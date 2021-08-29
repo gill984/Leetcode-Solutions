@@ -1,7 +1,4 @@
 class Solution {
-    // Key is starting from bottom right and moving towards beginning cell    
-    // LEFT and UP
-    int[][] dirs = new int[][] {{0, -1}, {-1, 0}};
     final int ROW = 0;
     final int COL = 1;
     public int calculateMinimumHP(int[][] dungeon) {
@@ -13,20 +10,29 @@ class Solution {
         {
             for (int col = n - 1; col >= 0; col--)
             {
-                // Look at up and left directions
-                for (int[] dir : dirs)
+                int nbrRow = row + -1;
+                int nbrCol = col + 0;
+
+                if (nbrRow >= 0 && nbrCol >= 0)
                 {
-                    int nbrRow = row + dir[ROW];
-                    int nbrCol = col + dir[COL];
-                    
-                    if (nbrRow >= 0 && nbrCol >= 0)
-                    {
-                        int cell = dungeon[nbrRow][nbrCol];
-                        int path = Math.max(dp[row][col] - cell, 1);
-                        int saved = dp[nbrRow][nbrCol];
-                        if (saved == 0 || path < saved)
-                            dp[nbrRow][nbrCol] = path;
-                    }
+                    int cell = dungeon[nbrRow][nbrCol];
+                    int path = Math.max(dp[row][col] - cell, 1);
+                    int saved = dp[nbrRow][nbrCol];
+                    if (saved == 0 || path < saved)
+                        dp[nbrRow][nbrCol] = path;
+                }
+                
+                // Look at up and left directions
+                nbrRow = row;
+                nbrCol = col - 1;
+
+                if (nbrRow >= 0 && nbrCol >= 0)
+                {
+                    int cell = dungeon[nbrRow][nbrCol];
+                    int path = Math.max(dp[row][col] - cell, 1);
+                    int saved = dp[nbrRow][nbrCol];
+                    if (saved == 0 || path < saved)
+                        dp[nbrRow][nbrCol] = path;
                 }
             }
         }
