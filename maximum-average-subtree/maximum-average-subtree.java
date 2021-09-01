@@ -4,38 +4,25 @@ class Solution {
     final int COUNT = 1;
     
     public double maximumAverageSubtree(TreeNode root) {
-        dfs(root);
+        if (root != null)
+            dfs(root);
         return max;
     }
     
-    public double[] dfs(TreeNode curNode)
+    public int[] dfs(TreeNode curNode)
     {
         if (curNode == null)
-            return null;
+            return new int [] {0, 0};
         
-        double [] leftVals = dfs(curNode.left);
-        double [] rightVals = dfs(curNode.right);
+        int [] leftVals = dfs(curNode.left);
+        int [] rightVals = dfs(curNode.right);
+        int sum = leftVals[SUM] + rightVals[SUM] + curNode.val;
+        int count = leftVals[COUNT] + rightVals[COUNT] + 1;
         
-        double count = 1.0;
-        double sum = curNode.val;
-        
-        if (leftVals != null)
-        {
-            sum += leftVals[SUM];
-            count += leftVals[COUNT];
-        }
-        
-        if (rightVals != null)
-        {
-            sum += rightVals[SUM];
-            count += rightVals[COUNT];
-        }
-        
-        // sum / count is the average value of this subtree, check if it's best
-        max = Math.max(sum / count, max);
+        max = Math.max( (double) sum / (double) count, max);
         
         // return result up the tree
-        double [] result = new double[2];
+        int [] result = new int[2];
         result[SUM] = sum;
         result[COUNT] = count;
         return result;
