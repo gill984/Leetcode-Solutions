@@ -1,93 +1,84 @@
-class Solution {
-    public List<TreeNode> generateTrees(int n) {
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution
+{
+    public List<TreeNode> generateTrees(int n)
+    {
+        if(n == 0)
+            return new ArrayList<TreeNode>();
+        
+        List<List<TreeNode>> trees = new ArrayList<List<TreeNode>>();
+        for(int i = 0; i < n; i++)
+            trees.add(new ArrayList<TreeNode>());
+        
+        // Base case tree
         TreeNode root = new TreeNode(1);
-        List<TreeNode> result = new ArrayList<TreeNode>();
-        result.add(root);
-        for (int i = 2; i <= n; i++)
+        trees.get(0).add(root);
+        
+        for(int numNodes = 1; numNodes < n; numNodes++)
         {
-            List<TreeNode> next = new ArrayList<TreeNode>();
-            for (TreeNode t : result)
+            // Add this next node as a root, bottom right child, and at each right edge with only
+            // left parents to all previous trees with 1 less nodes
+            // These are the only locations where the largest node in a binary search tree can be placed
+            for(TreeNode base : trees.get(numNodes - 1))
             {
-                List<TreeNode> tList = addNode(i, t);
-                next.addAll(tList);
+                // First add the tree where this new node is the root and the whole left subtree is base
+                TreeNode bigRoot = new TreeNode(numNodes + 1);
+                bigRoot.left = copyTree(base);
+                trees.get(numNodes).add(bigRoot);
+                
+                // Now Try adding this node as each right child which only has left parents
+                STEPS:
+                for(int steps = 0; ; steps++)
+                {
+                    TreeNode copy = copyTree(base);
+                    TreeNode iter = copy;
+                    
+                    // Try going right steps number of times
+                    boolean finished = false;
+                    for(int i = 0; i < steps; i++)
+                    {
+                        if(iter.right != null)
+                            iter = iter.right;
+                        else
+                        {
+                            break STEPS;
+                        }
+                    }
+                    
+                    TreeNode biggest = new TreeNode(numNodes + 1);
+                    biggest.left = iter.right;
+                    iter.right = biggest;
+                    trees.get(numNodes).add(copy);
+                }
             }
-            result = next;
         }
+        
+        return trees.get(n - 1);
+    }
+    
+    public TreeNode copyTree(TreeNode root)
+    {
+        if(root == null)
+            return null;
+        
+        TreeNode result = new TreeNode(root.val);
+        result.left = copyTree(root.left);
+        result.right = copyTree(root.right);
         
         return result;
-    }
-    
-    public List<TreeNode> addNode(int n, TreeNode root)
-    {
-        List<TreeNode> res = new ArrayList<TreeNode>();
-        List<Integer> insertions = new ArrayList<Integer>();
-        
-        // Add this new node as root
-        insertions.add(0);
-        
-        // Find other necessary insertions
-        findInsertions(root, n, insertions);
-        
-        for (int i = 0; i < insertions.size(); i++)
-        {
-            int parent = insertions.get(i);
-            TreeNode copy = new TreeNode();
-            copyTree(root, copy);
-            if (parent == 0)
-            {
-                TreeNode newRoot = new TreeNode(n);
-                newRoot.left = copy;
-                res.add(newRoot);
-            }
-            else
-            {
-                insertNode(copy, parent, n);
-                res.add(copy);
-            }
-        }
-        
-        return res;
-    }
-    
-    public void insertNode(TreeNode curNode, int parent, int n)
-    {        
-        if (curNode.val == parent)
-        {
-            TreeNode newNode = new TreeNode(n);
-            TreeNode temp = curNode.right;
-            curNode.right = newNode;
-            newNode.left = temp;
-        }
-        else
-        {
-            insertNode(curNode.right, parent, n);
-        }
-    }
-    
-    public void findInsertions(TreeNode curNode, int n, List<Integer> insertions)
-    {        
-        insertions.add(curNode.val);
-        if (curNode.right != null)
-            findInsertions(curNode.right, n, insertions);
-    }
-    
-    public void copyTree(TreeNode curNode, TreeNode copyNode)
-    {
-        if (curNode == null)
-            return;
-        
-        copyNode.val = curNode.val;
-        
-        if (curNode.left != null)
-        {
-            copyNode.left = new TreeNode();
-            copyTree(curNode.left, copyNode.left);
-        }
-        
-        if (curNode.right != null)
-        {
-            copyNode.right = new TreeNode();
-            copyTree(curNode.right, copyNode.right);
-        }
     }
 }
