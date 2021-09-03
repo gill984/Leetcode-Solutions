@@ -28,8 +28,6 @@ class Solution {
         
         // Sort in CCW order
         Arrays.sort(points);
-        System.out.println("P0: " + P0);
-        System.out.println(Arrays.toString(points));
         
         int colinear = points.length - 2;
         while (colinear >= 0 && ccw(P0, points[colinear + 1], points[colinear]) == 0)
@@ -41,8 +39,6 @@ class Solution {
             points[i] = points[j];
             points[j] = temp;
         }
-        
-        System.out.println(Arrays.toString(points));
         
         
         Point[] stack = new Point[points.length + 1];
@@ -58,11 +54,6 @@ class Solution {
             }
             
             stack[idx++] = points[i];
-            // System.out.print("Stack: ");
-            // for (int j = 0; j < idx; j++)
-            //     System.out.print(stack[j]);
-            // System.out.println();
-            // System.out.println();
         }
         
         int[][] res = new int[idx][2];
