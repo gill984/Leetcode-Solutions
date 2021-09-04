@@ -1,99 +1,63 @@
 class Solution {
-    final int COUNT = 0;
-    final int DIST = 1;
-    Node[] nodes;
+    int [] count;
+    int [] res;
+    List<Set<Integer>> tree;
     
     public int[] sumOfDistancesInTree(int n, int[][] edges)
     {
-        nodes = new Node[n];
+        count = new int[n];
+        res = new int[n];
+        tree = new ArrayList<Set<Integer>>();
         for (int i = 0; i < n; i++)
-            nodes[i] = new Node(i);
-        for (int i = 0; i < edges.length; i++)
+            tree.add(new HashSet<Integer>());
+        for (int[] edge : edges)
         {
-            nodes[edges[i][0]].nbr.put(edges[i][1], new int[2]);
-            nodes[edges[i][1]].nbr.put(edges[i][0], new int[2]);
+            tree.get(edge[0]).add(edge[1]);
+            tree.get(edge[1]).add(edge[0]);
         }
         
-        // Do the dfs operation from an arbitrary root
-        // this fills out every node's neighbor map
-        // in the direction opposite of the root
-        Node root = nodes[0];
-        for (int i : root.nbr.keySet())
-            dfs(-1, root.id);
+        // Do the dfs1 operation from an arbitrary root 0. This fills
+        // out every node's count and result but only in the direction
+        // that the dfs traversed in.
+        dfs1(-1, 0);
         
-        // for (Node iter : nodes)
-        //     System.out.println(iter);
-        
-        // Now that every node has its neighbor map filled
-        // out in the opposite direction of the root, fill
-        // in the gaps
-        int [] res = new int[n];
-        dfsFill(-1, root.id, res, 0, 0);
-        
+        // At this point res and count only take into account nodes
+        // which are in the opposite direction of the path to root
+        // for each node i. Meaning res[0] is the only correct value right now.
+        // This correct result can be propagated back out in the following way:
+        // From the root, look at all neighbors, their res[nbr] should be
+        // equal to the result at this node shifted +1 for each node which is
+        // closer to the neighbor, and shifted -1 for each node which is farther
+        // away from the neighbor than the root. There are count[nbr] nodes
+        // closer to the neighbor than the root and there are n - count[nbr]
+        // nodes which are further from the neighbor than the root. This gives
+        // us this equation res[nbr] = res[root] - count[nbr] + count.length - count[nbr]
+        dfs2(-1, 0);
         return res;
     }
     
-    public void dfsFill(int from, int to, int[] res, int trailCount, int trailSum)
-    {
-        // System.out.println("from: " + from + ", to: " + to + ", trailCount: " + trailCount + ", trailSum: " + trailSum);
-        int count = 1 + trailCount;
-        int sum = trailSum + trailCount;
-        Node n = nodes[to];
-        for (int k : n.nbr.keySet())
+    public void dfs1(int from, int to)
+    {        
+        for (int i : tree.get(to))
         {
-            count += n.nbr.get(k)[COUNT];
-            sum += n.nbr.get(k)[DIST];            
-        }
-        
-        res[to] = sum;
-        for (int k : n.nbr.keySet())
-        {
-            if (k != from) {
-                dfsFill(n.id, k, res, count - n.nbr.get(k)[COUNT], sum - n.nbr.get(k)[DIST]);
-            }
-                
-        }
-    }
-    
-    public int[] dfs(int from, int to)
-    {
-        Node n = nodes[to];
-        int [] result = new int[2];
-        result[COUNT] = 1;
-        for (int i : n.nbr.keySet())
-        {
-            // Don't go back to where we came from
             if (i == from)
                 continue;
-            
-            int [] nbrRes = dfs(to, i);
-            nbrRes[DIST] += nbrRes[COUNT];
-            n.nbr.put(i, nbrRes);
-            result[COUNT] += nbrRes[COUNT];
-            result[DIST] += nbrRes[DIST];
+            dfs1(to, i);
+            count[to] += count[i];
+            res[to] = res[to] + res[i] + count[i];
         }
-        
-        return result;
+        count[to] += 1;
     }
     
-    class Node
+    public void dfs2(int from, int to)
     {
-        int id;
-        Map<Integer, int[]> nbr;
-        
-        public Node (int ID)
+        for (int nbr : tree.get(to))
         {
-            id = ID;
-            nbr = new HashMap<Integer, int[]>();
-        }
-        
-        public String toString()
-        {
-            StringBuilder s = new StringBuilder();
-            s.append("id: " + id + ", nbr: ");
-            for (int i : nbr.keySet())
-                s.append(i + "=" + Arrays.toString(nbr.get(i)));
-            return s.toString();
+            if (nbr == from)
+                continue;
+            
+            res[nbr] = res[to] - count[nbr] + count.length - count[nbr];
+            dfs2(to, nbr);
         }
     }
 }
