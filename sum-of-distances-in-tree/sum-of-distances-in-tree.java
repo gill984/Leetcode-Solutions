@@ -1,15 +1,15 @@
 class Solution {
     int [] count;
     int [] res;
-    List<Set<Integer>> tree;
+    List<List<Integer>> tree;
     
     public int[] sumOfDistancesInTree(int n, int[][] edges)
     {
         count = new int[n];
         res = new int[n];
-        tree = new ArrayList<Set<Integer>>();
+        tree = new ArrayList<List<Integer>>();
         for (int i = 0; i < n; i++)
-            tree.add(new HashSet<Integer>());
+            tree.add(new ArrayList<Integer>());
         for (int[] edge : edges)
         {
             tree.get(edge[0]).add(edge[1]);
