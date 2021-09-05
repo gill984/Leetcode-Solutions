@@ -1,21 +1,24 @@
 class Solution {
-    public String orderlyQueue(String s, int k) {
+    public String orderlyQueue(String ss, int k) {
+        char[] s = ss.toCharArray();
         if (k == 1)
         {
-            String best = s;
-            for (int i = 0; i < s.length(); i++)
-            {
-                String attempt = s.substring(i, s.length()) + s.substring(0, i);
-                if (attempt.compareTo(best) < 0)
-                    best = attempt;
+            int n = s.length;
+            int best = 0;
+            for (int begin = 1; begin < s.length; begin++) {
+                for (int i = 0; i < s.length; i++) {
+                    if (s[(best + i) % n] < s[(begin + i) % n]) break;
+                    else if (s[(best + i) % n] > s[(begin + i) % n]) {
+                        best = begin;
+                        break;
+                    }
+                }
             }
-            return best;
+            
+            return ss.substring(best) + ss.substring(0, best);
         }
-        else
-        {
-            char[] arr = s.toCharArray();
-            Arrays.sort(arr);
-            return new String(arr);
-        }
+        
+        Arrays.sort(s);
+        return new String(s);
     }
 }
