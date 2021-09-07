@@ -4,21 +4,20 @@ class Solution {
         // When does graph only have 1 connected component?
         // It becomes connected when n - 1 nodes in separate
         // connected components are unioned
-        // Can check if such a union is occurring during the
-        // union operation by checking root of both components being
-        // unioned
+        // Can check if such a union is occurring by checking
+        // if 2 components have the same root before unioning
         Arrays.sort(logs, (a, b) -> a[0] - b[0]);
         DS ds = new DS(n);
         int connections = 0;
         for (int[] log : logs)
         {
             int time = log[0];
-            int a = log[1];
-            int b = log[2];
+            int x = log[1];
+            int y = log[2];
             
-            if (ds.root(a) != ds.root(b))
+            if (ds.root(x) != ds.root(y))
             {
-                ds.union(a, b);
+                ds.union(x, y);
                 connections++;
                 if (connections == n - 1)
                     return time;
