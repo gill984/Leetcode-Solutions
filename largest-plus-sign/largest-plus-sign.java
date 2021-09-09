@@ -15,17 +15,10 @@ class Solution {
             colMines.get(mine[1]).add(mine[0]);
         }
         
-        // System.out.println(rowMines);
-        // System.out.println(colMines);
-        
         int res = 0;
         for (int i = 0; i < n; i++)
-        {
             for (int j = 0; j < n; j++)
-            {
                 res = Math.max(res, largestPlus(i, j, rowMines.get(i), colMines.get(j), n));
-            }
-        }
         
         return res;
     }
@@ -37,8 +30,6 @@ class Solution {
         int upMine = (colMines.floor(row) != null) ? colMines.floor(row) : -1;
         int downMine = (colMines.ceiling(row) != null) ? colMines.ceiling(row) : n;
         int res = min4(col - leftMine, rightMine - col, row - upMine, downMine - row);
-        
-        // System.out.println("Row: " + row + ", Col: " + col + "(" + leftMine + ", " + rightMine + ", " +  upMine + ", " +  downMine + ") => " + res);
         
         return res;
     }
