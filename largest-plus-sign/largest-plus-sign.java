@@ -1,41 +1,87 @@
 class Solution {
-    public int orderOfLargestPlusSign(int n, int[][] mines) {
-        List<TreeSet<Integer>> rowMines = new ArrayList<TreeSet<Integer>>();
-        List<TreeSet<Integer>> colMines = new ArrayList<TreeSet<Integer>>();
+    private final int MINE = 1;
+    private final int FREE = 0;
+    private int n;
+    
+    public int orderOfLargestPlusSign(int n, int[][] mines)
+    {
+        this.n = n;
+        int[][] grid = new int[n][n];
+        for(int i = 0; i < mines.length; i++)
+            grid[mines[i][0]][mines[i][1]] = MINE;
         
+        int[][] closestMine = new int[n][n];
         for (int i = 0; i < n; i++)
-        {
-            rowMines.add(new TreeSet<Integer>());
-            colMines.add(new TreeSet<Integer>());
-        }
+            Arrays.fill(closestMine[i], Integer.MAX_VALUE);
         
-        for (int[] mine : mines)
-        {
-            rowMines.get(mine[0]).add(mine[1]);
-            colMines.get(mine[1]).add(mine[0]);
-        }
+        createDown(grid, closestMine);
+        createUp(grid, closestMine);
+        createRight(grid, closestMine);
+        createLeft(grid, closestMine);
         
+        // Pre-Process Arrays are all calculated now
         int res = 0;
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < n; j++)
-                res = Math.max(res, largestPlus(i, j, rowMines.get(i), colMines.get(j), n));
+        for(int i = 0; i < n; i++)
+            for(int j = 0; j < n; j++)
+                res = Math.max(res, closestMine[i][j]);
         
         return res;
     }
     
-    public int largestPlus(int row, int col, TreeSet<Integer> rowMines, TreeSet<Integer> colMines, int n)
+    private void createDown(int[][] grid, int[][] closestMine)
     {
-        int leftMine = (rowMines.floor(col) != null) ? rowMines.floor(col) : -1;
-        int rightMine = (rowMines.ceiling(col) != null) ? rowMines.ceiling(col) : n;
-        int upMine = (colMines.floor(row) != null) ? colMines.floor(row) : -1;
-        int downMine = (colMines.ceiling(row) != null) ? colMines.ceiling(row) : n;
-        int res = min4(col - leftMine, rightMine - col, row - upMine, downMine - row);
-        
-        return res;
+        for(int col = 0; col < grid[0].length; col++)
+        {
+            int last = n;
+            for(int row = grid.length - 1; row >= 0; row--)
+            {
+                if(grid[row][col] == MINE)
+                    last = row;
+                closestMine[row][col] = Math.min(last - row, closestMine[row][col]);
+            }
+        }
     }
     
-    public int min4(int a, int b, int c, int d)
+    private void createUp(int[][] grid, int[][] closestMine)
     {
-        return Math.min(a, Math.min(b, Math.min(c, d)));
+        for(int col = 0; col < grid[0].length; col++)
+        {
+            int last = -1;
+            for(int row = 0; row < grid.length; row++)
+            {
+                if(grid[row][col] == MINE)
+                    last = row;
+                closestMine[row][col] = Math.min(row - last, closestMine[row][col]);
+            }
+        }
+    }
+    
+    private void createRight(int[][] grid, int[][] closestMine)
+    {
+        for(int row = 0; row < grid.length; row++)
+        {
+            int last = n;
+            for(int col = grid[0].length - 1; col >= 0; col--)
+            {
+                if(grid[row][col] == MINE)
+                    last = col;
+                
+                closestMine[row][col] = Math.min(closestMine[row][col], last - col);
+            }
+        }
+    }
+    
+    private void createLeft(int[][] grid, int[][] closestMine)
+    {
+        for(int row = 0; row < grid.length; row++)
+        {
+            int last = -1;
+            for(int col = 0; col < grid[0].length; col++)
+            {
+                if(grid[row][col] == MINE)
+                    last = col;
+                closestMine[row][col] = Math.min(closestMine[row][col], col - last);
+            }
+        }
     }
 }
