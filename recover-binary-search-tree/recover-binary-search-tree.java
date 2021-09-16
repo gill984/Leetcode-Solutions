@@ -1,44 +1,32 @@
  class Solution {
+    TreeNode prev = null;
+    TreeNode first = null;
+    TreeNode last = null;
     public void recoverTree(TreeNode root)
     {
-        List<TreeNode> inorderList = new ArrayList<>();
-        traverse(inorderList, root);
+        traverse(root);
         
-        // for (TreeNode n : inorderList)
-        //     System.out.println(n.val);
         
-        TreeNode leftSwap = null;
-        TreeNode rightSwap = null;
-        for (int i = 0; i + 1 < inorderList.size(); i++)
-        {
-            if (inorderList.get(i).val > inorderList.get(i + 1).val)
-            {
-                leftSwap = inorderList.get(i);
-                break;
-            }
-        }
-        
-        for (int i = inorderList.size() - 1; i - 1 >= 0; i--)
-        {
-            if (inorderList.get(i).val < inorderList.get(i - 1).val)
-            {
-                rightSwap = inorderList.get(i);
-                break;
-            }
-        }
-        
-        int temp = leftSwap.val;
-        leftSwap.val = rightSwap.val;
-        rightSwap.val = temp;
+        int temp = first.val;
+        first.val = last.val;
+        last.val = temp;
     }
      
-    public void traverse(List<TreeNode> l, TreeNode cur)
+    public void traverse(TreeNode cur)
     {
         if (cur == null)
             return;
-        traverse(l, cur.left);
-        l.add(cur);
-        //System.out.println(cur.val);
-        traverse(l, cur.right);
+        
+        
+        traverse(cur.left);
+        if (prev != null && cur.val < prev.val)
+        {
+            if (first == null)
+                first = prev;
+            last = cur;
+        }
+        prev = cur;
+        
+        traverse(cur.right);
     }
 }
