@@ -10,14 +10,12 @@ class Solution {
             {
                 if (grid[i][j] == 1)
                 {
-                    if (i - 1 < 0 || grid[i - 1][j] == 0) // UP
-                        p++;
-                    if (j - 1 < 0 || grid[i][j - 1] == 0) // LEFT
-                        p++;
-                    if (i + 1 >= m || grid[i + 1][j] == 0) // DOWN
-                        p++;
-                    if (j + 1 >= n || grid[i][j + 1] == 0) // RIGHT
-                        p++;
+                    p += 4;
+                    
+                    if (i - 1 >= 0 && grid[i - 1][j] == 1) // UP
+                        p -= 2;
+                    if (j - 1 >= 0 && grid[i][j - 1] == 1) // LEFT
+                        p -= 2;
                 }
             }
         }
