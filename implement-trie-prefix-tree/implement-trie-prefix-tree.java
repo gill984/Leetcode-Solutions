@@ -1,53 +1,44 @@
 class Trie {
 
-    Trie [] children;
-    boolean isWord;
-    public Set<String> words;
+    Trie[] children;
+    boolean end;
     
-    /** Initialize your data structure here. */
     public Trie() {
         children = new Trie[26];
-        isWord = false;
-        words = new HashSet<String>();
+        end = false;
     }
     
-    /** Inserts a word into the trie. */
     public void insert(String word) {
-        Trie t = this;
-        t.words.add(word);
-        for(int i = 0; i < word.length(); i++)
+        Trie cur = this;
+        for (int i = 0; i < word.length(); i++)
         {
             char c = word.charAt(i);
-            //System.out.println(c);
-            int index = c - 'a';
-            if(t.children[index] == null)
-            {
-                //System.out.println("New trie at " + index);
-                t.children[index] = new Trie();
-            }
-            if(i == word.length() - 1)
-            {
-                t.children[index].isWord = true;
-            }
-            
-            //System.out.println("Setting pointer to " + index);
-            t = t.children[index];
+            if (cur.children[c - 'a'] == null)
+                cur.children[c - 'a'] = new Trie();
+            cur = cur.children[c - 'a'];
         }
+        cur.end = true;
     }
     
-    /** Returns if the word is in the trie. */
     public boolean search(String word) {
+        Trie cur = this;
+        for (char c : word.toCharArray())
+        {
+            if (cur.children[c - 'a'] != null)
+                cur = cur.children[c - 'a'];
+            else
+                return false;
+        }
         
-        return this.words.contains(word);
+        return cur.end;
     }
     
-    /** Returns if there is any word in the trie that starts with the given prefix. */
     public boolean startsWith(String prefix) {
-        Trie t = this;
-        for(char c : prefix.toCharArray())
+        Trie cur = this;
+        for (char c : prefix.toCharArray())
         {
-            if(t.children[c - 'a'] != null)
-                t = t.children[c - 'a'];
+            if (cur.children[c - 'a'] != null)
+                cur = cur.children[c - 'a'];
             else
                 return false;
         }
