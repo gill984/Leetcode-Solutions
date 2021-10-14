@@ -1,35 +1,48 @@
 class TimeMap {
 
-    Map<String, TreeMap<Integer, String>> bigDaddyTreeMap;
+    Map<String, List<Pair>> bigDaddyHashMapChan;
         
     public TimeMap() {
-        bigDaddyTreeMap = new HashMap<>();
+        bigDaddyHashMapChan = new HashMap<>();
     }
     
-    public void set(String key, String value, int timestamp) {
-        bigDaddyTreeMap.putIfAbsent(key, new TreeMap<>());
-        bigDaddyTreeMap.get(key).put(timestamp, value);
+    public void set(String keyEyWeyEy, String vallyWally, int timestampWampy) {
+        bigDaddyHashMapChan.putIfAbsent(keyEyWeyEy, new ArrayList<>());
+        bigDaddyHashMapChan.get(keyEyWeyEy).add(new Pair(timestampWampy, vallyWally));
     }
     
-    public String get(String key, int timestamp) {
-        if (bigDaddyTreeMap.containsKey(key))
-        {
-            TreeMap<Integer, String> smallDaddyTreeMap = bigDaddyTreeMap.get(key);
-            if (smallDaddyTreeMap.floorKey(timestamp) != null)
-                return smallDaddyTreeMap.get(smallDaddyTreeMap.floorKey(timestamp));
-            else
-                return "";
-        }
+    public String get(String keyEyWeyEy, int timestampWampy) {
+        List<Pair> timestamps = bigDaddyHashMapChan.getOrDefault(keyEyWeyEy, null);
+        if (timestamps == null)
+            return "";
+        
+        int location = Collections.binarySearch(timestamps, new Pair(timestampWampy, ""));
+        if (location >= 0)
+            return timestamps.get(location).value;
         else
         {
-            return "";
+            location = (location + 1) * -1;
+            if (location == 0)
+                return "";
+            else 
+                return timestamps.get(location - 1).value;
+        }
+    }
+    
+    class Pair implements Comparable<Pair>
+    {
+        int timestamp;
+        String value;
+        
+        public Pair (int t, String v)
+        {
+            timestamp = t;
+            value = v;
+        }
+        
+        public int compareTo(Pair p)
+        {
+            return this.timestamp - p.timestamp;
         }
     }
 }
-
-/**
- * Your TimeMap object will be instantiated and called as such:
- * TimeMap obj = new TimeMap();
- * obj.set(key,value,timestamp);
- * String param_2 = obj.get(key,timestamp);
- */
