@@ -1,10 +1,12 @@
 class Solution {
 
     int [] nums;
+    int [] s;
     Random r;
     
     public Solution(int[] nums) {
         this.nums = nums;
+        s = nums.clone();
         r = new Random();
     }
     
@@ -16,10 +18,9 @@ class Solution {
         if (nums == null)
             return null;
         
-        int [] s = nums.clone();
         for (int i = 0; i < s.length; i++)
         {
-            int j = r.nextInt(s.length);
+            int j = r.nextInt(i + 1);
             int temp = s[i];
             s[i] = s[j];
             s[j] = temp;
