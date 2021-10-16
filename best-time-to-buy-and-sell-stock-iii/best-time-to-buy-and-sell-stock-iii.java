@@ -6,18 +6,23 @@ class Solution {
         
         int min = prices[0];
         int max = prices[n - 1];
-        for (int i = 0; i < n; i++)
+        for (int i = 1; i < n; i++)
         {
-            left[i] = Math.max(i > 0 ? left[i - 1] : 0, prices[i] - min);
+            left[i] = Math.max(left[i - 1], prices[i] - min);
             min = Math.min(prices[i], min);
-            right[n - 1 - i] = Math.max(i > 0 ? right[n - i] : 0, max - prices[n - 1 - i]);
+            right[n - 1 - i] = Math.max(right[n - i], max - prices[n - 1 - i]);
             max = Math.max(max, prices[n - 1 - i]);
         }
         
-        int res = right[0];    // Best 1 transaction option, sometimes this is best
+        // Best single transaction option. Sometimes 1 transaction is optimal.
+        // left[n-1] = right[0] = max profit over [0..n-1] for 1 transaction
+        int res = left[n - 1];
         
+        // Since left[i] is the best profit we can get from [0..i] and
+        // right[i] is the best profit we can get from [i..n-1]
+        // We can now loop through and maximum of left[i] + right[i + 1]
         for (int i = 0; i + 1 < n; i++)
-            res = Math.max(res, left[i] + right[i + 1]);        // Best of all 2 transaction options
+            res = Math.max(res, left[i] + right[i + 1]);
         
         return res;
     }
