@@ -14,14 +14,14 @@ class Solution {
         int res = max;
         while (lo < hi)
         {
-            int mid = (lo + hi) / 2;
+            int mid = (hi - lo) / 2 + lo;
             int hoursNeeded = findHoursNeeded(piles, mid);
             if (hoursNeeded > h)
                 lo = mid + 1;
             else if (hoursNeeded <= h)
             {
                 hi = mid;
-                res = Math.min(res, mid);
+                res = mid;
             }
         }
         
