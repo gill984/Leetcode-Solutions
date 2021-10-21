@@ -14,7 +14,7 @@ class Solution {
         
         Arrays.sort(tasks, (a, b) -> a[0] - b[0]);
         PriorityQueue<int[]> minProcessTime = new PriorityQueue<>(
-        new Comparator<int[]>() {
+        new Comparator<>() {
             public int compare(int[] a, int[] b) {
                 if (Integer.compare(a[1], b[1]) == 0)
                     return Integer.compare(a[2], b[2]);
