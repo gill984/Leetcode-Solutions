@@ -1,27 +1,38 @@
 class Solution {
-    public Node connect(Node root) {
-        if (root == null)
-            return null;
-        
-        // Do a level order traversal
-        // While on each level, the next pointer is set to q.peek()
-        Queue<Node> nextLevel = new ArrayDeque<>();
-        nextLevel.offer(root);
-        
-        while (!nextLevel.isEmpty())
+    public Node connect(Node root)
+    {
+        Node head = null; //head of the next level
+        Node prev = null; //the leading node on the next level
+        Node cur = root;  //current node of current level
+
+        while (cur != null)
         {
-            Queue<Node> level = nextLevel;
-            nextLevel = new ArrayDeque<>();
-            while (!level.isEmpty())
-            {
-                Node cur = level.poll();
-                cur.next = level.isEmpty() ? null : level.peek();
+            while (cur != null)
+            { //iterate on the current level
                 if (cur.left != null)
-                    nextLevel.offer(cur.left);
+                {
+                    if (prev == null)
+                        head = cur.left;
+                    else
+                        prev.next = cur.left;
+                    prev = cur.left;
+                }
                 
                 if (cur.right != null)
-                    nextLevel.offer(cur.right);
+                {
+                    if (prev == null)
+                        head = cur.right;
+                    else
+                        prev.next = cur.right;
+                    prev = cur.right;
+                }
+                
+                cur = cur.next;
             }
+            
+            cur = head;
+            head = null;
+            prev = null;
         }
         
         return root;
