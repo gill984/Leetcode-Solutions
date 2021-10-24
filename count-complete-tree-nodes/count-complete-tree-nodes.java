@@ -2,10 +2,10 @@ class Solution {
     public int countNodes(TreeNode root) {
         int lo = findMin(root);
         int d = 32 - Integer.numberOfLeadingZeros(lo);
-        int hi = (2 * lo) - 1;
+        int hi = (2 * lo);
         int res = lo;
         
-        while (lo <= hi)
+        while (lo < hi)
         {
             int mid = (hi - lo) / 2 + lo;
             if (nodeExists(root, mid, d))
@@ -14,9 +14,7 @@ class Solution {
                 lo = mid + 1;
             }
             else
-            {
-                hi = mid - 1;
-            }
+                hi = mid;
         }
         
         return res;
@@ -40,13 +38,9 @@ class Solution {
         while (shift >= 0 && cur != null)
         {
             if ((label & mask) != 0)
-            {
                 cur = cur.right;
-            }
             else
-            {
                 cur = cur.left;
-            }
             shift -= 1;
             mask = (1 << (shift));
         }
