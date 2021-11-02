@@ -1,80 +1,60 @@
 class Solution {
-    private final int START = 1;
-    private final int END = 2;
-    private final int OBSTACLE = -1;
-    private final int VISITED = 3;
+    int m;
+    int n;
+    int freeSpaces;
+    int [][] dirs = new int[][] {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
     
-    public int uniquePathsIII(int[][] grid) {        
-        // Can easily find a single path from start to end using dfs or bfs
-        // Trick here is that we need to walk over every non-obstacle square exactly once
-        // Can perform dfs, each time we reach the end, add 1
-        // Mark and unmark visited as we go
+    public int uniquePathsIII(int[][] grid) {
+        m = grid.length;
+        n = grid[0].length;
+        
         int startRow = 0;
         int startCol = 0;
-        int endRow = 0;
-        int endCol = 0;
-        int numToVisit = 0;
-        
-        for(int i = 0; i < grid.length; i++)
+        freeSpaces = 0;
+        for (int i = 0; i < m; i++)
         {
-            for(int j = 0; j < grid[0].length; j++)
+            for (int j = 0; j < n; j++)
             {
-                if(grid[i][j] == 1)
+                if (grid[i][j] == 1)
                 {
                     startRow = i;
                     startCol = j;
                 }
-                else if(grid[i][j] == 2)
+                else if (grid[i][j] == 0)
                 {
-                    endRow = i;
-                    endCol = j;
-                }
-                
-                if(grid[i][j] != -1)
-                {
-                    numToVisit++;
+                    freeSpaces += 1;
                 }
             }
         }
         
-        return dfs(grid, startRow, startCol, endRow, endCol, 0, numToVisit);
+        int res = dfs(grid, startRow, startCol, 0);
+        return res;
     }
     
-    public int dfs(int[][] grid, int row, int col, int endRow, int endCol, int numVisited, int numToVisit)
+    public int dfs (int[][] grid, int row, int col, int freeVisited)
     {
-        if(grid[row][col] == END)
-        {
-            if(numVisited == numToVisit - 1)
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-        
-        grid[row][col] = VISITED;
-        numVisited++;
-        
-        // Try going up left down and right
-        int [] rowOffsets = new int [] {-1, 1, 0, 0};
-        int [] colOffsets = new int [] {0, 0, -1, 1};
+        // System.out.println("Row: " + row + ", Col: " + col);
         int numPaths = 0;
         
-        for(int i = 0; i < rowOffsets.length; i++)
+        for (int [] dir : dirs)
         {
-            int rOff = rowOffsets[i];
-            int cOff = colOffsets[i];
-            if(row + rOff >= 0 && row + rOff < grid.length && col + cOff >= 0 && col + cOff < grid[0].length &&
-               grid[row + rOff][col + cOff] != OBSTACLE && grid[row + rOff][col + cOff] != VISITED)
+            int nextRow = row + dir[0];
+            int nextCol = col + dir[1];
+            
+            if (nextRow >= 0 && nextRow < m && nextCol >= 0 && nextCol < n)
             {
-                numPaths += dfs(grid, row + rOff, col + cOff, endRow, endCol, numVisited, numToVisit);
+                if (grid[nextRow][nextCol] == 0)
+                {
+                    grid[nextRow][nextCol] = 1;
+                    numPaths += dfs(grid, nextRow, nextCol, freeVisited + 1);
+                    grid[nextRow][nextCol] = 0;
+                }
+                else if (grid[nextRow][nextCol] == 2 && freeVisited == freeSpaces)
+                {
+                    numPaths += 1;
+                }
             }
         }
-        
-        // Mark this spot as unvisited again
-        grid[row][col] = 0;
         
         return numPaths;
     }
