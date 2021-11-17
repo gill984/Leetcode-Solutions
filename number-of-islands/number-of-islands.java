@@ -12,7 +12,6 @@ class Solution {
                 if (grid[i][j] == '1')
                 {
                     count++;
-                    grid[i][j] = '0';
                     dfs(grid, i, j);
                 }
             }
@@ -23,6 +22,8 @@ class Solution {
     
     public void dfs(char[][] grid, int row, int col)
     {
+        grid[row][col] = '0';
+        
         for (int [] dir : dirs)
         {
             int nextRow = row + dir[0];
@@ -32,7 +33,6 @@ class Solution {
                 nextCol >= 0 && nextCol < grid[0].length &&
                 grid[nextRow][nextCol] == '1')
             {
-                grid[nextRow][nextCol] = '0';
                 dfs(grid, nextRow, nextCol);
             }
         }
