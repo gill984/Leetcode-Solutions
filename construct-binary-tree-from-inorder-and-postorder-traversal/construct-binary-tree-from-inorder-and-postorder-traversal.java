@@ -1,12 +1,17 @@
 class Solution
 {
     int poIndex;
+    Map<Integer, Integer> valToIn;
+        
     public TreeNode buildTree(int[] inorder, int[] postorder)
-    {
-        // inorder = [9,3,15,20,7], postorder = [9,15,7,20,3]
-        // last element in postorder is the root
-        // In the inorder array, left side of root is left subtree, right is right subtree
+    {        
+        valToIn = new HashMap<>();
         int n = inorder.length;
+        for (int i = 0; i < n; i++)
+        {
+            valToIn.put(inorder[i], i);
+        }
+        
         poIndex = n - 1;
         TreeNode root = buildRecursive(inorder, 0, n - 1, postorder);
         return root;
@@ -17,24 +22,14 @@ class Solution
         if (poIndex < 0 || inLo > inHi)
             return null;
         
-        TreeNode curr = new TreeNode(postorder[poIndex]);
-        poIndex--;
+        // Last element in postorder is the current root element
+        int val = postorder[poIndex--];
+        TreeNode curr = new TreeNode(val);
+        int inIndex = valToIn.get(val);
         
-        int curIndex = 0;
-        for (int i = inLo; i <= inHi; i++)
-        {
-            if (inorder[i] == curr.val)
-            {
-                curIndex = i;
-                break;
-            }
-        }
-        
-        // Only try the right if we have a right subtree
-        curr.right = buildRecursive(inorder, curIndex + 1, inHi, postorder);
-        
-        // Only try the left if we have a left subtree
-        curr.left = buildRecursive(inorder, inLo, curIndex - 1, postorder);
+        // In the inorder array, left side of root is left subtree, right is right subtree
+        curr.right = buildRecursive(inorder, inIndex + 1, inHi, postorder);
+        curr.left = buildRecursive(inorder, inLo, inIndex - 1, postorder);
         
         return curr;
     }
