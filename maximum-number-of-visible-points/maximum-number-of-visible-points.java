@@ -1,5 +1,4 @@
 class Solution {
-    double MARGIN = 1E-9;
     public int visiblePoints(List<List<Integer>> points, int angle, List<Integer> location) {
         // All optimal rotations have at least 1 point on the edge of your sight
         // Iterate through having all possible points on the edge of sight
@@ -26,7 +25,7 @@ class Solution {
                 dupes++;
                 continue;  // same point always counts
             }
-            angles.add(Math.atan2(dy, dx) * (180.0 / Math.PI));
+            angles.add(Math.atan2(dy, dx) * (180 / Math.PI));
         }
         
         Collections.sort(angles);
@@ -38,19 +37,23 @@ class Solution {
         
         int lo = 0;
         int hi = 0;
+        int count = 0;
         
         while (hi < temp.size() && lo < temp.size())
         {
-            if (Math.abs(temp.get(hi) - temp.get(lo)) <= angle + MARGIN)
+            if (Math.abs(temp.get(hi) - temp.get(lo)) <= angle)
             {
+                // add to sliding window
+                count++;
                 hi++;
             }
             else
             {
                 lo++;
+                count--;
             }
             
-            max = Math.max(max, hi - lo);
+            max = Math.max(max, count);
         }
         
         return max + dupes;
