@@ -1,10 +1,6 @@
 class Solution {
     public List<List<String>> partition(String s)
     {
-        // All characters as individual letters is always an option, sometimes that is the only option
-        // Start with all characters individual
-        // Try combining 2 indices to see if a palindrome is formed
-        // if it is a palindrome try doing the combining on the remaining characters
         List<List<String>> res = new ArrayList<>();
         dfs(s, 0, new ArrayList<>(), res);
         
