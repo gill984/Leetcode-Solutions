@@ -5,14 +5,13 @@ class Solution {
         // Start with all characters individual
         // Try combining 2 indices to see if a palindrome is formed
         // if it is a palindrome try doing the combining on the remaining characters
-        Map<String, Boolean> isPalindrome = new HashMap<>();
         List<List<String>> res = new ArrayList<>();
-        dfs(s, 0, new ArrayList<>(), res, isPalindrome);
+        dfs(s, 0, new ArrayList<>(), res);
         
         return res;
     }
     
-    public void dfs(String s, int index, List<String> curr, List<List<String>> res, Map<String, Boolean> isPalindrome)
+    public void dfs(String s, int index, List<String> curr, List<List<String>> res)
     {
         if (index >= s.length())
         {
@@ -20,18 +19,11 @@ class Solution {
         }
         
         for (int end = index; end < s.length(); end++)
-        {
-            // Check map first
-            String key = index + "," + end;
-            if (!isPalindrome.containsKey(key))
-            {
-                isPalindrome.put(key, checkPalindrome(s, index, end));
-            }
-            
-            if (isPalindrome.get(key))
+        {            
+            if (checkPalindrome(s, index, end))
             {
                 curr.add(s.substring(index, end + 1));
-                dfs(s, end + 1, curr, res, isPalindrome);
+                dfs(s, end + 1, curr, res);
                 curr.remove(curr.size() - 1);
             }
         }
