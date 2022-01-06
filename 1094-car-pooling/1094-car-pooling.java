@@ -1,25 +1,20 @@
 class Solution {
     public boolean carPooling(int[][] trips, int capacity) {
-        // Sort on increasing from locations
-        Arrays.sort(trips, (a, b) -> a[1] - b[1]);
-        PriorityQueue<int[]> minTo = new PriorityQueue<int[]>(10, (a, b) -> a[2] - b[2]);
-        int passengers = 0;
+        // Use bucket sort since from and to can only be [0, 1000]
+        int [] passengers = new int [1001];
         
-        for (int i = 0; i < trips.length; i++)
+        for (int [] trip : trips)
         {
-            int[] next = trips[i];
-            
-            // Remove all previous trips which can drop off their passengers
-            while (!minTo.isEmpty() && minTo.peek()[2] <= next[1])
-            {
-                int [] t = minTo.poll();
-                passengers -= t[0];
-            }
-            
-            // Try adding this new trip back on
-            passengers += next[0];
-            minTo.offer(next);
-            if (passengers > capacity)
+            passengers[trip[1]] += trip[0];
+            passengers[trip[2]] -= trip[0];
+        }
+        
+        // Now make sure the sum of passengers stays under capacity
+        int neededCapacity = 0;
+        for (int i : passengers)
+        {
+            neededCapacity += i;
+            if (neededCapacity > capacity)
                 return false;
         }
         
