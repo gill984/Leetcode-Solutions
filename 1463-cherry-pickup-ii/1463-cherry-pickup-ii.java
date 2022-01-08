@@ -28,16 +28,10 @@ class Solution {
                         }
                     }
                     
-                    max += grid[i][j];
-                    if (j != k)
-                        max += grid[i][k];
-                    
-                    dp[i][j][k] = max;
+                    dp[i][j][k] = max + grid[i][j] + (j != k ? grid[i][k] : 0);
                 }
             }
         }
-        
-        // System.out.println(Arrays.deepToString(dp));
         
         return dp[0][0][n - 1];
     }
