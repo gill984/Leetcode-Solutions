@@ -7,8 +7,8 @@ class Solution {
         int [][][] dp = new int [m][n][n];        
         
         // To reach dp[i][j][k], can come from dp[i - 1][j - 1, j, j + 1][k - 1, k, k + 1]
-        for (int i = m - 1; i >= 0; i--) {
-            for (int j = 0; j < n; j++) {
+        for (int i = m - 1; i >= 0; i--)
+            for (int j = 0; j < n; j++)
                 for (int k = 0; k < n; k++) {
                     if (i != m - 1)
                         for (int nextJ = j - 1; nextJ <= j + 1; nextJ++)
@@ -18,8 +18,6 @@ class Solution {
                     
                     dp[i][j][k] += grid[i][j] + (j != k ? grid[i][k] : 0);
                 }
-            }
-        }
         
         return dp[0][0][n - 1];
     }
