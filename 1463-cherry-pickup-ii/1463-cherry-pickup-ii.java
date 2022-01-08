@@ -7,28 +7,16 @@ class Solution {
         int [][][] dp = new int [m][n][n];        
         
         // To reach dp[i][j][k], can come from dp[i - 1][j - 1, j, j + 1][k - 1, k, k + 1]
-        for (int i = m - 1; i >= 0; i--)
-        {
-            for (int j = 0; j < n; j++)
-            {
-                for (int k = 0; k < n; k++)
-                {
-                    int max = 0;
+        for (int i = m - 1; i >= 0; i--) {
+            for (int j = 0; j < n; j++) {
+                for (int k = 0; k < n; k++) {
                     if (i != m - 1)
-                    {
                         for (int nextJ = j - 1; nextJ <= j + 1; nextJ++)
-                        {
                             for (int nextK = k - 1; nextK <= k + 1; nextK++)
-                            {
                                 if (nextJ < n && nextJ >= 0 && nextK < n && nextK >= 0)
-                                {
-                                    max = Math.max(max, dp[i + 1][nextJ][nextK]);
-                                }
-                            }
-                        }
-                    }
+                                    dp[i][j][k] = Math.max(dp[i][j][k], dp[i + 1][nextJ][nextK]);
                     
-                    dp[i][j][k] = max + grid[i][j] + (j != k ? grid[i][k] : 0);
+                    dp[i][j][k] += grid[i][j] + (j != k ? grid[i][k] : 0);
                 }
             }
         }
