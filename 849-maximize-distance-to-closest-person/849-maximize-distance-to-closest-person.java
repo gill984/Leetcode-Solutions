@@ -25,8 +25,6 @@ class Solution {
             }
         }
         
-        System.out.println(Arrays.toString(closest));
-        
         // From the right, put the closest distance in
         curr = -1;
         for (int i = n - 1; i >= 0; i--)
@@ -54,8 +52,6 @@ class Solution {
         {
             max = Math.max(max, i);
         }
-        
-        System.out.println(Arrays.toString(closest));
         
         return max;
     }
