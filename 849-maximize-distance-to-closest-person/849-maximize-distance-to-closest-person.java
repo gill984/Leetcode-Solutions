@@ -27,6 +27,7 @@ class Solution {
         
         // From the right, put the closest distance in
         curr = -1;
+        int res = 0;
         for (int i = n - 1; i >= 0; i--)
         {
             if (seats[i] == 0)
@@ -45,14 +46,10 @@ class Solution {
                 closest[i] = 0;
                 curr = i;
             }
+            
+            res = Math.max(res, closest[i]);
         }
         
-        int max = 0;
-        for (int i : closest)
-        {
-            max = Math.max(max, i);
-        }
-        
-        return max;
+        return res;
     }
 }
