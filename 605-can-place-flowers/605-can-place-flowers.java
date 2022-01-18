@@ -9,7 +9,6 @@ class Solution {
                 ((i == flowerbed.length - 1) || flowerbed[i + 1] == 0))
             {
                 count += 1;
-                flowerbed[i] = 1;
                 i += 2;
             }
             else if (flowerbed[i] == 1)
