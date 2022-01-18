@@ -1,12 +1,9 @@
 class Solution {
     public boolean canPlaceFlowers(int[] flowerbed, int n) {
-        // Can greedily plant flowers
-        // Can plant a flower if the surrounding 2 indices do not have flowers, or are OOB
         int count = 0;
         
         for (int i = 0; i < flowerbed.length && count < n;)
-        {
-            // Check left and right
+        {        
             if (flowerbed[i] == 0 &&
                 (i == 0 || flowerbed[i - 1] == 0) &&
                 ((i == flowerbed.length - 1) || flowerbed[i + 1] == 0))
@@ -15,13 +12,14 @@ class Solution {
                 flowerbed[i] = 1;
                 i += 2;
             }
+            else if (flowerbed[i] == 1)
+            {
+                i += 2;
+            }
             else
             {
                 i++;
             }
-            
-            if (count >= n)
-                return true;
         }
         
         return (count >= n);
