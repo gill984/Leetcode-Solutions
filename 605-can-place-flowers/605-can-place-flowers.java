@@ -19,6 +19,9 @@ class Solution {
             {
                 i++;
             }
+            
+            if (count >= n)
+                return true;
         }
         
         return (count >= n);
