@@ -4,7 +4,7 @@ class Solution {
         // Can plant a flower if the surrounding 2 indices do not have flowers, or are OOB
         int count = 0;
         
-        for (int i = 0; i < flowerbed.length && count < n; i++)
+        for (int i = 0; i < flowerbed.length && count < n;)
         {
             // Check left and right
             if (flowerbed[i] == 0 &&
@@ -13,6 +13,11 @@ class Solution {
             {
                 count += 1;
                 flowerbed[i] = 1;
+                i += 2;
+            }
+            else
+            {
+                i++;
             }
         }
         
