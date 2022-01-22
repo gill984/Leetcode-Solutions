@@ -1,9 +1,7 @@
 class Solution {
     public boolean winnerSquareGame(int n) {
-        int MAX_BOUND = 100000;
         List<Integer> squares = new ArrayList<Integer>();
         Set<Integer> wins = new HashSet<Integer>();
-        
         
         for (int i = 1; i <= Math.sqrt(n); i++)
             squares.add(i * i);
