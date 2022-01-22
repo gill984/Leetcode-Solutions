@@ -4,27 +4,26 @@ class Solution {
             return null;
         
         // Level order traversal and check for node u
-        Queue<TreeNode> queue = new ArrayDeque<>();
+        Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-        queue.offer(new TreeNode(0));
+        queue.offer(null);
         
         while (!queue.isEmpty())
         {
             TreeNode node = queue.poll();
             
-            if (node.val == 0)
+            if (node == null)
             {
                 if (!queue.isEmpty())
                 {
-                    queue.offer(new TreeNode(0));
+                    queue.offer(null);
                 }
             }
             else
             {
                 if (node.val == u.val)
                 {
-                    TreeNode next = queue.poll();
-                    return next.val == 0 ? null : next;
+                    return queue.poll();
                 }
                     
 
