@@ -5,7 +5,7 @@ class Solution {
         boolean onlyFirst = true;
         char [] w = word.toCharArray();
         
-        for (int i = 0; i < w.length; i++)
+        for (int i = 0; i < w.length && (allCaps || allLower || onlyFirst); i++)
         {
             char c = w[i];
             if (c >= 'a' && c <= 'z')
