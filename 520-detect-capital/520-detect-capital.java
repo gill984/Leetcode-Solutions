@@ -3,10 +3,11 @@ class Solution {
         boolean allCaps = true;
         boolean allLower = true;
         boolean onlyFirst = true;
+        char [] w = word.toCharArray();
         
-        for (int i = 0; i < word.length(); i++)
+        for (int i = 0; i < w.length; i++)
         {
-            char c = word.charAt(i);
+            char c = w[i];
             if (c >= 'a' && c <= 'z')
             {
                 allCaps = false;
