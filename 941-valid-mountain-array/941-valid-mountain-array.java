@@ -6,19 +6,13 @@ class Solution {
             return false;
         
         int idx = 1;
-        for (; idx < n && arr[idx] > arr[idx - 1]; idx++)
-        {
-            
-        }
+        for (; idx < n && arr[idx] > arr[idx - 1]; idx++);
         
         if (idx == n || idx == 1)
             return false;
             
-        for (; idx < n && arr[idx] < arr[idx - 1] ; idx++)
-        {
-            
-        }
-            
+        for (; idx < n && arr[idx] < arr[idx - 1] ; idx++);
+        
         return (idx == n);
     }
 }
