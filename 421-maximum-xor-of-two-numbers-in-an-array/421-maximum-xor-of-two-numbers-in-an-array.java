@@ -6,11 +6,11 @@ class Solution {
         // at currently
         Trie root = new Trie(0);
         for (int i : nums)
-            root.insert(root, i);
+            root.insert(i);
         
         int res = 0;
         for (int i : nums)
-            res = Math.max(res, root.getBestXOR(root, i));
+            res = Math.max(res, root.getBestXOR(i));
         
         return res;
     }
@@ -26,10 +26,10 @@ class Solution {
             bit = b;
         }
         
-        public void insert(Trie root, int val)
+        public void insert(int val)
         {
             // Insert the string of 1s and 0s represented by val into the trie
-            Trie curr = root;
+            Trie curr = this;
             for (int i = 30; i >= 0; i--)
             {
                 int digit = (val & (1 << i));
@@ -53,9 +53,9 @@ class Solution {
             }
         }
         
-        public int getBestXOR(Trie root, int a)
+        public int getBestXOR(int a)
         {
-            Trie curr = root;
+            Trie curr = this;
             int b = 0;
             
             for (int i = 30; i >= 0; i--)
