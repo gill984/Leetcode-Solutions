@@ -10,7 +10,7 @@ class Solution {
         
         int res = 0;
         for (int i : nums)
-            res = Math.max(res, root.getBestXOR(i, root));
+            res = Math.max(res, root.getBestXOR(root, i));
         
         return res;
     }
@@ -53,7 +53,7 @@ class Solution {
             }
         }
         
-        public int getBestXOR(int a, Trie root)
+        public int getBestXOR(Trie root, int a)
         {
             Trie curr = root;
             int b = 0;
