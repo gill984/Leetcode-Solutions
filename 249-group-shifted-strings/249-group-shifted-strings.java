@@ -10,10 +10,7 @@ class Solution {
         
         List<List<String>> res = new ArrayList<>();
         for (String t : buckets.keySet())
-        {
-            List<String> l = new ArrayList<String>(buckets.get(t));
-            res.add(l);
-        }
+            res.add(new ArrayList<String>(buckets.get(t)));
         
         return res;
     }
@@ -25,12 +22,7 @@ class Solution {
         StringBuilder out = new StringBuilder();
         
         for (char c : s.toCharArray())
-        {
             out.append((char) (Math.floorMod(c - 'a' + shift, 26) + 'a'));
-        }
-        
-        // System.out.println("s: " + s);
-        // System.out.println("t: " + out.toString());
         
         return out.toString();
     }
