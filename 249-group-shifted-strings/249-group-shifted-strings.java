@@ -10,7 +10,7 @@ class Solution {
         
         List<List<String>> res = new ArrayList<>();
         for (String t : buckets.keySet())
-            res.add(new ArrayList<String>(buckets.get(t)));
+            res.add(buckets.get(t));
         
         return res;
     }
@@ -18,6 +18,7 @@ class Solution {
     public String translate (String s)
     {
         // Manipulate this string so that it starts with a
+        // shift all other letters to match
         int shift = 'a' - s.charAt(0);
         StringBuilder out = new StringBuilder();
         
