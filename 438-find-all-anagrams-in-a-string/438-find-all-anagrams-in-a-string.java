@@ -17,10 +17,6 @@ class Solution {
         {
             int index = (int) (s.charAt(hi + 1) - 'a');
             
-            System.out.println("lo: " + lo);
-            System.out.println("hi: " + hi);
-            System.out.println("matched: " + matched);
-            
             if (windowCount[index] < pCount[index])
             {
                 if (lo == -1)
