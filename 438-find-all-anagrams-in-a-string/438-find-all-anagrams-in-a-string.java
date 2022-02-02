@@ -17,13 +17,28 @@ class Solution {
         {
             int index = (int) (s.charAt(hi + 1) - 'a');
             
-            if (windowCount[index] < pCount[index])
+            if (pCount[index] > 0)
             {
                 if (lo == -1)
                     lo = hi + 1;
                 
                 matched++;
                 windowCount[index] += 1;
+                
+                // Make sure we don't include too many of this character
+                // by sliding the window over
+                while (windowCount[index] > pCount[index])
+                {
+                    int lodx = (int) (s.charAt(lo) - 'a');
+                    windowCount[lodx] -= 1;
+                    matched -= 1;
+                    lo++;
+
+                    if (lodx == index)
+                    {
+                        break;
+                    }
+                }
                 
                 if (matched == p.length())
                 {
@@ -33,7 +48,7 @@ class Solution {
                     matched--;
                 }
             }
-            else if (pCount[index] == 0)
+            else
             {
                 // This character isn't in p
                 // zero out all window counts
@@ -42,26 +57,6 @@ class Solution {
                 
                 matched = 0;
                 lo = -1;
-            }
-            else if (windowCount[index] == pCount[index])
-            {
-                // In this case we need to increment lo 
-                // until we can add this character
-                while (lo < hi + 1)
-                {
-                    int lodx = (int) (s.charAt(lo) - 'a');
-                    windowCount[lodx] -= 1;
-                    matched -= 1;
-                    lo++;
-                    
-                    if (lodx == index)
-                    {
-                        break;
-                    }
-                }
-                
-                matched += 1;
-                windowCount[index] += 1;
             }
             
             hi++;
