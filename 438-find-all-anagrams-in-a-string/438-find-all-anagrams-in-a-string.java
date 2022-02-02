@@ -1,7 +1,7 @@
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
         // Use a sliding window algorithm
-        // Each character gets looked at exactly twice, so it's O(n)
+        // Each character gets looked at twice at most, so it's O(n)
         int lo = -1;
         int hi = -1;
         
@@ -31,13 +31,11 @@ class Solution {
                 {
                     int lodx = (int) (s.charAt(lo) - 'a');
                     windowCount[lodx] -= 1;
-                    matched -= 1;
+                    matched--;
                     lo++;
 
                     if (lodx == index)
-                    {
                         break;
-                    }
                 }
                 
                 if (matched == p.length())
