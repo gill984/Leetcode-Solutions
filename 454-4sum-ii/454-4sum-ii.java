@@ -13,14 +13,9 @@ class Solution {
             }
         }
         
-        // System.out.println(count1);
-        // System.out.println(count2);
-        
         int res = 0;
         for (int key : count1.keySet())
-        {
             res += (count1.get(key) * count2.getOrDefault(-key, 0));
-        }
         
         return res;
     }
