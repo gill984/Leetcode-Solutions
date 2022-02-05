@@ -1,50 +1,36 @@
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
 class Solution
 {
     public ListNode mergeKLists(ListNode[] lists)
     {
-        // Create a priority queue of size lists.length
-        // Add the first element of each list to the queue
-        PriorityQueue<ListNode> minHeap = new PriorityQueue<ListNode>((x, y) -> Integer.compare(x.val, y.val));
+        PriorityQueue<ListNode> q = new PriorityQueue<>((a, b) -> a.val - b.val);
         
-        for(int i = 0; i < lists.length; i++)
-        {
-            ListNode l = lists[i];
-            if(l != null)
-                minHeap.offer(l);
-        }
+        for (ListNode l : lists)
+            if (l != null)
+                q.offer(l);
         
-        ListNode result = null;
-        ListNode prev = null;
-        while(!minHeap.isEmpty())
+        ListNode head = null;
+        ListNode iter = null;
+        while (!q.isEmpty())
         {
-            ListNode nextSmallest = minHeap.poll();
-            if(result == null)
+            ListNode min = q.poll();
+            
+            if (iter != null)
             {
-                result = nextSmallest;
+                iter.next = min;
+                iter = iter.next;
+            }
+            else
+            {
+                iter = min;
+                head = min;
             }
             
-            if(prev != null)
+            if (min.next != null)
             {
-                prev.next = nextSmallest;
-            }
-            prev = nextSmallest;
-            
-            if(nextSmallest.next != null)
-            {
-                minHeap.offer(nextSmallest.next);
+                q.offer(min.next);
             }
         }
         
-        return result;
+        return head;
     }
 }
