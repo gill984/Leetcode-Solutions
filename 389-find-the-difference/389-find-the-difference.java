@@ -7,11 +7,11 @@ class Solution {
         for (char c : s.toCharArray())
             count[c - 'a'] -= 1;
         
-        char res = 'a';
-        for (int i = 0; i < count.length; i++)
+        int i = 0;
+        for (; i < count.length; i++) 
             if (count[i] == 1)
-                res += i;
+                break;
         
-        return res;
+        return (char) ('a' + i);
     }
 }
