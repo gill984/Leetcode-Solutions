@@ -5,13 +5,10 @@ class Solution {
         int res = 0;
         for (int i : nums)
         {
-            if (count.containsKey(i) && k != 0)
+            if (count.containsKey(i))
             {
-                continue;
-            }
-            else if (count.containsKey(i) && k == 0 && count.get(i) == 1)
-            {
-                res++;
+                if (k == 0 && count.get(i) == 1)
+                    res++;
             }
             else if (k != 0)
             {
