@@ -5,12 +5,10 @@ class Solution {
         int res = 0;
         for (int i : nums)
         {
-            if (count.containsKey(i))
-            {
-                if (k == 0 && count.get(i) == 1)
-                    res++;
-            }
-            else if (k != 0)
+            if (k == 0 && count.getOrDefault(i, 0) == 1)
+                res++;
+            
+            if (k != 0 && !count.containsKey(i))
             {
                 int search1 = i - k;
                 if (count.containsKey(search1))
