@@ -23,10 +23,8 @@ class Solution {
         
         while (!evens.isEmpty())
         {
-            // System.out.print(evens);
             int val = evens.poll();
             res = Math.min(res, val - min);
-            // System.out.println(", min deviation: " + res);
             
             if (val % 2 == 1)
                 break;
