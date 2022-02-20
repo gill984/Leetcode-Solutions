@@ -9,13 +9,9 @@ class Solution {
         for (int [] i : intervals)
         {
             if (i[1] > end)
-            {
                 end = i[1];
-            }
             else
-            {
                 res--;
-            }
         }
         
         return res;
