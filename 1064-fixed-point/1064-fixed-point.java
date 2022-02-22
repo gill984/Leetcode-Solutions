@@ -8,7 +8,7 @@ class Solution {
             }
             else if (arr[i] > i)
             {
-                i = arr[i] + 1;
+                i = arr[i];
             }
         }
         return -1;
