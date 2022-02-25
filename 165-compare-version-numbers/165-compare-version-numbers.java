@@ -3,9 +3,6 @@ class Solution {
         String [] v1 = version1.split("\\.");
         String [] v2 = version2.split("\\.");
         
-        System.out.println(Arrays.toString(v1));
-        System.out.println(Arrays.toString(v2));
-        
         for (int i = 0, j = 0; i < v1.length || j < v2.length;)
         {
             int rev1 = (i < v1.length ? Integer.parseInt(v1[i++]) : 0);
