@@ -1,62 +1,37 @@
 class Solution {
-    final int NONE = 100000;
-    
+    final int TAKE = 0;
+    final int LEAVE = 1;
+    final int NUM = 2;
     public int deleteAndEarn(int[] nums) {
-        Arrays.sort(nums);
-        List<int[]> numScore = new ArrayList<int[]>();
-        int res = 0;
-        List<Integer> sequence = new ArrayList<>();
+        Map<Integer, Integer> numToScore = new TreeMap<>();
+        for (int i : nums)
+            numToScore.put(i, numToScore.getOrDefault(i, 0) + i);
+        // System.out.println(numToScore);
         
-        for (int i = 0; i < nums.length; i++)
+        // Is there a sub-problem we can solve?
+        // Keep track of the max score when number i is taken or not taken
+        // where i is the current largest value allowed in the solution
+        int idx = 0;
+        int n = numToScore.size();
+        int[][] dp = new int[3][n];
+        for (Map.Entry<Integer, Integer> entry : numToScore.entrySet())
         {
-            if (numScore.size() == 0)
-            {
-                numScore.add(new int [] {nums[i], nums[i]});
-            }
-            else if (numScore.get(numScore.size() - 1)[0] == nums[i])
-            {
-                numScore.get(numScore.size() - 1)[1] += nums[i];
-            }
-            else
-            {
-                sequence.add(numScore.get(numScore.size() - 1)[1]);
-                
-                if (numScore.get(numScore.size() - 1)[0] + 1 != nums[i])
-                {
-                    res += findBest(sequence);
-                    sequence.clear();
-                }
-                
-                numScore.add(new int [] {nums[i], nums[i]});
-            }
+            // System.out.println(entry);
+            int i = entry.getKey();
+            int v = entry.getValue();
+            dp[TAKE][idx] = v + 
+                Math.max(
+                    (idx > 1 ? dp[TAKE][idx - 2] : 0),
+                    Math.max(
+                    (idx > 0 ? dp[LEAVE][idx - 1] : 0),
+                    (idx > 0 && dp[NUM][idx - 1] != i - 1 ? dp[TAKE][idx - 1] : 0)));
             
-            if (i == nums.length - 1)
-                sequence.add(numScore.get(numScore.size() - 1)[1]);
+            dp[LEAVE][idx] = (idx > 0 ? Math.max(dp[LEAVE][idx - 1], dp[TAKE][idx - 1]) : 0);
+            dp[NUM][idx] = i;
+            idx++;
         }
         
-        res += findBest(sequence);
-        
-        return res;
-    }
-    
-    public int findBest(List<Integer> values)
-    {
-        int [] dp = new int [values.size()];
-        
-        // dp[i] == max value at this index possible
-        // dp[i] == Max of dp[i - 1] and values[i] + dp[i - 2]
-        for (int i = 0; i < dp.length; i++)
-        {
-            if (i == 0)
-                dp[i] = values.get(i);
-            else if (i == 1)
-                dp[i] = Math.max(dp[i - 1], values.get(i));
-            else
-                dp[i] = Math.max(values.get(i) + dp[i - 2], dp[i - 1]);
-        }
-        
-        System.out.println(Arrays.toString(dp));
-        
-        return dp[dp.length - 1];
+        // System.out.println(Arrays.deepToString(dp));
+        return Math.max(dp[TAKE][n - 1], dp[LEAVE][n - 1]);
     }
 }
