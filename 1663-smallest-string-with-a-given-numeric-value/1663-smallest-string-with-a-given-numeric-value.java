@@ -8,7 +8,6 @@ class Solution {
         {
             // Check to see what character we can add
             int choice = k - (sum + ((n - i - 1) * 26));
-            // System.out.println(choice);
             char c = (choice <= 1 ? 'a' : (char)('a' + choice - 1));
             res.append(c);
             sum += c - 'a' + 1;
