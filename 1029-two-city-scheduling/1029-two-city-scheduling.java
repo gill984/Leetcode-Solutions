@@ -4,41 +4,14 @@ class Solution {
         // 2 buckets, A preferred or B preferred
         // Match off the largest A preferred and B
         // preferred cities
-        List<int[]> a = new ArrayList<>();
-        List<int[]> b = new ArrayList<>();
+        Arrays.sort(costs, (a, b) -> (a[0] - a[1]) - (b[0] - b[1]));
         int res = 0;
+        int n = costs.length;
         
-        for (int [] cost : costs)
+        for (int i = 0; i < n / 2; i++)
         {
-            if (cost[0] < cost[1])
-            {
-                a.add(cost);
-            }
-            else
-            {
-                b.add(cost);
-            }
-        }
-        
-        Collections.sort(a, (x, y) -> (x[1] - x[0]) - (y[1] - y[0]));
-        Collections.sort(b, (x, y) -> (x[0] - x[1]) - (y[0] - y[1]));
-        
-        while (!a.isEmpty() && !b.isEmpty())
-        {
-            res += a.remove(a.size() - 1)[0];
-            res += b.remove(b.size() - 1)[1];
-        }
-        
-        while (!a.isEmpty())
-        {
-            res += a.remove(a.size() - 1)[0];
-            res += a.remove(0)[1];
-        }
-        
-        while (!b.isEmpty())
-        {
-            res += b.remove(b.size() - 1)[1];
-            res += b.remove(0)[0];
+            res += costs[i][0];
+            res += costs[n - 1 - i][1];
         }
         
         return res;
