@@ -1,70 +1,26 @@
-class Solution
-{
-    public boolean validPalindrome(String s)
-    {
-        // solve palindrome and allow for one mistake
-        int n = s.length();
-        int lo = 0;
-        int hi = n - 1;
-        boolean miss = false;
-        
-        while (!miss && lo < hi)
-        {
-            if (s.charAt(lo) != s.charAt(hi))
-            {
-                miss = true;
-            }
-            else
-            {
-                lo++;
-                hi--;
-                // System.out.println("here");
-            }
-        }
-        
-        if (!miss)
-            return true;
-        
-        // System.out.println(lo + ", " + hi);
-        
-        int tempLo = lo;
-        int tempHi = hi;
-        miss = false;
-        // Try lo first, hi later if that doesn't work
-        lo++;
-        while (!miss && lo < hi)
-        {
-            if (s.charAt(lo) != s.charAt(hi))
-            {
-                miss = true;
-            }
-            else
-            {
+class Solution {
+    public boolean validPalindrome(String s) {
+        return findPalindrome(s, 0, s.length() - 1, false);
+    }
+    
+    public boolean findPalindrome(String s, int lo, int hi, boolean usedDelete) {
+        while (lo < hi) {
+            if (s.charAt(lo) == s.charAt(hi)) {
                 lo++;
                 hi--;
             }
-        }
-        
-        if (!miss)
-            return true;
-        
-        lo = tempLo;
-        hi = tempHi - 1;
-        miss = false;
-        
-        while (!miss && lo < hi)
-        {
-            if (s.charAt(lo) != s.charAt(hi))
-            {
-                miss = true;
+            else if(!usedDelete) {
+                if (findPalindrome(s, lo + 1, hi, true))
+                    return true;
+
+                if (findPalindrome(s, lo, hi - 1, true))
+                    return true;
+                
+                return false;
             }
             else
-            {
-                lo++;
-                hi--;
-            }
+                return false;
         }
-        
-        return !miss;
+        return true;
     }
 }
