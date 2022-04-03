@@ -1,32 +1,54 @@
-class Solution {
-    public void nextPermutation(int[] nums) {
-        // From right to left, look for first occurence of a decrease
-        // sort from index where decrease appears to the end of the array
-        // if no decrease is found, return fully sorted array
-        int n = nums.length;
-        PriorityQueue<Integer> trail = new PriorityQueue<>();
-        trail.offer(nums[n - 1]);
+class Solution
+{
+    public void nextPermutation(int[] nums)
+    {
+        // Pick up penultimate number in permutation, going down
+        //     Check to see if this number can be swapped with any of the previously checked numbers
+        //     This number should be swapped with the smallest number which is larger than this number
+        //     If no swap exists, bubble sort this entry into the end of the list.
+        //     If swap is available, perform swap and then sort end of list
+        int swappedIndex = -1;
         
-        for (int i = n - 2; i >= 0; i--)
+        for(int i = nums.length - 1; i >= 0; i--)
         {
-            // Check for decrease
-            if (nums[i] < nums[i + 1])
+            swappedIndex = swapWithClosestLarger(nums, i);
+            
+            if(swappedIndex == -1)
             {
-                Arrays.sort(nums, i + 1, n);
-                for (int j = i + 1; j < n; j++)
-                {
-                    if (nums[j] > nums[i])
-                    {
-                        int temp = nums[i];
-                        nums[i] = nums[j];
-                        nums[j] = temp;
-                        break;
-                    }
-                }
-                break;
+                Arrays.sort(nums, i, nums.length);
+                continue;
             }
-            else if (i == 0)
-                Arrays.sort(nums);
+            else
+            {
+                // Swap has occurred, merge sort remaining elements
+                Arrays.sort(nums, swappedIndex + 1, nums.length);
+                return;
+            }
         }
+        
+        // Swap was never found, sort array and return in for lexicographically smallest permutation
+        Arrays.sort(nums);
+        return;
+    }
+    
+    // Return -1 if no swap found
+    public int swapWithClosestLarger(int[] arr, int index)
+    {
+        int value = arr[index];
+        
+        for(int i = index + 1; i < arr.length; i++)
+        {
+            // Looking for a value which is less than the current index
+            // Swap if found
+            if(arr[i] > value )
+            {
+                int temp = arr[i];
+                arr[i] = value;
+                arr[index] = temp;
+                return i;
+            }
+        }
+        
+        return -1;
     }
 }
