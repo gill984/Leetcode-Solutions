@@ -7,13 +7,13 @@ class Solution {
         
         for (int row = 0; row < m; row++)
         {
-            res.add(new ArrayList<>());
-            for (int col = 0; col < n; col++)
+            List<Integer> l = new ArrayList<>();
+            for (int col = 0; col < n; col++, source = (source + 1) % (m * n))
             {
                 // find out what should go at res[row][col]
-                res.get(row).add(grid[source / n][source % n]);
-                source = (source + 1) % (m * n);
+                l.add(grid[source / n][source % n]);
             }
+            res.add(l);
         }
         
         return res;
