@@ -11,19 +11,11 @@ class Solution {
             for (int col = 0; col < n; col++)
             {
                 // find out what should go at res[row][col]
-                int [] sourcePoint = toTwoDim(source, n);
-                res.get(row).add(grid[sourcePoint[0]][sourcePoint[1]]);
+                res.get(row).add(grid[source / n][source % n]);
                 source = (source + 1) % (m * n);
             }
         }
         
         return res;
-    }
-    
-    public int[] toTwoDim(int x, int n)
-    {
-        int row = x / n;
-        int col = x % n;
-        return new int [] {row, col};
     }
 }
