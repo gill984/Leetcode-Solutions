@@ -1,17 +1,27 @@
 class Solution {
+    int WAS_ZERO_NOW_ONE = 2;
+    int WAS_ONE_NOW_ZERO = 3;
+    
     public void gameOfLife(int[][] board) {
         int m = board.length;
         int n = board[0].length;
         int [][] result = new int [m][n];
         for (int row = 0; row < m; row++) {
             for (int col = 0; col < n; col++) {
-                result[row][col] = nextState(board, row, col);
+                board[row][col] = nextState(board, row, col);
             }
         }
         
         for (int row = 0; row < m; row++) {
             for (int col = 0; col < n; col++) {
-                board[row][col] = result[row][col];
+                if (board[row][col] == WAS_ZERO_NOW_ONE)
+                {
+                    board[row][col] = 1;
+                }
+                else if (board[row][col] == WAS_ONE_NOW_ZERO)
+                {
+                    board[row][col] = 0;
+                }
             }
         }
     }
@@ -21,7 +31,7 @@ class Solution {
         if (board[row][col] == 0)
         {
             if (nbrs == 3)
-                return 1;
+                return WAS_ZERO_NOW_ONE;
             else
                 return 0;
         }
@@ -30,7 +40,7 @@ class Solution {
             if (nbrs == 2 || nbrs == 3)
                 return 1;
             else
-                return 0;
+                return WAS_ONE_NOW_ZERO;
         }
     }
     
@@ -45,7 +55,7 @@ class Solution {
                 
                 if (row + rd >= 0 && row + rd < board.length &&
                     col + cd >= 0 && col + cd < board[0].length &&
-                    board[row + rd][col + cd] == 1)
+                    (board[row + rd][col + cd] == 1 || board[row + rd][col + cd] == WAS_ONE_NOW_ZERO))
                 {
                     res++;
                 }
