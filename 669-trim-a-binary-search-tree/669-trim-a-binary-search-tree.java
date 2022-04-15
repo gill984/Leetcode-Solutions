@@ -8,13 +8,10 @@ class Solution {
         
         if (root.val < low)
         {
-            // This node and entire left subtree should be removed
-            root.left = null;
             return trimBST(root.right, low, high);
         }
         else if (root.val > high)
         {
-            root.right = null;
             return trimBST(root.left, low, high);
         }
         else
