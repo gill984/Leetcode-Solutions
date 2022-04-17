@@ -11,7 +11,7 @@ class Solution {
             prev.right = root;
         prev = root;
         
-        if (res == null || root.val < res.val)
+        if (res == null)
             res = root;
         
         root.left = null;
