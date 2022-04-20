@@ -14,10 +14,10 @@
  * }
  */
 class BSTIterator {
-    Stack<TreeNode> inorderStack;
+    Deque<TreeNode> inorderStack;
     
     public BSTIterator(TreeNode root) {
-        inorderStack = new Stack<TreeNode>();
+        inorderStack = new ArrayDeque<TreeNode>();
         inorder(root);
     }
     
@@ -25,14 +25,14 @@ class BSTIterator {
     {
         while (n != null)
         {
-            inorderStack.push(n);
+            inorderStack.addLast(n);
             n = n.left;
         }
     }
     
     /** @return the next smallest number */
     public int next() {
-        TreeNode n = inorderStack.pop();
+        TreeNode n = inorderStack.removeLast();
         int result = n.val;
         inorder(n.right);
         return result;
