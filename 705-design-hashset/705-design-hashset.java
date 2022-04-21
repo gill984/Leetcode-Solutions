@@ -1,30 +1,19 @@
 class MyHashSet {
-    int [] table;
+    HashSetEntry [] table;
     final int size = 9973;
     
     public MyHashSet()
     {
-        table = new int [size];
-        Arrays.fill(table, -1);
+        table = new HashSetEntry [size];
     }
     
     public void add(int key) {
         int h = hash(key);
         
-        for (int i = h; ; )
-        {
-            if (table[i] == -1)
-            {
-                table[i] = key;
-                return;
-            }
-            else if (table[i] == key)
-            {
-                return;
-            }
-            
-            i = (i + 1) % size;
-        }
+        if (table[h] == null)
+            table[h] = new HashSetEntry(key);
+        else
+            table[h].insert(key);
     }
     
     private int hash(int key) {
@@ -33,34 +22,50 @@ class MyHashSet {
     
     public void remove(int key) {
         int h = hash(key);
-        for (int i = h; ;)
+        if (table[h] == null)
         {
-            if (table[i] == -1)
-            {
-                return;
-            }
-            else if (table[i] == key)
-            {
-                table[i] = -table[i];
-                return;
-            }
-            i = (i + 1) % size;
+            return;
+        }
+        else
+        {
+            table[h].remove(key);
         }
     }
     
     public boolean contains(int key) {
         int h = hash(key);
-        for (int i = h; ;)
+        if (table[h] == null)
+            return false;
+        else
+            return table[h].contains(key);
+    }
+    
+    class HashSetEntry
+    {
+        List<Integer> keys;
+        public HashSetEntry(int key)
         {
-            if (table[i] == -1)
-            {
-                return false;
-            }
-            else if (table[i] == key)
-            {
-                return true;
-            }
-            i = (i + 1) % size;
+            keys = new ArrayList<Integer>();
+            keys.add(key);
+        }
+        
+        public void insert (int key)
+        {
+            int pos = Collections.binarySearch(keys, key);
+            if (pos < 0)
+                keys.add(-(pos + 1), key);
+        }
+        
+        public void remove (int key)
+        {
+            int pos = Collections.binarySearch(keys, key);
+            if (pos >= 0)
+                keys.remove(pos);
+        }
+        
+        public boolean contains(int key)
+        {
+            return Collections.binarySearch(keys, key) >= 0;
         }
     }
 }
