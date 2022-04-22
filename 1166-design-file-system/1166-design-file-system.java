@@ -19,7 +19,6 @@ class FileSystem {
         {
             if (subdirs.containsKey(d.name))
                 return false;
-            System.out.println("Adding " + d.name);
             subdirs.put(d.name, d);
             return true;
         }
@@ -31,7 +30,6 @@ class FileSystem {
     
     public boolean createPath(String path, int value) {
         String [] tokens = path.split("/");
-        // System.out.println(Arrays.toString(tokens));
         Dir curr = root;
         for (int i = 1; i < tokens.length - 1; i++)
         {
@@ -41,18 +39,15 @@ class FileSystem {
             else
                 return false;
         }
-        //System.out.println(tokens[tokens.length - 1]);
         return curr.add(new Dir(tokens[tokens.length - 1], value));
     }
     
     public int get(String path) {
         String [] tokens = path.split("/");
-        //System.out.println(Arrays.toString(tokens));
         Dir curr = root;
         for (int i = 1; i < tokens.length; i++)
         {
             String t = tokens[i];
-            System.out.println(curr.subdirs);
             if (curr.subdirs.containsKey(t))
                 curr = curr.subdirs.get(t);
             else
