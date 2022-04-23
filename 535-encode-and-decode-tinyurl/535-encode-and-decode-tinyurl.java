@@ -14,10 +14,6 @@ public class Codec {
     }
     
     private String genShortUrl(String longUrl) {
-        return "" + longUrl.hashCode();
+        return "http://tinyurl.com/" + longUrl.hashCode();
     }
 }
-
-// Your Codec object will be instantiated and called as such:
-// Codec codec = new Codec();
-// codec.decode(codec.encode(url));
