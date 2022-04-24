@@ -17,13 +17,9 @@ class UndergroundSystem {
         String key = ts.station + "," + stationName;
         int dt = t - ts.time;
         if (times.containsKey(key))
-        {
             times.get(key).add(dt);
-        }
         else
-        {
             times.put(key, new Fraction(dt));
-        }
     }
     
     public double getAverageTime(String startStation, String endStation) {
@@ -46,29 +42,18 @@ class UndergroundSystem {
         int numerator;
         int denominator;
         
-        public Fraction(int n)
-        {
+        public Fraction(int n) {
             numerator = n;
             denominator = 1;
         }
         
-        public void add (int n)
-        {
+        public void add (int n) {
             numerator += n;
             denominator += 1;
         }
         
-        public double getAverage()
-        {
-            return (double) ((double) numerator / (double) denominator);
+        public double getAverage() {
+            return (double) numerator / (double) denominator;
         }
     }
 }
-
-/**
- * Your UndergroundSystem object will be instantiated and called as such:
- * UndergroundSystem obj = new UndergroundSystem();
- * obj.checkIn(id,stationName,t);
- * obj.checkOut(id,stationName,t);
- * double param_3 = obj.getAverageTime(startStation,endStation);
- */
