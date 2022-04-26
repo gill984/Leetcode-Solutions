@@ -18,7 +18,7 @@ class Solution {
             // Add all edges which connect to points not in the MST
             for (int i = 0; i < n; i++)
             {
-                if (i == curr)
+                if (i == curr || visited[i])
                     continue;
                 
                 minHeap.offer(new int [] {i, manhattan(points[curr], points[i])});
