@@ -6,16 +6,19 @@ class Solution {
         for (List<Integer> pair : pairs)
             ds.union(pair.get(0), pair.get(1));
         
-        Map<Integer, PriorityQueue<Character>> map = new HashMap<>();
+        Map<Integer, List<Character>> map = new HashMap<>();
         for (int i = 0; i < n; i++) {
             int group = ds.root(i);
-            map.putIfAbsent(group, new PriorityQueue<Character>());
-            map.get(group).offer(s.charAt(i));
+            map.putIfAbsent(group, new ArrayList<Character>());
+            map.get(group).add(s.charAt(i));
         }
+        
+        for (List<Character> l : map.values())
+            Collections.sort(l);
         
         StringBuilder res = new StringBuilder();
         for (int i = 0; i < n; i++)
-            res.append(map.get(ds.root(i)).poll());
+            res.append(map.get(ds.root(i)).remove(0));
         
         return res.toString();
     }
