@@ -9,7 +9,7 @@ class Solution {
         Map<Integer, List<Character>> map = new HashMap<>();
         for (int i = 0; i < n; i++) {
             int group = ds.root(i);
-            map.putIfAbsent(group, new ArrayList<Character>());
+            map.putIfAbsent(group, new LinkedList<Character>());
             map.get(group).add(s.charAt(i));
         }
         
