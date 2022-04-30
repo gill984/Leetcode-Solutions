@@ -1,89 +1,66 @@
-import java.util.Arrays;
-import java.util.HashMap;
-
-class Solution
-{
-    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries)
-    {
-        HashMap<String, Integer> stringToIndex = new HashMap<String, Integer>();
-        HashMap<Integer, String> indexToString = new HashMap<Integer, String>();
-
-        int numNodes = 0;
-        for (List<String> vars : equations)
-        {
-            for (String var : vars)
-            {
-                if (!stringToIndex.containsKey(var))
-                {
-                    stringToIndex.put(var, numNodes);
-                    indexToString.put(numNodes, var);
-                    numNodes += 1;
-                }
-            }
-        }
-
-        // Build adjacency matrix
-        double[][][] D = new double[numNodes + 1][numNodes][numNodes];
-
-        // Put 0 in each self edge and infinity in the rest
-        for (int k = 0; k < numNodes + 1; k++)
-        {
-            for (int i = 0; i < numNodes; i++)
-            {
-                for (int j = 0; j < numNodes; j++)
-                {
-                    D[k][i][j] = Double.MAX_VALUE;
-                }
-            }
-        }
-
+class Solution {
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        // Build a graph which represents the relationship between each variable and the others
+        // can be represented as an adjacency list
+        Map<String, Node> graph = new HashMap<>();
         for (int i = 0; i < equations.size(); i++)
         {
-            String num = equations.get(i).get(0);
-            String den = equations.get(i).get(1);
-            double val = values[i];
-
-            D[0][stringToIndex.get(num)][stringToIndex.get(den)] = val;
-            D[0][stringToIndex.get(den)][stringToIndex.get(num)] = 1.0 / val;
+            List<String> eq = equations.get(i);
+            String a = eq.get(0);
+            String b = eq.get(1);
+            graph.putIfAbsent(a, new Node(a));
+            graph.putIfAbsent(b, new Node(b));
+            graph.get(a).neighbors.add(graph.get(b));
+            graph.get(b).neighbors.add(graph.get(a));
+            graph.get(a).ratios.add(values[i]);
+            graph.get(b).ratios.add(1.0 / values[i]);
         }
-
-        // Matrix is now in beginning state of Floyd Warshall
-        for (int k = 0; k < numNodes; k++)
-            for (int i = 0; i < numNodes; i++)
-                for (int j = 0; j < numNodes; j++)
-                    if (i == j)
-                        continue;
-                    else
-                        D[k + 1][i][j] = Math.min(D[k][i][j], D[k][i][k] * D[k][k][j]);
-
-        double[] result = new double[queries.size()];
-
-        for (int i = 0; i < queries.size(); i++)
+        
+        // For each query dfs out
+        double[] res = new double[queries.size()];
+        for (int i = 0; i < queries.size(); i++) {
+            List<String> q = queries.get(i);
+            String a = q.get(0);
+            String b = q.get(1);
+            
+            res[i] = (graph.containsKey(a) && graph.containsKey(b)) ? 
+                dfs (graph.get(a), graph.get(b), 1.0, new HashSet<String>()) : -1.0;
+        }
+        
+        return res;
+    }
+    
+    private double dfs (Node curr, Node dest, double ratio, Set<String> visited)
+    {
+        if (curr == dest)
+            return ratio;
+        
+        visited.add(curr.id);
+        
+        for (int i = 0; i < curr.neighbors.size(); i++)
         {
-            if (!stringToIndex.containsKey(queries.get(i).get(0)) || !stringToIndex.containsKey(queries.get(i).get(1)))
-            {
-                result[i] = -1;
-            }
-            else
-            {
-
-                int from = stringToIndex.get(queries.get(i).get(0));
-                int to = stringToIndex.get(queries.get(i).get(1));
-                if (from == to)
-                {
-                    result[i] = 1.0;
-                } 
-                else if (D[numNodes][from][to] > 1E100)
-                {
-                    result[i] = -1;
-                } 
-                else
-                {
-                    result[i] = D[numNodes][from][to];
-                }
+            Node nbr = curr.neighbors.get(i);
+            if (visited.contains(nbr.id))
+                continue;
+            
+            double res = dfs(nbr, dest, ratio * curr.ratios.get(i), visited);
+            if (res != -1.0) {
+                return res; 
             }
         }
-
-        return result;
+        
+        return -1.0;
+    }
+    
+    class Node {
+        String id;
+        List<Node> neighbors;
+        List<Double> ratios;
+        
+        public Node (String id) {
+            neighbors = new ArrayList<>();
+            ratios = new ArrayList<>();
+            this.id = id;
+        }
     }
 }
