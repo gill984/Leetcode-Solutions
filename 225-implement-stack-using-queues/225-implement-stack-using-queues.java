@@ -4,51 +4,31 @@ class MyStack {
     
     public MyStack() {
         a = new LinkedList<>();
-        b = new LinkedList<>();
     }
     
     public void push(int x) {
-        if (!a.isEmpty()) {
-            a.add(x);
-        } else {
-            b.add(x);
-        }
+        a.add(x);
     }
     
     public int pop() {
-        if (a.isEmpty()) {
-            while (b.size() > 1) {
-                a.add(b.poll());
-            }
-            return b.poll();
-        } else {
-            while (a.size() > 1) {
-                b.add(a.poll());
-            }
-            return a.poll();
-        }
+        int n = a.size();
+        for (int i = 0; i < n - 1; i++)
+            a.add(a.poll());
+        
+        return a.poll();
     }
     
     public int top() {
-        if (a.isEmpty()) {
-            while (b.size() > 1) {
-                a.add(b.poll());
-            }
-            int res = b.poll();
-            a.add(res);
-            return res;
-        } else {
-            while (a.size() > 1) {
-                b.add(a.poll());
-            }
-            int res = a.poll();
-            b.add(res);
-            return res;
-        }
+        int n = a.size();
+        for (int i = 0; i < n - 1; i++)
+            a.add(a.poll());
+        int res = a.poll();
+        a.add(res);
+        return res;
     }
     
     public boolean empty() {
-        return a.isEmpty() && b.isEmpty();
+        return a.isEmpty();
     }
 }
 
