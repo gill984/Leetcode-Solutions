@@ -1,26 +1,26 @@
 class Solution {
     public String removeDuplicates(String s, int k) {
-        Stack<Chain> stack = new Stack<>();
+        ArrayDeque<Chain> stack = new ArrayDeque<>();
         
         for (char c : s.toCharArray()) {
-            if (stack.isEmpty() || stack.peek().c != c) {
-                stack.push(new Chain(c, 1));
+            if (stack.isEmpty() || stack.peekLast().c != c) {
+                stack.addLast(new Chain(c, 1));
             } else {
-                stack.peek().count++;
+                stack.peekLast().count++;
             }
             
-            if (stack.peek().count == k) {
-                stack.pop();
+            if (stack.peekLast().count == k) {
+                stack.removeLast();
             }
         }
         
         StringBuilder res = new StringBuilder();
         while (!stack.isEmpty()) {
-            Chain c = stack.pop();
+            Chain c = stack.removeFirst();
             res.append((c.c + "").repeat(c.count));
         }
         
-        return res.reverse().toString();
+        return res.toString();
     }
     
     class Chain {
