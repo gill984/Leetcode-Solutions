@@ -1,7 +1,7 @@
 class Solution {
     public List<String> letterCombinations(String digits) {
-        String [] map = new String[] {"", "", "abc", "def", "ghi", 
-                                      "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        String [] map = new String[] {"", "", "abc", "def", "ghi", "jkl",
+                                      "mno", "pqrs", "tuv", "wxyz"};
         List<String> res = new ArrayList<String>();
         if (digits != null && digits.length() > 0) {
             dfs (new StringBuilder(), map, digits, 0, res);
