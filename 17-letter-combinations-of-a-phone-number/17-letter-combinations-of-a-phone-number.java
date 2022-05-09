@@ -3,8 +3,9 @@ class Solution {
         String [] map = new String[] {"", "", "abc", "def", "ghi", 
                                       "jkl", "mno", "pqrs", "tuv", "wxyz"};
         List<String> res = new ArrayList<String>();
-        if (digits != null && digits.length() > 0)
+        if (digits != null && digits.length() > 0) {
             dfs (new StringBuilder(), map, digits, 0, res);
+        }
         return res;
     }
     
@@ -14,8 +15,7 @@ class Solution {
             return;
         }
         
-        int num = digits.charAt(idx) - '0';
-        for (char c : map[num].toCharArray()) {
+        for (char c : map[digits.charAt(idx) - '0'].toCharArray()) {
             curr.append(c);
             dfs (curr, map, digits, idx + 1, res);
             curr.deleteCharAt(curr.length() - 1);
