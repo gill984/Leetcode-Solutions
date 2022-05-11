@@ -1,5 +1,7 @@
 class Solution {
     int MAX = 5;
+    // "min,remainingSpaces"
+    Map<String, Integer> memo = new HashMap<>();
     
     public int countVowelStrings(int n) {
         return dfs (n, 1, 0);
@@ -8,6 +10,11 @@ class Solution {
     public int dfs (int n, int min, int length) {
         if (length == n) {
             return 1;
+        } 
+        
+        String key = "" + min + "," + (n - length);
+        if (memo.containsKey(key)) {
+            return memo.get(key);
         }
         
         int sum = 0;
@@ -15,6 +22,7 @@ class Solution {
             sum += dfs (n, i, length + 1);
         }
         
+        memo.put(key, sum);
         return sum;
     }
 }
