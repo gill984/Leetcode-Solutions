@@ -8,11 +8,12 @@ class Solution {
     }
     
     public int dfs (int n, int min, int length) {
+        String key = "" + min + "," + (n - length);
         if (length == n) {
+            memo.put(key, 1);
             return 1;
         } 
         
-        String key = "" + min + "," + (n - length);
         if (memo.containsKey(key)) {
             return memo.get(key);
         }
