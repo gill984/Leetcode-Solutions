@@ -7,7 +7,7 @@ class Solution {
     }
     
     public int dfs (int n, int min, int length) {
-        int key = min + (MAX + 1) * (n - length);
+        int key = min + (MAX) * (n - length);
         if (length == n) {
             memo.put(key, 1);
             return 1;
