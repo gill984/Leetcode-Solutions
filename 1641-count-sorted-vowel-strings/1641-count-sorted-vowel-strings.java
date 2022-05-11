@@ -1,14 +1,13 @@
 class Solution {
     int MAX = 5;
-    // "min,remainingSpaces"
-    Map<String, Integer> memo = new HashMap<>();
+    Map<Integer, Integer> memo = new HashMap<>();
     
     public int countVowelStrings(int n) {
         return dfs (n, 1, 0);
     }
     
     public int dfs (int n, int min, int length) {
-        String key = "" + min + "," + (n - length);
+        int key = min + (MAX + 1) * (n - length);
         if (length == n) {
             memo.put(key, 1);
             return 1;
