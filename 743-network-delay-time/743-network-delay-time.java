@@ -14,7 +14,6 @@ class Solution {
         Set<Integer> visited = new HashSet<>();
         
         while (!pq.isEmpty()) {
-            
             int [] path = pq.poll();
             if (visited.contains(path[0])) {
                 continue;
@@ -26,7 +25,9 @@ class Solution {
             }
             
             for (int [] nbr : nodes[path[0]].neighbors) {
-                pq.offer(new int [] {nbr[0], path[1] + nbr[1]});
+                if (!visited.contains(nbr[0])) {
+                    pq.offer(new int [] {nbr[0], path[1] + nbr[1]});
+                }
             }
         }
         
