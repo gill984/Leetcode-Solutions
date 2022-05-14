@@ -14,10 +14,6 @@ class Solution {
         Set<Integer> visited = new HashSet<>();
         
         while (!pq.isEmpty()) {
-            // System.out.println(visited);
-            // for (int [] a : pq)
-            //     System.out.println(Arrays.toString(a));
-            // System.out.println();
             
             int [] path = pq.poll();
             if (visited.contains(path[0])) {
@@ -28,9 +24,6 @@ class Solution {
             if (visited.size() == n) {
                 return path[1];
             }
-            
-            if (nodes[path[0]].neighbors == null)
-                continue;
             
             for (int [] nbr : nodes[path[0]].neighbors) {
                 pq.offer(new int [] {nbr[0], path[1] + nbr[1]});
