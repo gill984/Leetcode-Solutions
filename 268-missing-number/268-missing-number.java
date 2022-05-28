@@ -5,9 +5,7 @@ class Solution {
         // Swap the numbers into the correct index
         // swap to index val - 1, swap 0 into zdx
         for (int i = 0; i < n;) {
-            if (nums[i] == 0) {
-                i++;
-            } else if (nums[i] == i + 1 || nums[i] == -1) {
+            if (nums[i] == i + 1 || nums[i] == 0) {
                 i++;
             } else {
                 int temp = nums[i];
