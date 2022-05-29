@@ -9,9 +9,7 @@ class Solution {
         int max = 0;
         for (int i = 0; i < n; i++) {
             for (int j = i + 1; j < n; j++) {
-                int a = wordBits[i];
-                int b = wordBits[j];
-                if ((a & b) == 0) {
+                if ((wordBits[i] & wordBits[j]) == 0) {
                     max = Math.max(max, words[i].length() * words[j].length());
                 }
             }
