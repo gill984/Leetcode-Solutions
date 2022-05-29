@@ -3,9 +3,8 @@ class Solution {
         // Topological sort on the dependency graph
         Node [] nodes = new Node[n + 1];
         
-        for (int i = 0; i < n + 1; i++) {
+        for (int i = 1; i < n + 1; i++)
             nodes[i] = new Node();
-        }
         
         for (int i = 0; i < relations.length; i++) {
             int preReq = relations[i][0];
@@ -19,11 +18,9 @@ class Solution {
         int semesters = 0;
         ArrayDeque<Integer> next = new ArrayDeque<>();
         
-        for (int i = 1; i < n + 1; i++) {
-            if (nodes[i].inDegree == 0) {
+        for (int i = 1; i < n + 1; i++)
+            if (nodes[i].inDegree == 0)
                 next.offer(i);
-            }
-        }        
         
         while (!next.isEmpty()) {
             semesters++;
@@ -34,9 +31,8 @@ class Solution {
                 int node = curr.poll();
                 for (int nbr : nodes[node].postReqs) {
                     nodes[nbr].inDegree--;
-                    if (nodes[nbr].inDegree == 0) {
+                    if (nodes[nbr].inDegree == 0)
                         next.offer(nbr);
-                    }
                 }
                 visited++;
             }
