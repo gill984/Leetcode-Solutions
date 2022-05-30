@@ -7,12 +7,10 @@ class Solution {
                 continue;
             
             place = i;
-            if (i + 1 == n)
-                return number.substring(0, i);
-            else if (number.charAt(i + 1) > digit)
+            if (i + 1 == n || number.charAt(i + 1) > digit)
                 break;
         }
         
-        return (number.substring(0, place) + number.substring(place + 1, n));
+        return number.substring(0, place) + (place + 1 < n ? number.substring(place + 1, n) : "");
     }
 }
