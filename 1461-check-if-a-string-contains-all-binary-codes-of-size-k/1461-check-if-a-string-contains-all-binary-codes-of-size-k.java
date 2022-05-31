@@ -9,16 +9,13 @@ class Solution {
         int curr = 0;
         int MASK = (1 << k) - 1;
         for (int i = 0; i < k && i < n; i++) {
-            curr <<= 1;
-            curr += s.charAt(i) - '0';
+            curr = (curr << 1) + s.charAt(i) - '0';
         }
         Set<Integer> visited = new HashSet<>();
         visited.add(curr);
         
         for (int i = k; i < n; i++) {
-            curr <<= 1;
-            curr += s.charAt(i) - '0';
-            curr &= MASK;
+            curr = (((curr << 1) + (s.charAt(i) - '0')) & MASK);
             visited.add(curr);
         }       
         return (visited.size() == (1 << k));
