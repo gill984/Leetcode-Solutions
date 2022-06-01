@@ -1,5 +1,6 @@
 class Solution {
-    int MIN_BOUND = -10;
+    int d = 10;
+    int MIN_BOUND = -d;
     int MAX_BOUND = 300;
     int [][] moves = new int [][] {{2, 1}, {1, 2}, {2, -1}, {1, -2}, {-1, -2}, {-2, -1}, {-2, 1}, {-1, 2}};
     
@@ -12,7 +13,7 @@ class Solution {
         boolean [][] visited = new boolean[311][311];
         Deque<int[]> next = new ArrayDeque<>();
         int [] start = new int [] {0, 0};
-        visited[10][10] = true;
+        visited[d][d] = true;
         next.offer(start);
         int steps = 0;
         
@@ -31,11 +32,11 @@ class Solution {
 
                     if (nextX < MIN_BOUND || nextX > MAX_BOUND ||
                         nextY < MIN_BOUND || nextY > MAX_BOUND ||
-                        visited[nextX + 10][nextY + 10]) {
+                        visited[nextX + d][nextY + d]) {
                         continue;
                     }
                     
-                    visited[nextX + 10][nextY + 10] = true;
+                    visited[nextX + d][nextY + d] = true;
                     next.offer(new int [] {nextX, nextY});
                 }
             }
