@@ -1,5 +1,5 @@
 class Solution {
-    int d = 2;
+    int d = 1;
     int MIN_BOUND = -d;
     int MAX_BOUND = 300;
     int [][] moves = new int [][] {{2, 1}, {1, 2}, {2, -1}, {1, -2}, {-1, -2}, {-2, -1}, {-2, 1}, {-1, 2}};
