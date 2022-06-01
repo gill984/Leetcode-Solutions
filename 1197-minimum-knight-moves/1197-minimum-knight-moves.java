@@ -1,13 +1,18 @@
 class Solution {
-    int MIN_BOUND = -300;
+    int MIN_BOUND = -10;
     int MAX_BOUND = 300;
     int [][] moves = new int [][] {{2, 1}, {1, 2}, {2, -1}, {1, -2}, {-1, -2}, {-2, -1}, {-2, 1}, {-1, 2}};
     
     public int minKnightMoves(int x, int y) {
-        boolean [][] visited = new boolean[601][601];
+        if (x < 0)
+            x = -x;
+        if (y < 0)
+            y = -y;
+        
+        boolean [][] visited = new boolean[311][311];
         Deque<int[]> next = new ArrayDeque<>();
         int [] start = new int [] {0, 0};
-        visited[300][300] = true;
+        visited[10][10] = true;
         next.offer(start);
         int steps = 0;
         
@@ -26,11 +31,11 @@ class Solution {
 
                     if (nextX < MIN_BOUND || nextX > MAX_BOUND ||
                         nextY < MIN_BOUND || nextY > MAX_BOUND ||
-                        visited[nextX + 300][nextY + 300]) {
+                        visited[nextX + 10][nextY + 10]) {
                         continue;
                     }
                     
-                    visited[nextX + 300][nextY + 300] = true;
+                    visited[nextX + 10][nextY + 10] = true;
                     next.offer(new int [] {nextX, nextY});
                 }
             }
