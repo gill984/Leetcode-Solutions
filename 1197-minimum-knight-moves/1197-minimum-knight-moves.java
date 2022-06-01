@@ -1,5 +1,5 @@
 class Solution {
-    int d = 1;
+    final int d = 1;
     int MIN_BOUND = -d;
     int MAX_BOUND = 300;
     int [][] moves = new int [][] {{2, 1}, {1, 2}, {2, -1}, {1, -2}, {-1, -2}, {-2, -1}, {-2, 1}, {-1, 2}};
@@ -10,7 +10,7 @@ class Solution {
         if (y < 0)
             y = -y;
         
-        boolean [][] visited = new boolean[311][311];
+        boolean [][] visited = new boolean[301 + d][301 + d];
         Deque<int[]> next = new ArrayDeque<>();
         int [] start = new int [] {0, 0};
         visited[d][d] = true;
