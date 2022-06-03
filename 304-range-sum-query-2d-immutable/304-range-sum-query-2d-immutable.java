@@ -1,25 +1,38 @@
 class NumMatrix {
-    int[][] matrix;
+
+    int N;
+    int M;
+    int [][] leftSum;
+    int [][] downSum;
+    int [][] matrix;
     
-    public NumMatrix(int[][] M) {
-        matrix = M;
-        int m = matrix.length;
-        int n = matrix[0].length;
+    
+    public NumMatrix(int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
+            return;
         
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                matrix[i][j] += (i > 0 ? matrix[i - 1][j] : 0) 
-                    + (j > 0 ? matrix[i][j - 1] : 0) 
-                    - (i > 0 && j > 0 ? matrix[i - 1][j - 1] : 0);
+        M = matrix.length;
+        N = matrix[0].length;
+        leftSum = new int[M][N];
+        
+        for (int i = 0; i < M; i++)
+        {
+            int sum = 0;
+            for (int j = 0; j < N; j++)
+            {
+                sum += matrix[i][j];
+                leftSum[i][j] = sum;
             }
         }
+        
+        this.matrix = matrix;
     }
     
     public int sumRegion(int row1, int col1, int row2, int col2) {
-        return matrix[row2][col2] 
-            - (row1 > 0 ? matrix[row1 - 1][col2] : 0) 
-            - (col1 > 0 ? matrix[row2][col1 - 1] : 0) 
-            + (row1 > 0 && col1 > 0 ? matrix[row1 - 1][col1 - 1] : 0);
+        int sum = 0;
+        for (int i = row1; i <= row2; i++)
+            sum += leftSum[i][col2] - leftSum[i][col1] + matrix[i][col1];
+        return sum;
     }
 }
 
