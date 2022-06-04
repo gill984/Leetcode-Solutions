@@ -8,7 +8,7 @@ class Solution {
     
     // Keep track of rows, columns and diagonals
     public void dfs (int row, int col, List<String> curr, boolean [] usedCols, boolean [] usedDiagDown, boolean [] usedDiagUp, int n, List<List<String>> res) {
-        if (usedCols[col] || usedDiagDown[diagDown(row, col, n)] || usedDiagUp[diagUp(row, col)]) {
+        if (usedCols[col] || usedDiagDown[(n - 1 - row) + col] || usedDiagUp[row + col]) {
             return;
         }
         
@@ -20,8 +20,8 @@ class Solution {
         }
         
         usedCols[col] = true;
-        usedDiagDown[diagDown(row, col, n)] = true;
-        usedDiagUp[diagUp(row, col)] = true;
+        usedDiagDown[(n - 1 - row) + col] = true;
+        usedDiagUp[row + col] = true;
         
         // Can move to the next row
         for (int c = 0; c < n; c++) {
@@ -30,8 +30,8 @@ class Solution {
         
         curr.remove(curr.size() - 1);
         usedCols[col] = false;
-        usedDiagDown[diagDown(row, col, n)] = false;
-        usedDiagUp[diagUp(row, col)] = false;
+        usedDiagDown[(n - 1 - row) + col] = false;
+        usedDiagUp[row + col] = false;
     }
     
     private String createQueenRow(int col, int n) {
@@ -39,13 +39,5 @@ class Solution {
         for (int i = 0; i < n; i++)
             res.append(i == col ? 'Q' : '.');
         return res.toString();
-    }
-    
-    private int diagDown(int row, int col, int n) {
-        return (n - 1 - row) + col;
-    }
-    
-    private int diagUp(int row, int col) {
-        return row + col;
     }
 }
