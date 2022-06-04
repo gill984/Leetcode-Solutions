@@ -1,37 +1,35 @@
 class Solution {
     public List<List<String>> solveNQueens(int n) {
         List<List<String>> res = new ArrayList<>();
-        for (int i = 0; i < n; i++)
-            dfs(0, i, new ArrayList<String>(), new boolean [n], new boolean [2 * n + 1], new boolean [2 * n + 1], n, res);
+        dfs(0, new ArrayList<String>(), new boolean [n], new boolean [2 * n + 1], new boolean [2 * n + 1], n, res);
         return res;
     }
     
     // Keep track of rows, columns and diagonals
-    public void dfs (int row, int col, List<String> curr, boolean [] usedCols, boolean [] usedDiagDown, boolean [] usedDiagUp, int n, List<List<String>> res) {
-        if (usedCols[col] || usedDiagDown[(n - 1 - row) + col] || usedDiagUp[row + col]) {
-            return;
-        }
-        
-        curr.add(createQueenRow(col, n));        
-        if (row == n - 1) {
-            res.add(new ArrayList<String>(curr));
+    public void dfs (int row, List<String> curr, boolean [] usedCols, boolean [] usedDiagDown, boolean [] usedDiagUp, int n, List<List<String>> res) {
+        for (int col = 0; col < n; col++) {
+            if (usedCols[col] || usedDiagDown[(n - 1 - row) + col] || usedDiagUp[row + col])
+                continue;
+                
+            curr.add(createQueenRow(col, n));        
+            if (row == n - 1) {
+                res.add(new ArrayList<String>(curr));
+                curr.remove(curr.size() - 1);
+                continue;
+            }
+
+            usedCols[col] = true;
+            usedDiagDown[(n - 1 - row) + col] = true;
+            usedDiagUp[row + col] = true;
+
+            // Can move to the next row
+            dfs (row + 1, curr, usedCols, usedDiagDown, usedDiagUp, n, res);
+
             curr.remove(curr.size() - 1);
-            return;
+            usedCols[col] = false;
+            usedDiagDown[(n - 1 - row) + col] = false;
+            usedDiagUp[row + col] = false;
         }
-        
-        usedCols[col] = true;
-        usedDiagDown[(n - 1 - row) + col] = true;
-        usedDiagUp[row + col] = true;
-        
-        // Can move to the next row
-        for (int c = 0; c < n; c++) {
-            dfs (row + 1, c, curr, usedCols, usedDiagDown, usedDiagUp, n, res);
-        }
-        
-        curr.remove(curr.size() - 1);
-        usedCols[col] = false;
-        usedDiagDown[(n - 1 - row) + col] = false;
-        usedDiagUp[row + col] = false;
     }
     
     private String createQueenRow(int col, int n) {
