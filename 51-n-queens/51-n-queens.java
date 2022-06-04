@@ -28,7 +28,7 @@ class Solution {
     }
     
     private boolean isUsed (int row, int col) {
-        return (usedCols & (1 << col)) != 0 || (usedDiagDown & (1 << (n - 1 - row + col))) != 0 || (usedDiagUp & (1 << (row + col))) != 0;
+        return (usedCols & 1 << col) != 0 || (usedDiagDown & 1 << (n - 1 - row + col)) != 0 || (usedDiagUp & (1 << (row + col))) != 0;
     }
     
     private void flipUseBits (int row, int col) {
