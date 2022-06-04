@@ -14,20 +14,20 @@ class Solution {
         return res;
     }
     
-    public void dfs (int row, List<String> curr, List<List<String>> res) {
+    public void dfs (int row, List<String> board, List<List<String>> res) {
         for (int col = 0; col < n; col++) {
             if (usedCols[col] || usedDiagDown[(n - 1 - row) + col] || usedDiagUp[row + col])
                 continue;
                 
-            curr.add(createQueenRow(col, n));
+            board.add(createQueenRow(col, n));
             used(true, row, col);
 
             if (row == n - 1)
-                res.add(new ArrayList<String>(curr));
+                res.add(new ArrayList<String>(board));
             else
-                dfs (row + 1, curr, res);
+                dfs (row + 1, board, res);
 
-            curr.remove(curr.size() - 1);
+            board.remove(board.size() - 1);
             used(false, row, col);
         }
     }
