@@ -1,26 +1,21 @@
 class Solution {
     int n;
-    boolean [] usedCols;
-    boolean [] usedDiagDown;
-    boolean [] usedDiagUp;
+    int usedCols = 0, usedDiagDown = 0, usedDiagUp = 0;
     
     public List<List<String>> solveNQueens(int n) {
         this.n = n;
         List<List<String>> res = new ArrayList<>();
-        usedCols = new boolean[n];
-        usedDiagDown = new boolean[2 * n + 1];
-        usedDiagUp = new boolean [2 * n + 1];
         dfs(0, new ArrayList<String>(), res);
         return res;
     }
     
     public void dfs (int row, List<String> board, List<List<String>> res) {
         for (int col = 0; col < n; col++) {
-            if (usedCols[col] || usedDiagDown[(n - 1 - row) + col] || usedDiagUp[row + col])
+            if (isUsed(row, col))
                 continue;
                 
             board.add(createQueenRow(col, n));
-            used(true, row, col);
+            flipUseBits(row, col);
 
             if (row == n - 1)
                 res.add(new ArrayList<String>(board));
@@ -28,14 +23,18 @@ class Solution {
                 dfs (row + 1, board, res);
 
             board.remove(board.size() - 1);
-            used(false, row, col);
+            flipUseBits(row, col);
         }
     }
     
-    private void used (boolean use, int row, int col) {
-        usedCols[col] = use;
-        usedDiagDown[(n - 1 - row) + col] = use;
-        usedDiagUp[row + col] = use;
+    private boolean isUsed (int row, int col) {
+        return (usedCols & (1 << col)) != 0 || (usedDiagDown & (1 << (n - 1 - row + col))) != 0 || (usedDiagUp & (1 << (row + col))) != 0;
+    }
+    
+    private void flipUseBits (int row, int col) {
+        usedCols ^= (1 << col);
+        usedDiagDown ^= (1 << (n - 1 - row + col));
+        usedDiagUp ^= (1 << (row + col));
     }
     
     private String createQueenRow(int col, int n) {
