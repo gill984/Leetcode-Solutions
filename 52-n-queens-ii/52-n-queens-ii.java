@@ -8,7 +8,7 @@ class Solution {
         return res;
     }
     
-    public void dfs (int row) {
+    final public void dfs (int row) {
         for (int col = 0; col < n; col++) {
             if (isUsed(row, col))
                 continue;
