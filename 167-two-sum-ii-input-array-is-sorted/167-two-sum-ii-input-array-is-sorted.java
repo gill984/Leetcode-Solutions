@@ -1,18 +1,20 @@
 class Solution {
     public int[] twoSum(int[] numbers, int k) {
+        int lo = 0;
+        int hi = numbers.length - 1;
         int [] res = new int [2];
-        int [] indices = new int [2001];
         
-        for (int i = 0; i < numbers.length; i++) {
-            int num = numbers[i];
-            
-            if (k - num + 1000 < indices.length && indices[k - num + 1000] != 0) {
-                res[0] = indices[k - num + 1000];
-                res[1] = i + 1;
+        while (hi > lo) {
+            int sum = numbers[lo] + numbers[hi];
+            if (sum < k) {
+                lo++;
+            } else if (sum > k) {
+                hi--;
+            } else {
+                res[0] = lo + 1;
+                res[1] = hi + 1;
                 break;
             }
-            
-            indices[num + 1000] = i + 1;
         }
         
         return res;
