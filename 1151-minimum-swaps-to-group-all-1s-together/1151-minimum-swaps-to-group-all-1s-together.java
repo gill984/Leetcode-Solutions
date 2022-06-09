@@ -1,7 +1,5 @@
 class Solution {
     public int minSwaps(int[] nums) {
-        if(nums.length < 3)
-            return 0;
         
         int numOnes = 0;
         for(int num: nums)
