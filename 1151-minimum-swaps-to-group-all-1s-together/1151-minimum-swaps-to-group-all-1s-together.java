@@ -4,25 +4,22 @@ class Solution {
             return 0;
         
         int numOnes = 0;
-        for(int num: nums) {
+        for(int num: nums)
             if(num == 1)
                 numOnes++;
-        }
         
-        int lo = 0;
-        int hi = numOnes - 1;
         int count = 0;
         
-        for (int i = 0; i <= hi; i++)
+        for (int i = 0; i < numOnes; i++)
             if (nums[i] == 1)
                 count++;
         
         int res = numOnes - count;        
-        while (hi + 1 < nums.length) {
-            if (nums[lo++] == 1)
+        for (int i = 1; i + numOnes - 1 < nums.length; i++) {
+            if (nums[i - 1] == 1)
                 count--;
             
-            if (nums[++hi] == 1)
+            if (nums[i + numOnes - 1] == 1)
                 count++;
             
             res = Math.min(numOnes - count, res);
