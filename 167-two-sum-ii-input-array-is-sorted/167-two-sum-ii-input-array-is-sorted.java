@@ -5,15 +5,12 @@ class Solution {
         int [] res = new int [2];
         
         while (hi > lo) {
-            while (numbers[lo] + numbers[hi] < k) {
+            int sum = numbers[lo] + numbers[hi];
+            if (sum < k) {
                 lo++;
-            } 
-            
-            while (numbers[lo] + numbers[hi] > k) {
+            } else if (sum > k) {
                 hi--;
-            } 
-            
-            if (numbers[lo] + numbers[hi] == k) {
+            } else {
                 res[0] = lo + 1;
                 res[1] = hi + 1;
                 break;
