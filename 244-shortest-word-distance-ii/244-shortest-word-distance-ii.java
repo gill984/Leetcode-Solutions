@@ -1,5 +1,6 @@
 class WordDistance {
     Map<String, List<Integer>> wordToIndices = new HashMap<>();
+    Map<String, Integer> memo = new HashMap<>();
     
     public WordDistance(String[] wordsDict) {
         for (int i = 0; i < wordsDict.length; i++) {
@@ -9,6 +10,10 @@ class WordDistance {
     }
     
     public int shortest(String word1, String word2) {
+        if (memo.containsKey(word1 + "," + word2)) {
+            return memo.get(word1 + "," + word2);
+        }
+        
         List<Integer> nums1 = wordToIndices.get(word1);
         List<Integer> nums2 = wordToIndices.get(word2);
         
@@ -20,9 +25,8 @@ class WordDistance {
             if (num1 > nums2.get(j)) {
                 while (j + 1 < nums2.size()) {
                     int newDiff = Math.abs(nums2.get(j + 1) - num1);
-                    if (diff < newDiff) {
+                    if (diff < newDiff)
                         break;
-                    }
                     
                     j++;
                     diff = newDiff;
@@ -31,12 +35,7 @@ class WordDistance {
             res = Math.min(diff, res);
         }
         
+        memo.put(word1 + "," + word2, res);
         return res;
     }
 }
-
-/**
- * Your WordDistance object will be instantiated and called as such:
- * WordDistance obj = new WordDistance(wordsDict);
- * int param_1 = obj.shortest(word1,word2);
- */
