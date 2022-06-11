@@ -10,9 +10,6 @@ class WordDistance {
     }
     
     public int shortest(String word1, String word2) {
-        if (memo.containsKey(word1 + "," + word2)) {
-            return memo.get(word1 + "," + word2);
-        }
         
         List<Integer> nums1 = wordToIndices.get(word1);
         List<Integer> nums2 = wordToIndices.get(word2);
@@ -34,8 +31,6 @@ class WordDistance {
             }            
             res = Math.min(diff, res);
         }
-        
-        memo.put(word1 + "," + word2, res);
         return res;
     }
 }
