@@ -1,5 +1,4 @@
 class WordDistance {
-
     Map<String, List<Integer>> wordToIndices = new HashMap<>();
     
     public WordDistance(String[] wordsDict) {
@@ -16,26 +15,21 @@ class WordDistance {
         int res = Integer.MAX_VALUE;
         for (int i = 0, j = 0; i < nums1.size() && j < nums2.size(); i++) {
             int num1 = nums1.get(i);
-            int num2 = nums2.get(j);
-            int diff = Math.abs(num1 - num2);
+            int diff = Math.abs(num1 - nums2.get(j));
             
-            if (num1 > num2) {
+            if (num1 > nums2.get(j)) {
                 while (j + 1 < nums2.size()) {
                     int newDiff = Math.abs(nums2.get(j + 1) - num1);
-                    if (diff >= newDiff) {
-                        j++;
-                        diff = newDiff;
-                    } else {
+                    if (diff < newDiff) {
                         break;
                     }
+                    
+                    j++;
+                    diff = newDiff;
                 }
-            }
-            
-            
+            }            
             res = Math.min(diff, res);
         }
-        
-        // System.out.println(res);
         
         return res;
     }
