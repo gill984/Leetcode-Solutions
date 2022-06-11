@@ -1,6 +1,5 @@
 class WordDistance {
     Map<String, List<Integer>> wordToIndices = new HashMap<>();
-    Map<String, Integer> memo = new HashMap<>();
     
     public WordDistance(String[] wordsDict) {
         for (int i = 0; i < wordsDict.length; i++) {
