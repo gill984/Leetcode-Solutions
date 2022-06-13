@@ -19,9 +19,8 @@ class Solution {
         }
         
         int res = Integer.MAX_VALUE;
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
             res = Math.min(res, dp[i]);
-        }
         return res;
     }
 }
