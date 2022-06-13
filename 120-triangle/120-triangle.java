@@ -3,21 +3,24 @@ class Solution {
         int m = triangle.size();
         int n = triangle.get(m - 1).size();
         
-        int [][] dp = new int [m][n];
-        dp [0][0] = triangle.get(0).get(0);
+        int [] dp = new int [n];
+        dp [0] = triangle.get(0).get(0);
         
         for (int i = 1; i < triangle.size(); i++) {
             List<Integer> row = triangle.get(i);
+            int prev = Integer.MAX_VALUE;
             for (int j = 0; j < row.size(); j++) {
-                int left = (j > 0) ? dp[i - 1][j - 1] : Integer.MAX_VALUE;
-                int right = (j < row.size() - 1) ? dp[i - 1][j] : Integer.MAX_VALUE;
-                dp[i][j] = row.get(j) + Math.min(left, right);
+                int temp = dp[j];
+                int left = (j > 0) ? prev : Integer.MAX_VALUE;
+                int right = (j < row.size() - 1) ? dp[j] : Integer.MAX_VALUE;
+                dp[j] = row.get(j) + Math.min(left, right);
+                prev = temp;
             }
         }
         
         int res = Integer.MAX_VALUE;
         for (int i = 0; i < n; i++) {
-            res = Math.min(res, dp[m - 1][i]);
+            res = Math.min(res, dp[i]);
         }
         return res;
     }
