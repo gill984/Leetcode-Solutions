@@ -31,9 +31,6 @@ class Solution {
             }
             same = false;
         }
-        
-        System.out.println(resLo);
-        System.out.println(res);
         return s.substring(resLo, resLo + res);
     }
 }
