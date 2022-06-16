@@ -11,7 +11,7 @@ class Solution {
                 int length = 0;
                 int lo = mid;
                 int hi = odd ? lo : lo + 1;
-                while (lo >= 0 && hi < n) {
+                for (;lo >= 0 && hi < n; lo--, hi++) {
                     if (s.charAt(lo) != s.charAt(hi))
                         break;
                     
@@ -21,9 +21,6 @@ class Solution {
                         resLo = lo;
                         res = length;
                     }
-                    
-                    lo--;
-                    hi++;
                 }
             }
             odd = false;
