@@ -1,7 +1,7 @@
 class Solution {
     public String longestPalindrome(String s) {
         // Try every middle element
-        boolean same = true;
+        boolean odd = true;
         int res = 0;
         int n = s.length();
         int resLo = 0;
@@ -10,10 +10,11 @@ class Solution {
             for (int mid = 0; mid < n; mid++) {
                 int length = 0;
                 int lo = mid;
-                int hi = same ? lo : lo + 1;
+                int hi = odd ? lo : lo + 1;
                 while (lo >= 0 && hi < n) {
                     if (s.charAt(lo) != s.charAt(hi))
                         break;
+                    
                     length += (lo == hi) ? 1 : 2;
                     
                     if (length > res) {
@@ -21,16 +22,13 @@ class Solution {
                         res = length;
                     }
                     
-                    if (lo > 0 && hi < n - 1) {
-                        lo--;
-                        hi++;
-                    } else {
-                        break;
-                    }
+                    lo--;
+                    hi++;
                 }
             }
-            same = false;
+            odd = false;
         }
+        
         return s.substring(resLo, resLo + res);
     }
 }
