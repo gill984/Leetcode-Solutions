@@ -1,9 +1,8 @@
 class Solution {
     public String longestPalindrome(String s) {
         // Try every middle element
-        int res = 0;
+        String res = "";
         int n = s.length();
-        int resLo = 0;
         
         for (int i = 0; i < 2; i++) {
             for (int mid = 0; mid < n; mid++) {
@@ -14,14 +13,13 @@ class Solution {
                     
                     length += (lo == hi) ? 1 : 2;
                     
-                    if (length > res) {
-                        resLo = lo;
-                        res = length;
+                    if (length > res.length()) {
+                        res = s.substring(lo, hi + 1);
                     }
                 }
             }
         }
         
-        return s.substring(resLo, resLo + res);
+        return res;
     }
 }
