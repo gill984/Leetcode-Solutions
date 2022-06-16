@@ -4,9 +4,9 @@ class Solution {
         String res = "";
         int n = s.length();
         
-        for (int i = 0; i < 2; i++) {
+        for (int oddThenEven = 0; oddThenEven < 2; oddThenEven++) {
             for (int mid = 0; mid < n; mid++) {
-                for (int lo = mid, hi = mid + i; lo >= 0 && hi < n; lo--, hi++) {
+                for (int lo = mid, hi = mid + oddThenEven; lo >= 0 && hi < n; lo--, hi++) {
                     if (s.charAt(lo) != s.charAt(hi))
                         break;
                     
