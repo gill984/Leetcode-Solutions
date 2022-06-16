@@ -6,10 +6,7 @@ class Solution {
         
         for (int oddThenEven = 0; oddThenEven < 2; oddThenEven++) {
             for (int mid = 0; mid < n; mid++) {
-                for (int lo = mid, hi = mid + oddThenEven; lo >= 0 && hi < n; lo--, hi++) {
-                    if (s.charAt(lo) != s.charAt(hi))
-                        break;
-                    
+                for (int lo = mid, hi = mid + oddThenEven; lo >= 0 && hi < n && s.charAt(lo) == s.charAt(hi); lo--, hi++) {
                     if (hi - lo + 1 > res.length())
                         res = s.substring(lo, hi + 1);
                 }
