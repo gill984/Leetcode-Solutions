@@ -1,7 +1,5 @@
 class Solution {
     public boolean checkPossibility(int[] nums) {
-        // Try replacing previous first, if that won't work
-        // try replacing current
         int n = nums.length;
         boolean usedModify = false;
         
@@ -12,7 +10,6 @@ class Solution {
             if (usedModify) {
                 return false;
             } else if (i < 2 || nums[i - 2] <= nums[i]) {
-                nums[i - 1] = (i >= 2 ? nums[i - 2] : Integer.MIN_VALUE);
                 usedModify = true;
             } else {
                 nums[i] = nums[i - 1];
