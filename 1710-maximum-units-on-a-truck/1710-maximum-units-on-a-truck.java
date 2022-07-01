@@ -5,9 +5,9 @@ class Solution {
         int count = 0;
         int res = 0;
         for (int i = 0; i < n && count < truckSize; i++) {
-            for (int j = 0; j < boxTypes[i][0] && count < truckSize; j++) {
+            for (int j = 0; j < boxTypes[i][0] && count++ < truckSize; j++) {
                 res += boxTypes[i][1];
-                count++;
+                // count++;
             }
         }
         return res;
