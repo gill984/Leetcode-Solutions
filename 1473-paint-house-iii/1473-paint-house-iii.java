@@ -10,11 +10,9 @@ class Solution {
     
     public int minCost(int[] houses, int[][] cost, int m, int n, int target) {
         memo = new int [m][n][101];
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
+        for (int i = 0; i < m; i++)
+            for (int j = 0; j < n; j++)
                 Arrays.fill(memo[i][j], UNVISITED);
-            }
-        }
         
         this.houses = houses;
         this.cost = cost;
@@ -26,11 +24,10 @@ class Solution {
     }
     
     public int dfs (int i, int hoods, int prev) {       
-        if (i == m) {
+        if (i == m)
             return (hoods == target ? 0 : INVALID);
-        } else if (prev > 0 && memo[i][prev - 1][hoods] != UNVISITED) {
+        else if (prev > 0 && memo[i][prev - 1][hoods] != UNVISITED)
             return memo[i][prev - 1][hoods];
-        } 
         
         int min = INVALID;
         if (houses[i] == 0) {
