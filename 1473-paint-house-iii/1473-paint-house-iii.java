@@ -11,23 +11,23 @@ class Solution {
         return res == INVALID ? -1 : res;
     }
     
-    public int dfs (int i, int hoods, int prev, int [] h, int [][] cost, int target, int [][][] memo, int m, int n) {       
+    public int dfs (int i, int hoods, int prev, int [] h, int [][] c, int t, int [][][] memo, int m, int n) {       
         if (i == m)
-            return (hoods == target ? 0 : INVALID);
+            return (hoods == t ? 0 : INVALID);
         else if (prev > 0 && memo[i][prev - 1][hoods] != UNVISITED)
             return memo[i][prev - 1][hoods];
         
         int min = INVALID;
         if (h[i] == 0) {
             for (int j = 0; j < n; j++) {
-                int tail = dfs(i + 1, hoods + (prev == j + 1 ? 0 : 1), j + 1, h, cost, target, memo, m, n);
+                int tail = dfs(i + 1, hoods + (prev == j + 1 ? 0 : 1), j + 1, h, c, t, memo, m, n);
                 if (tail == INVALID)
                     continue;
-                min = Math.min(min, cost[i][j] + tail);
+                min = Math.min(min, c[i][j] + tail);
             }
         } else {
             // This house is already painted, no cost added from this house
-            min = dfs(i + 1, hoods + (prev == h[i] ? 0 : 1), h[i], h, cost, target, memo, m, n);
+            min = dfs(i + 1, hoods + (prev == h[i] ? 0 : 1), h[i], h, c, t, memo, m, n);
         }
         
         if (prev > 0)
