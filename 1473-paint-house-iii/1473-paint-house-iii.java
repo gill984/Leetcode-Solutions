@@ -1,5 +1,5 @@
 class Solution {
-    final int UNVISITED = -2;
+    final int UNVISITED = -1;
     final int INVALID = Integer.MAX_VALUE;
     int target;
     int m;
