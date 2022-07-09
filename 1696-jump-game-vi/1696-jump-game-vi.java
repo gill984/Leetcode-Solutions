@@ -1,17 +1,18 @@
 class Solution {
     public int maxResult(int[] nums, int k) {
-        // use dynamic programming
+        // DP plus deque: T = O(n)
         int n = nums.length;
-        PriorityQueue<int[]> maxHeap = new PriorityQueue<>((a, b) -> b[1] - a[1]);
-        maxHeap.offer(new int [] {0, nums[0]});
+        Deque<Integer> maxPrevIdx = new ArrayDeque<>();
+        maxPrevIdx.addFirst(0);
         for (int i = 1; i < n; i++) {
-            // Try jumping to this index from all indices [i-k, i-1]
-            while (maxHeap.peek()[0] < i - k)
-                maxHeap.poll();
-            
-            int [] to = new int [] {i, maxHeap.peek()[1] + nums[i]};
-            nums[i] = to[1];
-            maxHeap.offer(to);
+            // Always jump from first deque element
+            while (maxPrevIdx.peekFirst() < i - k)
+                maxPrevIdx.removeFirst();
+                        
+            nums[i] += nums[maxPrevIdx.peekFirst()];
+            while (!maxPrevIdx.isEmpty() && nums[i] >= nums[maxPrevIdx.peekLast()])
+                maxPrevIdx.removeLast();
+            maxPrevIdx.addLast(i);
         }
         
         return nums[n - 1];
