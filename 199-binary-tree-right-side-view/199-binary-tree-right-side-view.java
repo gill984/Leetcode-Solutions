@@ -15,7 +15,7 @@ class Solution {
         int [] pair = new int [] {x, n.val};
         if (depthToNode.size() <= depth)
             depthToNode.add(pair);
-        else if (depthToNode.get(depth)[0] < x)
+        else // if (depthToNode.get(depth)[0] < x)
             depthToNode.set(depth, pair);
         
         traverse(n.left, depthToNode, depth + 1, x * 2);
