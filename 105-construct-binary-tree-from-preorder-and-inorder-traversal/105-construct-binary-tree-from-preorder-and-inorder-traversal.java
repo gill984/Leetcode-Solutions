@@ -5,20 +5,19 @@ class Solution {
         return traverse(preorder, inorder, 0, inorder.length - 1);
     }
     
-    public TreeNode traverse(int [] preorder, int [] inorder, int loInorder, int hiInorder) {
-        if (loInorder > hiInorder)
+    public TreeNode traverse(int [] preorder, int [] inorder, int lo, int hi) {
+        if (lo > hi)
             return null;
         int val = preorder[preIdx++];
         TreeNode root = new TreeNode(val);
-        int midInorder = 0;
+        int mid = 0;
         
-        for (midInorder = loInorder; midInorder <= hiInorder; midInorder++) {
-            if (inorder[midInorder] == val)
+        for (mid = lo; mid <= hi; mid++)
+            if (inorder[mid] == val)
                 break;
-        }
         
-        root.left = traverse(preorder, inorder, loInorder, midInorder - 1);
-        root.right = traverse(preorder, inorder, midInorder + 1, hiInorder);
+        root.left = traverse(preorder, inorder, lo, mid - 1);
+        root.right = traverse(preorder, inorder, mid + 1, hi);
         return root;
     }
 }
