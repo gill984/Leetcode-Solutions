@@ -8,10 +8,11 @@ class Solution {
     public TreeNode traverse(int [] preorder, int [] inorder, int lo, int hi) {
         if (lo > hi)
             return null;
+        
         int val = preorder[preIdx++];
         TreeNode root = new TreeNode(val);
-        int mid = 0;
         
+        int mid;
         for (mid = lo; mid <= hi; mid++)
             if (inorder[mid] == val)
                 break;
