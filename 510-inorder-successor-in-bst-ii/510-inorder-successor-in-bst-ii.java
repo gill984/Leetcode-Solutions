@@ -1,6 +1,6 @@
 class Solution {
     public Node inorderSuccessor(Node node) {
-        // 3 cases
+        // 2 cases
         // Either the node has a right node or it doesn't
         // If it has a right child we want the the leftmost node in the right subtree
         // Else keep going up the parent path until the node you come from is a left child, return that parent
