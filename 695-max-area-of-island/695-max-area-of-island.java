@@ -15,19 +15,17 @@ class Solution {
     }
     
     public int dfs (int row, int col, int [][] grid) {
-        if (row < 0 || col < 0 || row >= grid.length || col >= grid[0].length) {
+        if (row < 0 || col < 0 || row >= grid.length || col >= grid[0].length)
             return 0;
-        }
         
         int val = grid[row][col];
-        if (val == 0 || val == 2) {
+        if (val != 1)
             return 0;
-        }
+        
         grid[row][col] = 2;
         
-        for (int [] dir : dirs) {
+        for (int [] dir : dirs)
             val += dfs (row + dir[0], col + dir[1], grid);
-        }
         
         return val;
     }
