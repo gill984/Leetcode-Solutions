@@ -6,4 +6,3 @@ class Solution:
             if diff in d.keys():
                 return [d[diff], i]
             d[num] = i
-        return []
