@@ -1,9 +1,7 @@
 class Solution:
     def numMatchingSubseq(self, s: str, words: List[str]) -> int:
         res = 0
-        heads = []
-        for i in range(26):
-            heads.append([])
+        heads = [[] for i in range(26)]
         
         for w in words:
             heads[ord(w[0]) - ord('a')].append((w, 0))
@@ -20,4 +18,3 @@ class Solution:
                     heads[ord(nextWord[0][nextWord[1]]) - ord('a')].append(nextWord)
         
         return res
-        
