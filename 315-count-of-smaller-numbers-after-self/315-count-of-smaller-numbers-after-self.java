@@ -28,7 +28,6 @@ class Solution {
             single[0] = pairs[lo];
             return single;
         }
-        System.out.println("HI: " + hi + ", LO: " + lo);
         Pair [] left = mergeSortCount(lo, (hi + lo) / 2, pairs, result);
         Pair [] right = mergeSortCount((hi + lo)/ 2 + 1, hi, pairs, result);
         Pair [] sorted = new Pair[left.length + right.length];
