@@ -6,4 +6,3 @@ class Solution:
                 if row[idx] == target:
                     return True
         return False
-            
