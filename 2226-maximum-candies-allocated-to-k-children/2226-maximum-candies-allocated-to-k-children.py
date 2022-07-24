@@ -1,10 +1,11 @@
 class Solution:
     def maximumCandies(self, candies: List[int], k: int) -> int:
-        if sum(candies) < k:
+        total = sum(candies)
+        if total < k:
             return 0
         
         res = 0
-        hi = sum(candies) // k
+        hi = total // k
         lo = 1
         while lo <= hi:
             mid = (hi + lo) // 2
