@@ -17,7 +17,4 @@ class Solution:
         return res
         
     def attempt(self, candies, c, k):
-        count = 0
-        for candy in candies:
-            count += candy // c
-        return count >= k
+        return sum([candy // c for candy in candies]) >= k
