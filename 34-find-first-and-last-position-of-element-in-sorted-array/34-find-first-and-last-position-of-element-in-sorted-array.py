@@ -1,29 +1,20 @@
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
-        n = len(nums)
-        lo = 0
-        hi = n - 1
-        left = -1
-        right = -1
-        
+        return [self.bSearch(nums, 0, len(nums) - 1, target, True), self.bSearch(nums, 0, len(nums) - 1, target, False)]
+    
+    def bSearch(self, nums, lo, hi, target, searchLeft):
+        res = -1
         while lo <= hi:
             mid = (lo + hi) // 2
-            if nums[mid] >= target:
-                if nums[mid] == target:
-                    left = mid
+            if nums[mid] > target:
                 hi = mid - 1
-            else:
-                lo = mid + 1
-                
-        lo = 0 if left == -1 else left
-        hi = n - 1
-        while lo <= hi:
-            mid = (lo + hi) // 2
-            if nums[mid] <= target:
-                if nums[mid] == target:
-                    right = mid
+            elif nums[mid] < target:
                 lo = mid + 1
             else:
-                hi = mid - 1
+                res = mid
+                if searchLeft:
+                    hi = mid - 1
+                else:
+                    lo = mid + 1
+        return res
                 
-        return [left, right]
