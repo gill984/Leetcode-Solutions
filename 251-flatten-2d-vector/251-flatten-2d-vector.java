@@ -13,6 +13,10 @@ class Vector2D {
         this.vec = vec;
     }
     
+    public void advance () {
+        
+    }
+    
     public int next() {
         int res = vec[row][col];
         col++;
