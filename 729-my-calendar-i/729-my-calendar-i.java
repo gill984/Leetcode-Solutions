@@ -8,11 +8,10 @@ class MyCalendar {
     public boolean book(int start, int end) {
         Map.Entry<Integer, Integer> floor = schedule.floorEntry(start);
         Map.Entry<Integer, Integer> ceil = schedule.ceilingEntry(start);
-        if (ceil != null && end - 1 >= ceil.getKey()) {
+        if (ceil != null && end > ceil.getKey())
             return false;
-        } else if (floor != null && floor.getValue() - 1 >= start) {
+        else if (floor != null && floor.getValue() > start)
             return false;
-        }
         schedule.put(start, end);
         return true;
     }
