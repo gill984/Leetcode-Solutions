@@ -6,7 +6,7 @@ class Solution {
         if (lcm / p % 2 == 0)
             return 0;
         else
-            return (lcm / q) % 2 == 0 ? 2 : 1;
+            return lcm / q % 2 == 0 ? 2 : 1;
     }
     
     public int gcd(int a, int b) {
