@@ -3,7 +3,7 @@ class Solution {
         int gcd = gcd(p, q);
         int lcm = (p * q) / gcd;
         
-        if ((lcm / p) % 2 == 0)
+        if (lcm / p % 2 == 0)
             return 0;
         else
             return (lcm / q) % 2 == 0 ? 2 : 1;
