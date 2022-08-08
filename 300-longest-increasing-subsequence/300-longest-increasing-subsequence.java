@@ -1,20 +1,15 @@
 class Solution {
     public int lengthOfLIS(int[] nums) {
-        int [] dp = new int [nums.length];
-        int length = 0;
-        
+        TreeSet<Integer> bst = new TreeSet<>();
         for (int num : nums) {
-            int i = Arrays.binarySearch(dp, 0, length, num);
-            if (i < 0) {
-                i = -(i + 1);
-            }
-            
-            dp[i] = num;
-            if (i == length) {
-                length++;
+            if (bst.isEmpty() || bst.last() < num) {
+                bst.add(num);
+            } else {
+                bst.remove(bst.ceiling(num));
+                bst.add(num);
             }
         }
         
-        return length;
+        return bst.size();
     }
 }
