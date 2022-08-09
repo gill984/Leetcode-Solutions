@@ -10,7 +10,7 @@ class Solution:
                 if num % key != 0 or target not in dp:
                     continue
                 
-                count = dp[key] * dp[key] if key == target else (dp[key] * dp[target])
+                count = dp[key] * dp[target]
                 dp[num] = dp[num] + count if num in dp else count
                 res += count
             dp[num] = dp[num] + 1 if num in dp else 1
