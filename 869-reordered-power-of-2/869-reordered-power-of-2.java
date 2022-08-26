@@ -3,10 +3,8 @@ class Solution {
         List<String> powers = new ArrayList<>();
         List<Map<Character, Integer>> counts = new ArrayList<>();
         
-        for (int pow = 1; ; pow *= 2) {
-            powers.add("" + pow);
-            if (pow == 1 << 30)
-                break;
+        for (int pow = 0; pow < 31; pow++) {
+            powers.add("" + (1 << pow));
         }
         
         for (String p : powers) {
