@@ -25,13 +25,10 @@ class Solution {
         }
         
         Collections.sort(diag);
-        
-        row = tempRow;
-        col = tempCol;
         for (int i : diag) {
-            mat[row][col] = i;
-            row++;
-            col++;
+            mat[tempRow][tempCol] = i;
+            tempRow++;
+            tempCol++;
         }
     }
 }
