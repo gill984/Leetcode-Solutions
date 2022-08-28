@@ -18,17 +18,11 @@ class Solution {
         List<Integer> diag = new ArrayList<>();
         int tempRow = row;
         int tempCol = col;
-        while (row < m && col < n) {
-            diag.add(mat[row][col]);
-            row++;
-            col++;
-        }
+        while (row < m && col < n)
+            diag.add(mat[row++][col++]);
         
         Collections.sort(diag);
-        for (int i : diag) {
-            mat[tempRow][tempCol] = i;
-            tempRow++;
-            tempCol++;
-        }
+        for (int i : diag)
+            mat[tempRow++][tempCol++] = i;
     }
 }
