@@ -19,8 +19,6 @@ class Solution {
     }
     
     public int dfs(TreeNode curr, int maxVal) {
-        if (curr == null)
-            return 0;
-        return (curr.val >= maxVal ? 1 : 0) + dfs(curr.left, Math.max(maxVal, curr.val)) + dfs(curr.right, Math.max(maxVal, curr.val));
+        return curr == null ? 0 : (curr.val >= maxVal ? 1 : 0) + dfs(curr.left, Math.max(maxVal, curr.val)) + dfs(curr.right, Math.max(maxVal, curr.val));
     }
 }
