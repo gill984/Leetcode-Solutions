@@ -9,7 +9,6 @@ class Solution {
         PriorityQueue<Integer> bestSpeeds = new PriorityQueue<>();
         long sumSpeed = 0;
         long res = 0;
-        // System.out.println(Arrays.deepToString(engineers));
         
         for (int i = 0; i < n; i++) {
             int s = engineers[i][0];
