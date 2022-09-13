@@ -21,7 +21,6 @@ class Solution {
             }
             
             if (size == 4) {
-                System.out.println("No start byte");
                 return false;
             } else if (size == 0) {
                 continue;
@@ -31,7 +30,6 @@ class Solution {
             
             // Not enough bytes
             if (end >= data.length) {
-                System.out.println("Not enough bytes");
                 return false;
             }
             
