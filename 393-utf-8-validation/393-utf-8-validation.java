@@ -5,13 +5,10 @@ class Solution {
     int endBytesValue = 0x80;
     
     public boolean validUtf8(int[] data) {
-        
         for (int i = 0; i < data.length; i++) {
-            int start = data[i];
-            
             int size = 0;
             for (size = 0; size < 4; size++)
-                if ((start & masks[size]) == values[size])
+                if ((data[i] & masks[size]) == values[size])
                     break;
             
             if (size == 4)
@@ -20,12 +17,9 @@ class Solution {
                 continue;
             
             int end = i + size;
-            
-            // Not enough bytes
             if (end >= data.length)
                 return false;
             
-            // Check all data bytes
             while (++i <= end)
                 if ((data[i] & endBytesMask) != endBytesValue)
                     return false;
