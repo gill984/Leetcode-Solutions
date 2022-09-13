@@ -1,14 +1,10 @@
 class Solution {    
     int [] masks = new int []  {0x80, 0xE0, 0xF0, 0xF8};
     int [] values = new int [] {0x00, 0xC0, 0xE0, 0xF0};
-    
     int endBytesMask = 0xC0;
     int endBytesValue = 0x80;
     
     public boolean validUtf8(int[] data) {
-        if (data == null) {
-            return false;
-        }
         
         for (int i = 0; i < data.length; i++) {
             int start = data[i];
