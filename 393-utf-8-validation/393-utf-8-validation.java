@@ -14,31 +14,25 @@ class Solution {
             int start = data[i];
             
             int size = 0;
-            for (size = 0; size < 4; size++) {
-                if ((start & masks[size]) == values[size]) {
+            for (size = 0; size < 4; size++)
+                if ((start & masks[size]) == values[size])
                     break;
-                }
-            }
             
-            if (size == 4) {
+            if (size == 4)
                 return false;
-            } else if (size == 0) {
+            else if (size == 0)
                 continue;
-            }
             
             int end = i + size;
             
             // Not enough bytes
-            if (end >= data.length) {
+            if (end >= data.length)
                 return false;
-            }
             
             // Check all data bytes
-            while (++i <= end) {
-                if ((data[i] & endBytesMask) != endBytesValue) {
+            while (++i <= end)
+                if ((data[i] & endBytesMask) != endBytesValue)
                     return false;
-                }
-            }
             i--;
         }
         
