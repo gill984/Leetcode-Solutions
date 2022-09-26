@@ -30,9 +30,9 @@ class DisjointSet {
     
     public int find(char c) {
         int a = c - 'a';
-        while (a != p[a]) {
+        while (a != p[a])
             a = p[a];
-        }
+        
         return a;
     }
     
