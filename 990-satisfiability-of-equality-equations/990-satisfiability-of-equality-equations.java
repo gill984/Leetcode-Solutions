@@ -4,19 +4,16 @@ class Solution {
         // Perform find on all non-equal and verify they aren't part of the same equation
         List<String> notEquals = new ArrayList<>();
         DisjointSet ds = new DisjointSet();
-        for (String equation : equations) {
-            if (equation.contains("!")) {
-                notEquals.add(equation);
-            } else {
-                ds.union(equation.charAt(0), equation.charAt(3));
-            }
-        }
         
-        for (String equation : notEquals) {
-            if (ds.find(equation.charAt(0)) == ds.find(equation.charAt(3))) {
+        for (String equation : equations)
+            if (equation.contains("!"))
+                notEquals.add(equation);
+            else
+                ds.union(equation.charAt(0), equation.charAt(3));
+        
+        for (String equation : notEquals)
+            if (ds.find(equation.charAt(0)) == ds.find(equation.charAt(3)))
                 return false;
-            }
-        }
         
         return true;
     }
