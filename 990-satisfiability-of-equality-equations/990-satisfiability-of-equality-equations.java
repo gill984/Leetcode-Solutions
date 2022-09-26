@@ -4,7 +4,7 @@ class Solution {
         DisjointSet ds = new DisjointSet();
         
         for (String equation : equations) {
-            if (equation.contains("!"))
+            if (equation.charAt(1) == '!')
                 notEquals.add(equation);
             else
                 ds.union(equation.charAt(0), equation.charAt(3));
