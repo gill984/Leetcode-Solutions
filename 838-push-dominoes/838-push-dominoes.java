@@ -8,11 +8,10 @@ class Solution {
         while (hi < n) {
             char c = dominoes.charAt(hi);
             if (c == 'L') {
-                if (dominoes.charAt(lo) == '.' || dominoes.charAt(lo) == 'L') {
+                if (dominoes.charAt(lo) == '.' || dominoes.charAt(lo) == 'L')
                     fill(lo, hi, res, 'L');
-                } else {
+                else
                     split(lo, hi, res);
-                }
                 lo = hi;
             } else if (c == 'R') {
                 if (dominoes.charAt(lo) == 'R')
@@ -30,21 +29,17 @@ class Solution {
     }
     
     public void fill(int lo, int hi, char [] res, char c) {
-        for (int i = lo; i < hi; i++) {
+        for (int i = lo; i < hi; i++)
             res[i] = c;
-        }
     }
     
     public void split(int lo, int hi, char [] res) {
         while (lo < hi) {
-            res[lo] = 'R';
-            res[hi] = 'L';
-            lo++;
-            hi--;
+            res[lo++] = 'R';
+            res[hi--] = 'L';
         }
         
-        if (hi == lo) {
+        if (hi == lo)
             res[hi] = '.';
-        }
     }
 }
