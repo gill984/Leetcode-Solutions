@@ -10,8 +10,8 @@ class MyCalendarThree {
         times.put(end, times.getOrDefault(end, 0) - 1);
         int res = 0;
         int count = 0;
-        for (int t : times.keySet()) {
-            count += times.get(t);
+        for (int t : times.values()) {
+            count += t;
             res = Math.max(count, res);
         }
         return res;
