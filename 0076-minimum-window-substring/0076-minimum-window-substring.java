@@ -1,9 +1,5 @@
 class Solution {
     public String minWindow(String s, String t) {
-        // Naive solution, from each character in s, iterate until character counts in t is 0. O(n^2)
-        // When moving to the next character x in s, if x-1 is in t, then the right side will need to expand,
-        // if not in t then this is the optimal window starting at x
-        // As result store starting idx and length
         int hi = 0;
         int resIdx = -1;
         int resHi = 1000000;
@@ -29,7 +25,6 @@ class Solution {
                 }
             }
             
-            
             // Add necessary characters until tCount == 0
             while (tCount != 0 && hi < s.length()) {
                 char hiC = s.charAt(hi);
@@ -41,9 +36,12 @@ class Solution {
                 }
                 hi++;
             }
-                
-            if (tCount == 0 && hi - i < resHi - resIdx) {
-                // System.out.println("i: " + i + ", hi: " + hi);
+            
+            if (tCount != 0) {
+                break;
+            }
+            
+            if (hi - i < resHi - resIdx) {
                 resIdx = i;
                 resHi = hi;
             }
