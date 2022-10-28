@@ -1,18 +1,70 @@
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
-        int n = strs.length;
-        Map<String, List<String>> anagrams = new HashMap<>();
-        for (String s : strs) {
-            char [] word = s.toCharArray();
-            Arrays.sort(word);
-            String sorted = new String(word);
-            anagrams.putIfAbsent(sorted, new ArrayList<>());
-            anagrams.get(sorted).add(s);
+        HashMap<WordMap, ArrayList<String>> map = new HashMap<WordMap, ArrayList<String>>();
+        List<List<String>> res = new ArrayList<List<String>>();
+        
+        for(String s : strs)
+        {
+            WordMap w = new WordMap(s);
+            
+            if(map.containsKey(w))
+            {
+                map.get(w).add(s);
+            }
+            else
+            {
+                ArrayList<String> l = new ArrayList<String>();
+                res.add(l);
+                l.add(s);
+                map.put(w, l);
+            }
+        }
+            
+        // System.out.println(map);
+
+        // for(WordMap i : map.keySet())
+        // {
+        //     res.add(map.get(i));
+        // }
+        
+        return res;
+    }
+}
+
+class WordMap
+{
+    int [] occ;
+    String s;
+    
+    public WordMap(String s)
+    {
+        this.s = s;
+        occ = new int[26];
+        for(int i = 0; i < s.length(); i++)
+        {
+            occ[s.charAt(i) - 'a'] += 1;
+        }
+    }
+    
+    public boolean equals(Object o)
+    {
+        WordMap wm = (WordMap)o;
+        return Arrays.equals(this.occ, wm.occ);
+    }
+    
+    public boolean isAnagram(WordMap wm)
+    {
+        for(int i = 0; i < occ.length; i++)
+        {
+            if(wm.occ[i] != this.occ[i])
+                return false;
         }
         
-        List<List<String>> res = new ArrayList<>();
-        for (List<String> val : anagrams.values())
-            res.add(val);
-        return res;
+        return true;
+    }
+    
+    public int hashCode()
+    {
+        return Arrays.hashCode(occ);
     }
 }
