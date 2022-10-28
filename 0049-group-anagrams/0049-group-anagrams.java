@@ -1,70 +1,29 @@
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
-        HashMap<WordMap, ArrayList<String>> map = new HashMap<WordMap, ArrayList<String>>();
-        List<List<String>> res = new ArrayList<List<String>>();
-        
-        for(String s : strs)
-        {
-            WordMap w = new WordMap(s);
-            
-            if(map.containsKey(w))
-            {
-                map.get(w).add(s);
-            }
-            else
-            {
-                ArrayList<String> l = new ArrayList<String>();
-                res.add(l);
-                l.add(s);
-                map.put(w, l);
-            }
+        int n = strs.length;
+        Map<String, List<String>> anagrams = new HashMap<>();
+        for (String s : strs) {
+            String sorted = createKey(s);
+            anagrams.putIfAbsent(sorted, new ArrayList<>());
+            anagrams.get(sorted).add(s);
         }
-            
-        // System.out.println(map);
-
-        // for(WordMap i : map.keySet())
-        // {
-        //     res.add(map.get(i));
-        // }
         
+        List<List<String>> res = new ArrayList<>();
+        for (List<String> val : anagrams.values())
+            res.add(val);
         return res;
     }
-}
-
-class WordMap
-{
-    int [] occ;
-    String s;
     
-    public WordMap(String s)
-    {
-        this.s = s;
-        occ = new int[26];
-        for(int i = 0; i < s.length(); i++)
-        {
-            occ[s.charAt(i) - 'a'] += 1;
-        }
-    }
-    
-    public boolean equals(Object o)
-    {
-        WordMap wm = (WordMap)o;
-        return Arrays.equals(this.occ, wm.occ);
-    }
-    
-    public boolean isAnagram(WordMap wm)
-    {
-        for(int i = 0; i < occ.length; i++)
-        {
-            if(wm.occ[i] != this.occ[i])
-                return false;
+    public String createKey(String s) {
+        int [] count = new int [26];
+        for (char c : s.toCharArray()) {
+            count[c - 'a'] += 1;
         }
         
-        return true;
-    }
-    
-    public int hashCode()
-    {
-        return Arrays.hashCode(occ);
+        StringBuilder res = new StringBuilder();
+        for (int i = 0; i < 26; i++) {
+            res.append(count[i] + ",");
+        }
+        return res.toString();
     }
 }
