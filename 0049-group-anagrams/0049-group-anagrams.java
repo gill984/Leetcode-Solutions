@@ -11,9 +11,8 @@ class Solution {
         }
         
         List<List<String>> res = new ArrayList<>();
-        for (List<String> val : anagrams.values()) {
+        for (List<String> val : anagrams.values())
             res.add(val);
-        }
         return res;
     }
 }
