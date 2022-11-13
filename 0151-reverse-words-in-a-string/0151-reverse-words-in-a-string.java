@@ -1,20 +1,23 @@
 class Solution {
     public String reverseWords(String s) {
-        Deque<Character> stack = new ArrayDeque<>();
+        Deque<String> stack = new ArrayDeque<>();
         int n = s.length();
+        StringBuilder word = new StringBuilder();
         StringBuilder res = new StringBuilder();
-        for (int i = n - 1; i >= -1; i--) {
-            if (i >= 0 && s.charAt(i) != ' ') {
-                stack.addLast(s.charAt(i));
-            } else if (!stack.isEmpty()) {
-                if (res.length() != 0) {
-                    res.append(' ');
-                }
-                
-                while (!stack.isEmpty()) {
-                    res.append(stack.removeLast());
-                }
+        
+        for (int i = 0; i <= n; i++) {
+            if (i < n && s.charAt(i) != ' ') {
+                word.append(s.charAt(i));
+            } else if (word.length() > 0) {
+                stack.addLast(word.toString());
+                word = new StringBuilder();
             }
+        }
+        
+        while (!stack.isEmpty()) {
+            res.append(stack.removeLast());
+            if (!stack.isEmpty())
+                res.append(' ');
         }
         
         return res.toString();
