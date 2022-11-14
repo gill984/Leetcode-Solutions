@@ -1,22 +1,22 @@
 class Solution {    
     public int removeStones(int[][] stones) {
-        DisjointSet ds = new DisjointSet(stones.length);
-        Map<Integer, Integer> rowStone = new HashMap<>();
-        Map<Integer, Integer> colStone = new HashMap<>();
+        DisjointSet ds = new DisjointSet(stones.length + 1);
+        int[] rowStone = new int[10000];
+        int[] colStone = new int[10000];
         
         for (int id = 0; id < stones.length; id++) {
             int row = stones[id][0];
             int col = stones[id][1];
             
-            if (rowStone.containsKey(row))
-                ds.union(id, rowStone.get(row));
+            if (rowStone[row] != 0)
+                ds.union(id + 1, rowStone[row]);
             else
-                rowStone.put(row, id);
+                rowStone[row] = id + 1;
             
-            if (colStone.containsKey(col))
-                ds.union(id, colStone.get(col));
+            if (colStone[col] != 0)
+                ds.union(id + 1, colStone[col]);
             else
-                colStone.put(col, id);
+                colStone[col] = id + 1;
         }
         
         return ds.numConnections;
