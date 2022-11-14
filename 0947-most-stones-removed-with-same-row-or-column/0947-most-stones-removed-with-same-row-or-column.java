@@ -1,11 +1,5 @@
-class Solution {
-    int MAX_ROWS = 10000;
-    int MAX_COLS = 10000;
-    
+class Solution {    
     public int removeStones(int[][] stones) {
-        // For any group of connected stones, can remove all but 1.
-        // So just count the number of connected stone groups.
-        // Can do this efficiently using Union Find.
         DisjointSet ds = new DisjointSet(stones.length);
         Map<Integer, Integer> rowStone = new HashMap<>();
         Map<Integer, Integer> colStone = new HashMap<>();
@@ -40,19 +34,16 @@ class Solution {
         }
         
         public void union(int a, int b) {
-            if (root(a) == root(b)) {
+            if (root(a) == root(b))
                 return;
-            }
             
             numConnections++;
             p[root(a)] = p[root(b)];
         }
         
         public int root(int a) {
-            while (a != p[a]) {
-                p[a] = p[p[a]];
-                a = p[a];
-            }
+            while (a != p[a])
+                a = p[a] = p[p[a]];
             
             return a;
         }
