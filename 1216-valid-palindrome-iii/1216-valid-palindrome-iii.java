@@ -1,32 +1,29 @@
 class Solution {
-    public boolean isValidPalindrome(String s, int k) {
-        return dfs(s, k, 0, s.length() - 1, 0, new Integer [s.length()][s.length()]);
-    }
-    
-    public boolean dfs (String s, int k, int lo, int hi, int numUsed, Integer[][] memo) {
-        if (memo[lo][hi] != null) {
-            if (memo[lo][hi] <= numUsed)
-                return false;
+    public boolean isValidPalindrome(String ss, int k) {
+        char [] s = ss.toCharArray();
+        int n = s.length;
+        int [][] dp = new int [n + 1][n + 1];
+        
+        for (int i = 0; i <= n; i++)
+        {
+            dp[0][i] = i;
+            dp[i][0] = i;
         }
         
-        if (numUsed > k)
-            return false;
-        
-        memo[lo][hi] = numUsed;
-        
-        if (hi <= lo && numUsed <= k)
-            return true;
-        
-        char cLo = s.charAt(lo);
-        char cHi = s.charAt(hi);
-        boolean neither = false;
-        
-        if (cLo == cHi) {
-            neither = dfs(s, k, lo + 1, hi - 1, numUsed, memo);    
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = 1; j <= n; j++)
+            {
+                if (s[i - 1] == s[n - j])
+                    dp[i][j] = dp[i - 1][j - 1];
+                else
+                    dp[i][j] = 1 + Math.min(dp[i][j - 1], dp[i - 1][j]);
+                
+                if (i + j >= n && dp[i][j] <= k)
+                    return true;
+            }
         }
         
-        boolean left = dfs(s, k, lo + 1, hi, numUsed + 1, memo);
-        boolean right = dfs(s, k, lo, hi - 1, numUsed + 1, memo);
-        return left || right || neither;        
+        return false;
     }
 }
