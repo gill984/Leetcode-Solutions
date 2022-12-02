@@ -17,18 +17,27 @@ class Solution {
             count2[c]++;
         }
         
-        List<Integer> countList1 = new ArrayList<>();
-        List<Integer> countList2 = new ArrayList<>();
-        for (int i : count1)
+        int [] countCount = new int [100001];
+        for (int i : count1) {
             if (i != 0)
-                countList1.add(i);
-        for (int i : count2)
+                countCount[i] += 1;
+        }
+        
+        for (int i : count2) {
+            if (i == 0)
+                continue;
+            
+            if (countCount[i] == 0)
+                return false;
+            else 
+                countCount[i] -= 1;
+        }
+        
+        for (int i : countCount) {
             if (i != 0)
-                countList2.add(i);
+                return false;
+        }
         
-        Collections.sort(countList1);
-        Collections.sort(countList2);
-        
-        return countList1.equals(countList2);
+        return true;
     }
 }
