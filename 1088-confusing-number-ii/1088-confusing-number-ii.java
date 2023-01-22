@@ -1,32 +1,39 @@
 class Solution {
-    Map<Integer, Integer> map = new HashMap<>();
-    int res = 0;
-    public int confusingNumberII(int N) {
-        map.put(0, 0);
-        map.put(1, 1);
-        map.put(6, 9);
-        map.put(8, 8);
-        map.put(9, 6);
-        helper(N, 0);
-        return res;
+    int [] digits = new int [] {0, 1, 6, 8, 9};
+    int [] reverseMap = new int [] {0, 1, -1, -1, -1, -1, 9, -1, 8, 6};
+
+    public int confusingNumberII(int n) {
+        return dfs(0, 0, 1, n);
     }
-    private void helper(int N, long cur) {
-        if (isConfusingNumber(cur)) {
-            res++;
+
+    public int dfs (int curNum, int reverseNum, int pow, int n) {
+        int tempCur = curNum;
+        int tempRev = reverseNum;
+        int sum = 0;
+        for (int digit : digits) {
+            // Skip the case where adding 0s creates the same number
+            if (curNum == 0 && digit == 0)
+                continue;
+
+            // 1. Try Adding This digit and check bounds
+            curNum = (curNum * 10) + digit;
+            reverseNum = (pow * reverseMap[digit]) + reverseNum;
+            
+            if (curNum > n || Integer.MAX_VALUE / 10 + digit < tempCur)
+                break;
+
+            // 2. Check if the resulting number is confusing
+            if (curNum != reverseNum)
+                sum++;
+            
+            // 3. Search by trying to add more digits
+            sum += dfs(curNum, reverseNum, pow * 10, n);
+
+            // 4. Cleanup added digit to backtrack
+            reverseNum = tempRev;
+            curNum = tempCur;
         }
-        for (Integer i : map.keySet()) {
-            if (cur * 10 + i <= N && cur * 10 + i != 0) {
-                helper(N, cur * 10 + i);
-            }
-        }
-    }
-    private boolean isConfusingNumber(long n) {
-        long src = n;
-        long res = 0;
-        while (n > 0) {
-            res = res * 10 + map.get((int) n % 10); 
-            n /= 10;
-        }
-        return res != src;
+
+        return sum;
     }
 }
