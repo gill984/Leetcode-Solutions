@@ -3,11 +3,10 @@ class Solution {
         int chainStart = 0;
         int basket1 = -1;
         int basket2 = -1;
-        int n = fruits.length;
         int res = 0;
         int lo = 0;
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < fruits.length; i++) {
             if (basket1 != fruits[i] && basket2 != fruits[i]) {
                 lo = chainStart;
                 if (basket1 != fruits[chainStart])
