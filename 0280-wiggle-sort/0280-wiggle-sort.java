@@ -8,16 +8,13 @@ class Solution {
         int hi = 10000;
         int idx = 0;
         while (idx < nums.length) {
-            int cand = 0;
-            if (idx % 2 == 0) {
-                while (buckets[lo] == 0)
-                    lo++;
-                cand = lo;
-            } else {
-                while (buckets[hi] == 0)
-                    hi--;
-                cand = hi;
-            }
+            while (buckets[lo] == 0)
+                lo++;
+            while (buckets[hi] == 0)
+                hi--;
+            int cand = (idx % 2 == 0 ? lo : hi);
+            
+                
             buckets[cand]--;
             nums[idx] = cand;
             idx++;
