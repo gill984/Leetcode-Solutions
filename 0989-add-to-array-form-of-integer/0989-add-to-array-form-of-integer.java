@@ -21,7 +21,6 @@ class Solution {
         }
         
         if (carry > 0) {
-            if (i == res.size())
                 res.add(carry);
         }
         
