@@ -6,8 +6,6 @@ class Solution {
             k /= 10;
         }
         
-        // System.out.println(res);
-        
         int carry = 0;
         int i = 0;
         for (int ndx = num.length - 1; ndx >= 0 || (i < res.size()); ndx--, i++) {
@@ -25,8 +23,6 @@ class Solution {
         if (carry > 0) {
             if (i == res.size())
                 res.add(carry);
-            else
-                res.set(i, carry);
         }
         
         Collections.reverse(res);
