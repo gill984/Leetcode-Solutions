@@ -4,8 +4,6 @@ class Solution {
     }
     
     public int dfs (TreeNode curr, int depth) {
-        if (curr == null)
-            return depth;
-        return Math.max(dfs(curr.left, depth + 1), dfs(curr.right, depth + 1));
+        return curr == null ? depth : Math.max(dfs(curr.left, depth + 1), dfs(curr.right, depth + 1));
     }
 }
