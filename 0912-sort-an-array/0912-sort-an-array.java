@@ -12,16 +12,11 @@ class Solution {
         
         int [] copy = new int [bhi - alo + 1];
         
-        while (i <= ahi && j <= bhi) {
-            if (nums[i] < nums[j]) {
-                copy[idx] = nums[i];
-                i++;
-            } else {
-                copy[idx] = nums[j];
-                j++;
-            }
-            idx++;
-        }
+        while (i <= ahi && j <= bhi)
+            if (nums[i] < nums[j])
+                copy[idx++] = nums[i++];
+            else
+                copy[idx++] = nums[j++];
         
         while (i <= ahi)
             copy[idx++] = nums[i++];
@@ -29,15 +24,13 @@ class Solution {
         while (j <= bhi)
             copy[idx++] = nums[j++];
         
-        for (int k = 0; k < copy.length; k++) {
+        for (int k = 0; k < copy.length; k++)
             nums[alo + k] = copy[k];
-        }
     }
     
     public void mergeSort(int [] nums, int lo, int hi) {
-        if (hi == lo) {
+        if (hi == lo)
             return;
-        }
         
         int mid = (lo + hi) / 2;
         mergeSort(nums, lo, mid);
