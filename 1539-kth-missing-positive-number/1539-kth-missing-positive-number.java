@@ -3,15 +3,15 @@ class Solution {
         int nextValue = 1;
         int missingCount = 0;
         
-        for (int i = 0; i < arr.length; i++) {
-            int val = arr[i];
-            
+        for (int val : arr) {
             // All values between next value and this val need to be skipped
-            for (; nextValue < val && missingCount < k; nextValue++) {
+            for (; nextValue < val && missingCount < k;) {
                 missingCount++;
-                if (missingCount == k)
-                    return nextValue;
+                nextValue++;
             }
+            
+            if (missingCount == k)
+                    return nextValue - 1;
             nextValue++;
         }
         
