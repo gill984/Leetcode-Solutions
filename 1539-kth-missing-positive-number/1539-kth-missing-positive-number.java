@@ -5,10 +5,6 @@ class Solution {
         
         for (int i = 0; i < arr.length; i++) {
             int val = arr[i];
-            if (val == nextValue) {
-                nextValue++;
-                continue;
-            }
             
             // All values between next value and this val need to be skipped
             for (; nextValue < val && missingCount < k; nextValue++) {
