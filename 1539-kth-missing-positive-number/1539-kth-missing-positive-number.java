@@ -5,13 +5,12 @@ class Solution {
         
         for (int val : arr) {
             // All values between next value and this val need to be skipped
-            for (; nextValue < val && missingCount < k;) {
+            for (; nextValue < val && missingCount < k; nextValue++)
                 missingCount++;
-                nextValue++;
-            }
             
             if (missingCount == k)
                     return nextValue - 1;
+            
             nextValue++;
         }
         
