@@ -17,9 +17,8 @@ class Solution {
     
     public boolean canEat(int k, int [] piles, int h) {
         int time = 0;
-        for (int i = 0; i < piles.length; i++) {
-            time += piles[i] / k + (piles[i] % k == 0 ? 0 : 1);
-        }
+        for (int p : piles)
+            time += p / k + (p % k == 0 ? 0 : 1);
         return time <= h;
     }
 }
