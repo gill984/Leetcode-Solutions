@@ -11,9 +11,8 @@ class BrowserHistory:
         # If current_idx is not at the end of the history list, overwrite the value and add 1 to current_idx
         else:
             self.history[self.current_idx+1] = url
-            self.history = self.history[:self.current_idx+2]
-        # Update the indices
-        self.current_idx = len(self.history) - 1
+            
+        self.current_idx += 1
         self.max_forward_idx = self.current_idx
 
     def back(self, steps: int) -> str:
