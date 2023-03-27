@@ -1,4 +1,5 @@
 class Solution {
+    int INF = 1000000;
     public int minPathSum(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
@@ -8,7 +9,7 @@ class Solution {
                 if (i == 0 && j == 0)
                     continue;
                 
-                grid[i][j] += Math.min(i > 0 ? grid[i - 1][j] : 1000000, j > 0 ? grid[i][j - 1] : 1000000);
+                grid[i][j] += Math.min(i > 0 ? grid[i - 1][j] : INF, j > 0 ? grid[i][j - 1] : INF);
             }
         }
         
