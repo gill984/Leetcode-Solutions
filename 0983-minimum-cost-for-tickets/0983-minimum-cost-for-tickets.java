@@ -1,7 +1,7 @@
 class Solution {
     public int mincostTickets(int[] days, int[] costs) {
         int n = days.length;
-        int [] dp = new int [days[n - 1] + 1];      // Last day we need a ticket
+        int [] dp = new int [days[n - 1] + 1];
         Arrays.fill(dp, Integer.MAX_VALUE);
         
         for (int i = 0; i < n; i++) {
