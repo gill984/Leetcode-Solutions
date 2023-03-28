@@ -10,6 +10,5 @@ class Solution:
             for j in range(day, min(day + 30, len(dp))):
                 dp[j] = min(dp[j], prev_cost + costs[2])
         
-        # print(dp)
         return dp[-1];
         
