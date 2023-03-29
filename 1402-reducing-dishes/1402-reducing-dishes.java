@@ -4,9 +4,7 @@ class Solution {
         int res = 0;
         int n = satisfaction.length;
         for (int i = 0; i < n; i++) {
-            for (int j = i; j < n; j++) {
-                res = Math.max(res, calculateSatisfaction(satisfaction, i, j));
-            }
+            res = Math.max(res, calculateSatisfaction(satisfaction, i, satisfaction.length - 1));
         }
         
         return res;
