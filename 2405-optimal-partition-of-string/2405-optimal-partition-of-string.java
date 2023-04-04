@@ -1,14 +1,14 @@
 class Solution {
     public int partitionString(String s) {
         int res = 1;
-        boolean [] inSubstring = new boolean [26];
+        int inSubstring = 0;
         for (char c : s.toCharArray()) {
-            if (inSubstring[c - 'a']) {
+            if ((inSubstring & (1 << (c - 'a'))) > 0) {
                 res++;
-                inSubstring = new boolean [26];
+                inSubstring = 0;
             }
             
-            inSubstring[c - 'a'] = true;
+            inSubstring |= 1 << (c - 'a');
         }
         
         return res;
