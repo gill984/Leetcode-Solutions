@@ -1,10 +1,8 @@
 class Solution {
     public int partitionString(String s) {
-        if (s == null || s.equals(""))
-            return 0;
-        
-        int res = 1;
+        int res = 0;
         boolean [] inSubstring = new boolean [26];
+        Arrays.fill(inSubstring, true);
         for (char c : s.toCharArray()) {
             if (inSubstring[c - 'a']) {
                 res++;
