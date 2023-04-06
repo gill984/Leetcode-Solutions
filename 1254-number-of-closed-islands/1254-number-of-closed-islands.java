@@ -19,8 +19,6 @@ class Solution {
             }
         }
         
-        // System.out.println(Arrays.deepToString(grid));
-        
         return res;
     }
     
@@ -29,9 +27,8 @@ class Solution {
         
         // Note this also does a bounds check for us, so we don't need it later
         // an island isn't closed iff it has a piece of land on the edge
-        if (row == m - 1 || col == n - 1 || row == 0 || col == 0) {
+        if (row == m - 1 || col == n - 1 || row == 0 || col == 0)
             isClosed = false;
-        }
         
         for (int [] dir : dirs) {
             int nextRow = row + dir[0];
