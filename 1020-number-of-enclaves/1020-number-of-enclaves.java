@@ -38,7 +38,7 @@ class Solution {
             int nextRow = row + dir[0];
             int nextCol = col + dir[1];
             
-            if (oob(nextRow, nextCol) || grid[nextRow][nextCol] != 1)
+            if (oob(nextRow, nextCol))
                 continue;
             
             dfsEdge(grid, nextRow, nextCol);
