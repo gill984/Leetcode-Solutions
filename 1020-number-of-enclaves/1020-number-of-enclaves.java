@@ -15,14 +15,11 @@ class Solution {
             dfsEdge(grid, i, n - 1);
         }
         
-        // Count unmarked cells
         int res = 0;
-        for (int i = 1; i < m - 1; i++) {
-            for (int j = 1; j < n - 1; j++) {
+        for (int i = 1; i < m - 1; i++)
+            for (int j = 1; j < n - 1; j++)
                 if (grid[i][j] == 1)
                     res++;
-            }
-        }
         
         return res;
     }
@@ -38,7 +35,8 @@ class Solution {
             int nextRow = row + dir[0];
             int nextCol = col + dir[1];
             
-            if (nextRow < 0 || nextRow >= m || nextCol < 0 || nextCol >= n || grid[nextRow][nextCol] != 1)
+            if (nextRow < 0 || nextRow >= m || nextCol < 0 || nextCol >= n ||
+                grid[nextRow][nextCol] != 1)
                 continue;
             
             dfsEdge(grid, nextRow, nextCol);
