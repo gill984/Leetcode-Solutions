@@ -24,8 +24,6 @@ class Solution {
             }
         }
         
-        System.out.println(Arrays.deepToString(grid));
-        
         return res;
     }
     
