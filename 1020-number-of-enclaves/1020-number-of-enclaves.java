@@ -38,14 +38,10 @@ class Solution {
             int nextRow = row + dir[0];
             int nextCol = col + dir[1];
             
-            if (oob(nextRow, nextCol))
+            if (nextRow < 0 || nextRow >= m || nextCol < 0 || nextCol >= n)
                 continue;
             
             dfsEdge(grid, nextRow, nextCol);
         }
-    }
-    
-    public boolean oob(int row, int col) {
-        return row < 0 || row >= m || col < 0 || col >= n;
     }
 }
