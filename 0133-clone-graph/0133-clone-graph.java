@@ -1,10 +1,6 @@
 class Solution {
-    
-    public Node cloneGraph(Node node) {
-        return dfs(node, new HashMap<>());
-    }
-    
-    public Node dfs(Node curr, Map<Node, Node> oldToNew) {
+    Map<Node, Node> oldToNew = new HashMap<>();
+    public Node cloneGraph(Node curr) {
         if (curr == null)
             return null;
         
@@ -14,7 +10,7 @@ class Solution {
         Node newNode = new Node(curr.val, new ArrayList<>());
         oldToNew.put(curr, newNode);
         for (Node nbr : curr.neighbors)
-            newNode.neighbors.add(dfs(nbr, oldToNew));
+            newNode.neighbors.add(cloneGraph(nbr));
         return newNode;
     }
 }
