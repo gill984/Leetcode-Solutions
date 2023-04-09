@@ -12,9 +12,8 @@ class Solution {
         visited = new boolean[n];
         nodes = new Node[n];
         
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
             nodes[i] = new Node(i, colors.charAt(i));
-        }
         
         for (int [] edge : edges) {
             nodes[edge[0]].neighbors.add(edge[1]);
@@ -33,10 +32,9 @@ class Solution {
         }
         
         // Check for an unvisited node, only possible with a cycle that doesn't have an
-        for (boolean b : visited) {
+        for (boolean b : visited)
             if (!b)
                 containsCycle = true;
-        }
         
         return (containsCycle ? -1 : res);
     }
@@ -59,16 +57,13 @@ class Solution {
         }
         
         int [] maxes = new int [26];
-        for (int i = 0; i < 26; i++) {
-            for (int nbr : curr.neighbors) {
+        for (int i = 0; i < 26; i++)
+            for (int nbr : curr.neighbors)
                 maxes[i] = Math.max(maxes[i], memo[nbr][i]);
-            }
-        }
         
         maxes[curr.color - 'a'] += 1;
-        for (int i = 0; i < 26; i++) {
+        for (int i = 0; i < 26; i++)
             memo[curr.id][i] = maxes[i];
-        }
         pathVisited.remove(curr.id);
     }
     
