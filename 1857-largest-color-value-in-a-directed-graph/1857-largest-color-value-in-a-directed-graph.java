@@ -3,82 +3,58 @@ class Solution {
     int [][] memo;
     boolean [] visited;
     int res = -1;
-    Node[] nodes;
     boolean containsCycle = false;
+    List<List<Integer>> graph = new ArrayList<>();
+    String colors;
     
-    public int largestPathValue(String colors, int[][] edges) {
+    public int largestPathValue(String _colors, int[][] edges) {
+        colors = _colors;
         n = colors.length();
         memo = new int [n][26];
         visited = new boolean[n];
-        nodes = new Node[n];
         
         for (int i = 0; i < n; i++)
-            nodes[i] = new Node(i, colors.charAt(i));
+            graph.add(new ArrayList<>());
         
-        for (int [] edge : edges) {
-            nodes[edge[0]].neighbors.add(edge[1]);
-            nodes[edge[1]].indegree++;
-        }
+        for (int [] edge : edges)
+            graph.get(edge[0]).add(edge[1]);
         
-        // Topological traversal
         for (int i = 0; i < n && !containsCycle; i++) {
-            Node curr = nodes[i];
-            if (curr.indegree != 0)
-                continue;
-            
             boolean [] pathVisited = new boolean [n];
-            dfs(curr, pathVisited);
+            dfs(i, pathVisited);
             
             for (int j : memo[i])
                 res = Math.max(j, res);
         }
         
-        // Check for an unvisited node, only possible with a cycle that doesn't have an
-        for (boolean b : visited)
-            if (!b)
-                containsCycle = true;
-        
         return (containsCycle ? -1 : res);
     }
     
-    public void dfs(Node curr, boolean [] pathVisited) {
-        if (visited[curr.id])
+    public void dfs(int curr, boolean [] pathVisited) {
+        if (visited[curr])
             return;
         
-        visited[curr.id] = true;
-        pathVisited[curr.id] = true;;
+        visited[curr] = true;
+        pathVisited[curr] = true;;
         
-        for (int nbr : curr.neighbors) {
+        for (int nbr : graph.get(curr)) {
             if (pathVisited[nbr]) {
                 containsCycle = true;
                 return;
             }
             
-            dfs(nodes[nbr], pathVisited);
+            dfs(nbr, pathVisited);
         }
         
         int [] maxes = new int [26];
         for (int i = 0; i < 26; i++)
-            for (int nbr : curr.neighbors)
+            for (int nbr : graph.get(curr))
                 maxes[i] = Math.max(maxes[i], memo[nbr][i]);
         
-        maxes[curr.color - 'a'] += 1;
+        maxes[colors.charAt(curr) - 'a'] += 1;
         for (int i = 0; i < 26; i++)
-            memo[curr.id][i] = maxes[i];
+            memo[curr][i] = maxes[i];
         
-        pathVisited[curr.id] = false;
-    }
-    
-    class Node {
-        int id;
-        char color;
-        List<Integer> neighbors;
-        int indegree;
-        
-        public Node (int _id, char c) {
-            id = _id;
-            color = c;
-            neighbors = new ArrayList<>();
-        }
+        pathVisited[curr] = false;
     }
 }
