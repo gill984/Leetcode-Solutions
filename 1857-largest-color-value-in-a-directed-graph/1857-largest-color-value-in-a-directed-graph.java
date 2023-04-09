@@ -22,10 +22,12 @@ class Solution {
         
         // Topological traversal
         for (int i = 0; i < n && !containsCycle; i++) {
-            Node n = nodes[i];
-            if (n.indegree != 0)
+            Node curr = nodes[i];
+            if (curr.indegree != 0)
                 continue;
-            dfs(n, new HashSet<Integer>());
+            
+            boolean [] pathVisited = new boolean [n];
+            dfs(curr, pathVisited);
             
             for (int j : memo[i])
                 res = Math.max(j, res);
@@ -39,16 +41,15 @@ class Solution {
         return (containsCycle ? -1 : res);
     }
     
-    public void dfs(Node curr, Set<Integer> pathVisited) {
-        // Traverse each neighbor then determine this nodes memo values from
-        // all the neighbor memo values
+    public void dfs(Node curr, boolean [] pathVisited) {
         if (visited[curr.id])
             return;
+        
         visited[curr.id] = true;
-        pathVisited.add(curr.id);
+        pathVisited[curr.id] = true;;
         
         for (int nbr : curr.neighbors) {
-            if (pathVisited.contains(nbr)) {
+            if (pathVisited[nbr]) {
                 containsCycle = true;
                 return;
             }
@@ -64,7 +65,8 @@ class Solution {
         maxes[curr.color - 'a'] += 1;
         for (int i = 0; i < 26; i++)
             memo[curr.id][i] = maxes[i];
-        pathVisited.remove(curr.id);
+        
+        pathVisited[curr.id] = false;
     }
     
     class Node {
