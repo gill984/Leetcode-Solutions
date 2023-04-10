@@ -6,9 +6,7 @@ class Solution {
                 stack.addLast(c);
             else if (stack.isEmpty())
                 return false;
-            else if ((c == ')' && stack.peekLast() == '(') ||
-                       (c == ']' && stack.peekLast() == '[') || 
-                       (c == '}' && stack.peekLast() == '{'))
+            else if (stack.peekLast() == c - 1 || stack.peekLast() == c - 2)
                 stack.removeLast();
             else
                 return false;
