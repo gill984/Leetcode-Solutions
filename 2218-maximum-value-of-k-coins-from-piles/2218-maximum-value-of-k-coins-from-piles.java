@@ -15,7 +15,7 @@ class Solution {
         dp[0] = 0;
         
         for (int i = 0; i < n; i++) {
-            // Need this temp array to stay the same value in a given row
+            // Need this temp array to stay the same value in a given row because
             // we can't decide to take a different number of coins from a single
             // pile within 1 solution
             int [] temp = dp.clone();
