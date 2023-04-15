@@ -1,29 +1,35 @@
 class Solution {
-    int dp[][];
-    private int f(List<List<Integer>> piles, int i, int coins) {
-        if (i == 0) {
-            return 0;
-        }
-        if (dp[i][coins] != -1) {
-            return dp[i][coins];
-        }
-        int currentSum = 0;
-        for (int currentCoins = 0; currentCoins <= Math.min(piles.get(i - 1).size(), coins); currentCoins++) {
-            if (currentCoins > 0) {
-                currentSum += piles.get(i - 1).get(currentCoins - 1);
-            }
-            dp[i][coins] = Math.max(dp[i][coins], f(piles, i - 1, coins - currentCoins) + currentSum);
-        }
-        return dp[i][coins];
-    }
     public int maxValueOfCoins(List<List<Integer>> piles, int k) {
+        // dp[i][j] = max if we take only from piles 0-i and we take j top coins from pile i
         int n = piles.size();
-        dp = new int[n + 1][k + 1];
-        for (int i = 1; i <= n; i++) {
-            for (int coins = 0; coins <= k; coins++) {
-                dp[i][coins] = -1;
+        int [][] presums = new int [n][k + 1];
+        
+        // Base case for first pile
+        for (int i = 0; i < n; i++) {
+            for (int j = 1; j <= piles.get(i).size() && j <= k; j++) {
+                presums[i][j] = presums[i][j - 1] + piles.get(i).get(j - 1);
             }
         }
-        return f(piles, n, k);
+        
+        int [] dp = new int [k + 1];
+        Arrays.fill(dp, -1);
+        dp[0] = 0;
+        
+        for (int i = 0; i < n; i++) {
+            int [] temp = dp.clone();
+            for (int j = 1; j <= piles.get(i).size() && j <= k; j++) {
+                knapsackStep(presums, dp, temp, i, j);
+            }
+        }
+        
+        return dp[k];
+    }
+    
+    public void knapsackStep(int [][] presums, int [] dp, int [] temp, int row, int weight) {
+        for (int i = dp.length - 1; i >= 0; i--) {
+            if (temp[i] >= 0 && i + weight < dp.length) {
+                dp[i + weight] = Math.max(dp[i + weight], temp[i] + presums[row][weight]);
+            }
+        }
     }
 }
