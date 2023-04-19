@@ -1,25 +1,22 @@
 class Solution {
     int LEFT = 0;
     int RIGHT = 1;
-    int res;
+    int res = 0;
     
     public int longestZigZag(TreeNode root) {
-        res = 0;
-        dfs(root);
+        dfs(root, LEFT);
+        dfs(root, RIGHT);
         return res;
     }
     
-    public int[] dfs (TreeNode curr) {
+    public int dfs (TreeNode curr, int dir) {
         if (curr == null)
-            return new int [] {-1, -1};
+            return -1;
         
-        int [] leftLength = dfs(curr.left);
-        int [] rightLength = dfs(curr.right);
-        int leftDistance = leftLength[RIGHT] + 1;
-        int rightDistance = rightLength[LEFT] + 1;
-        // System.out.println("Node " + curr.val + " leftDistance = " + leftDistance + ", rightDistance = " + rightDistance);
+        int leftLength = dfs(curr.left, RIGHT) + 1;
+        int rightLength = dfs(curr.right, LEFT) + 1;
         
-        res = Math.max(res, Math.max(leftDistance, rightDistance));
-        return new int [] {leftDistance, rightDistance};
+        res = Math.max(res, Math.max(leftLength, rightLength));
+        return (dir == RIGHT ? rightLength : leftLength);
     }
 }
