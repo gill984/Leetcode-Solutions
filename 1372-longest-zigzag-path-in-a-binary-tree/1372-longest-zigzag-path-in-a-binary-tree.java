@@ -5,7 +5,6 @@ class Solution {
     
     public int longestZigZag(TreeNode root) {
         dfs(root, LEFT);
-        dfs(root, RIGHT);
         return res;
     }
     
@@ -15,7 +14,6 @@ class Solution {
         
         int leftLength = dfs(curr.left, RIGHT) + 1;
         int rightLength = dfs(curr.right, LEFT) + 1;
-        
         res = Math.max(res, Math.max(leftLength, rightLength));
         return (dir == RIGHT ? rightLength : leftLength);
     }
