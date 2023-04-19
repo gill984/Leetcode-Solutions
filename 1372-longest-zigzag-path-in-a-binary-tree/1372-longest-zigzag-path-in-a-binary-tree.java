@@ -4,7 +4,8 @@ class Solution {
     int res = 0;
     
     public int longestZigZag(TreeNode root) {
-        dfs(root, LEFT);
+        // Starting direction doesn't matter because this return val doesn't matter
+        dfs(root, 0);
         return res;
     }
     
