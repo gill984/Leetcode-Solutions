@@ -2,7 +2,6 @@ class Solution {
     int MOD = 1000000007;
     
     public int profitableSchemes(int n, int minProfit, int[] group, int[] profit) {
-        // dp[i][j] = we made i profit using j total people so far in this many ways
         int [][] dp = new int [minProfit + 1][n + 1];
         dp[0][0] = 1;
         
@@ -22,8 +21,6 @@ class Solution {
                 }
             }
         }
-        
-        // System.out.println(Arrays.deepToString(dp));
         
         int sum = 0;
         for (int i : dp[minProfit]) {
