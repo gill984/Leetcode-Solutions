@@ -1,19 +1,13 @@
 class Solution {
-    int [][] memo;
-    int EMPTY = 10000;
     
     public int minInsertions(String s) {
-        // At each step, add a character in left mirror position or right mirror position
-        // How to maintain state? Basically which 2 indexes are we looking at in the original
-        // string -> how many chars we had to add to get to this state
-        memo = new int [s.length()][s.length()];
-        for (int [] row : memo)
-            Arrays.fill(row, EMPTY);
-        return dfs(s, 0, s.length() - 1, memo);
+        return dfs(s, 0, s.length() - 1, new Integer [s.length()][s.length()]);
     }
     
-    public int dfs (String s, int lo, int hi, int [][] memo) {        
-        if (memo[lo][hi] != EMPTY)
+    // Return the number of additions necessary to match all characters between
+    // lo and hi in s inclusive. Memoize on these lo and hi indexes.
+    public int dfs (String s, int lo, int hi, Integer [][] memo) {        
+        if (memo[lo][hi] != null)
             return memo[lo][hi];
         
         // No further additions are necessary, all chars matched
@@ -23,13 +17,11 @@ class Solution {
         // We either can match both of these characters without an addition, match lo with a new addition, or
         // match hi with a new addition. In all three cases we still need to check the remaining
         // characters so the dfs must continue.
-        Integer res = null;
-        res = (s.charAt(lo) == s.charAt(hi) ?
-            dfs(s, lo + 1, hi - 1, memo) + 0 :          // Both characters already match
+        memo[lo][hi] = (s.charAt(lo) == s.charAt(hi) ?
+            dfs(s, lo + 1, hi - 1, memo) :          // Both characters already match
             Math.min(dfs(s, lo, hi - 1, memo) + 1,      // No match, add character to match with hi
                      dfs(s, lo + 1, hi, memo) + 1));    // No match, add character to match with lo
         
-        memo[lo][hi] = res;
-        return res;
+        return memo[lo][hi];
     }
 }
