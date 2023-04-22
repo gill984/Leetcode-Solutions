@@ -25,11 +25,9 @@ class Solution {
         }
         
         Integer res = null;
-        if (charLo == charHi) {
-            res = dfs(s, lo + 1, hi - 1, memo);
-        } else {
-            res = Math.min(dfs(s, lo, hi - 1, memo) + 1, dfs(s, lo + 1, hi, memo) + 1);
-        }
+        res = (charLo == charHi ? dfs(s, lo + 1, hi - 1, memo)
+              : Math.min(dfs(s, lo, hi - 1, memo) + 1, dfs(s, lo + 1, hi, memo) + 1));
+        
         
         memo[lo][hi] = res;
         return res;
