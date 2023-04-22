@@ -10,7 +10,7 @@ class Solution {
         if (memo[lo][hi] != null)
             return memo[lo][hi];
         
-        // No further additions are necessary, all chars matched
+        // Case where no further additions are necessary
         if (lo >= hi)
             return 0;
         
@@ -18,7 +18,7 @@ class Solution {
         // match hi with a new addition. In all three cases we still need to check the remaining
         // characters so the dfs must continue.
         memo[lo][hi] = (s.charAt(lo) == s.charAt(hi) ?
-            dfs(s, lo + 1, hi - 1, memo) :          // Both characters already match
+            dfs(s, lo + 1, hi - 1, memo) :              // Both characters already match
             Math.min(dfs(s, lo, hi - 1, memo) + 1,      // No match, add character to match with hi
                      dfs(s, lo + 1, hi, memo) + 1));    // No match, add character to match with lo
         
