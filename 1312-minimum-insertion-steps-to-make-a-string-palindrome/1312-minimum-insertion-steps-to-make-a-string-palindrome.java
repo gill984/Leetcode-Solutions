@@ -1,13 +1,13 @@
 class Solution {
     
     public int minInsertions(String s) {
-        return dfs(s, 0, s.length() - 1, new Integer [s.length()][s.length()]);
+        return dfs(s, 0, s.length() - 1, new int [s.length()][s.length()]);
     }
     
     // Return the number of additions necessary to match all characters between
     // lo and hi in s inclusive. Memoize on these lo and hi indexes.
-    public int dfs (String s, int lo, int hi, Integer [][] memo) {        
-        if (memo[lo][hi] != null)
+    public int dfs (String s, int lo, int hi, int [][] memo) {        
+        if (memo[lo][hi] != 0)
             return memo[lo][hi];
         
         // Case where no further additions are necessary
