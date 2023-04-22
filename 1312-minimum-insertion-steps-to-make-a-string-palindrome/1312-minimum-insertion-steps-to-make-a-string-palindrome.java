@@ -1,14 +1,19 @@
 class Solution {
+    int [][] memo;
+    int EMPTY = 10000;
     
     public int minInsertions(String s) {
         // At each step, add a character in left mirror position or right mirror position
         // How to maintain state? Basically which 2 indexes are we looking at in the original
         // string -> how many chars we had to add to get to this state
-        return dfs(s, 0, s.length() - 1, new Integer [s.length()][s.length()]);
+        memo = new int [s.length()][s.length()];
+        for (int [] row : memo)
+            Arrays.fill(row, EMPTY);
+        return dfs(s, 0, s.length() - 1, memo);
     }
     
-    public int dfs (String s, int lo, int hi, Integer [][] memo) {        
-        if (memo[lo][hi] != null)
+    public int dfs (String s, int lo, int hi, int [][] memo) {        
+        if (memo[lo][hi] != EMPTY)
             return memo[lo][hi];
         
         // No further additions are necessary, all chars matched
