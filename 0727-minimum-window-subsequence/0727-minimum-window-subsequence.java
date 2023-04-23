@@ -28,7 +28,7 @@ class Solution {
             return memo[idx1][idx2];
         
         if (idx2 >= s2.length())
-            return memo[idx1][idx2] = 0;
+            return 0;
         
         if (idx1 >= s1.length())
             return memo[idx1][idx2] = INVALID;
