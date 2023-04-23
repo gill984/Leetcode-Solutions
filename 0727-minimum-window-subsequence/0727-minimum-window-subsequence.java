@@ -11,8 +11,7 @@ class Solution {
         for (int i = 0; i < s1.length(); i++) {
             int length = dfs(s1, s2, memo, i, 0);
             
-            // No greater index will work either if this one fails
-            if (length == -1)
+            if (length == INVALID)
                 break;
             
             if (length < resLength) {
