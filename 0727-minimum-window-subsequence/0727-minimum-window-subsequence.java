@@ -1,24 +1,27 @@
 class Solution {
     int INVALID = -1;
     
+    // memo[i][j] = how many chars more necessary in s1 if we're at
+    // char i and we've already matched j characters in s2
     public String minWindow(String s1, String s2) {
-        // memo[i][j] = how many chars more necessary in s1 if we're at
-        // char i and we've already matched j characters in s2
         int[][] memo = new int [s1.length() + 1][s2.length() + 1];
-        int res = Integer.MAX_VALUE;
-        String stringRes = "";
+        int resLength = Integer.MAX_VALUE;
+        String resString = "";
+        
         for (int i = 0; i < s1.length(); i++) {
-            int iStartResult = dfs(s1, s2, memo, i, 0);
-            if (iStartResult == -1)
+            int length = dfs(s1, s2, memo, i, 0);
+            
+            // No greater index will work either if this one fails
+            if (length == -1)
                 break;
             
-            if (iStartResult < res) {
-                stringRes = s1.substring(i, i + iStartResult);
-                res = iStartResult;
+            if (length < resLength) {
+                resString = s1.substring(i, i + length);
+                resLength = length;
             }
         }
         
-        return stringRes;
+        return resString;
     }
     
     public int dfs(String s1, String s2, int [][] memo, int idx1, int idx2) {
