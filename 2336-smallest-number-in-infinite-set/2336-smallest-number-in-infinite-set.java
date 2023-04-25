@@ -1,22 +1,22 @@
 class SmallestInfiniteSet {
     Set<Integer> removed;
-    TreeSet<Integer> available;
+    PriorityQueue<Integer> available;
+    int curr;
     
     public SmallestInfiniteSet() {
-        available = new TreeSet<>();
+        available = new PriorityQueue<>();
         removed = new HashSet<>();
-        available.add(1);
+        curr = 1;
     }
     
     public int popSmallest() {
-        int res = available.first();
-        available.remove(res);
-        removed.add(res);
-        int next = res + 1;
-        while (removed.contains(next)) {
-            next++;
+        if (available.isEmpty()) {
+            removed.add(curr);
+            return curr++;
         }
-        available.add(next);
+        
+        int res = available.poll();
+        removed.add(res);
         return res;
     }
     
