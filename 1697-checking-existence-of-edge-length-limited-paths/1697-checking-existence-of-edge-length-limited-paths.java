@@ -1,10 +1,8 @@
 class UnionFind {
     private int[] group;
-    private int[] rank;
 
     UnionFind(int size) {
         group = new int[size];
-        rank = new int[size];
         for (int i = 0; i < size; ++i) {
             group[i] = i;
         }
@@ -26,14 +24,7 @@ class UnionFind {
             return;
         }
 
-        if (rank[group1] > rank[group2]) {
-            group[group2] = group1;
-        } else if (rank[group1] < rank[group2]) {
-            group[group1] = group2;
-        } else {
-            group[group1] = group2;
-            rank[group2] += 1;
-        }
+        group[group1] = group2;
     }
     
     public boolean areConnected(int node1, int node2) {
