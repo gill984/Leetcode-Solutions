@@ -31,9 +31,7 @@ class Solution {
         }
         
         int [][] res = new int [resList.size()][2];
-        for (int i = 0; i < res.length; i++)
-            for (int j = 0; j < 2; j++)
-                res[i][j] = resList.get(i)[j];
+        res = resList.toArray(res);
         return res;
     }
 }
