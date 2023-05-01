@@ -9,7 +9,6 @@ class Solution {
             min = Math.min(s, min);
         }
         
-        sum = sum - max - min;
-        return (sum / (salary.length - 2.0));
+        return (sum - max - min) / (salary.length - 2.0);
     }
 }
