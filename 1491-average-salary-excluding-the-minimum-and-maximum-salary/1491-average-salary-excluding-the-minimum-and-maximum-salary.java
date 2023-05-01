@@ -5,10 +5,8 @@ class Solution {
         int sum = 0;
         for (int s : salary) {
             sum += s;
-            if (s > max)
-                max = s;
-            if (s < min)
-                min = s;
+            max = Math.max(s, max);
+            min = Math.min(s, min);
         }
         
         sum = sum - max - min;
