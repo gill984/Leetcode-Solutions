@@ -2,32 +2,48 @@ class Solution {
     public int[][] indexPairs(String text, String[] words) {
         Arrays.sort(words, (a, b) -> a.length() - b.length());
         List<int[]> resList = new ArrayList<>();
+        
+        // Build trie
+        TrieNode root = new TrieNode();
+        for (String word : words) {
+            TrieNode curr = root;
+            for (char c : word.toCharArray()) {
+                if (curr.children[c - 'a'] == null)
+                    curr.children[c - 'a'] = new TrieNode();
+                curr = curr.children[c - 'a'];
+            }
+            curr.isWordEnd = true;
+        }
+        
+        // Traverse trie for each start position in text
         for (int start = 0; start < text.length(); start++) {
-            for (String word : words) {
-                boolean match = true;
-                
-                if (word.length() + start > text.length()) {
+            TrieNode curr = root;
+            for (int i = 0; i + start < text.length(); i++) {
+                char c = text.charAt(i + start);
+                if (curr.children[c - 'a'] == null)
                     break;
-                }
+                curr = curr.children[c - 'a'];
                 
-                for (int j = 0; j + start < text.length() && j < word.length(); j++) {
-                    if (word.charAt(j) != text.charAt(j + start)) {
-                        match = false;
-                        break;
-                    }
+                if (curr.isWordEnd) {
+                    resList.add(new int [] {start, i + start});
                 }
-                
-                if (match)
-                    resList.add(new int [] {start, start + word.length() - 1});
             }
         }
         
         int [][] res = new int [resList.size()][2];
-        for (int i = 0; i < res.length; i++) {
-            for (int j = 0; j < 2; j++) {
+        for (int i = 0; i < res.length; i++)
+            for (int j = 0; j < 2; j++)
                 res[i][j] = resList.get(i)[j];
-            }
-        }
         return res;
+    }
+}
+
+class TrieNode {
+    TrieNode [] children;
+    boolean isWordEnd;
+    
+    public TrieNode () {
+        children = new TrieNode[26];
+        isWordEnd = false;
     }
 }
