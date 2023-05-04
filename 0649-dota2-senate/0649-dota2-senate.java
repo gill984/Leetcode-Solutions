@@ -2,43 +2,26 @@ class Solution {
     public String predictPartyVictory(String senate) {
         int n = senate.length();
         Deque<Character> queue = new ArrayDeque<>();
-        int rCount = 0;
-        int dCount = 0;
+        int [] count = new int [128];
+        int [] remove = new int [128];
         
         for (char c : senate.toCharArray()) {
-            if (c == 'R')
-                rCount++;
-            else
-                dCount++;
+            count[c]++;
             queue.addLast(c);
         }
         
-        int removeR = 0;
-        int removeD = 0;
-        
-        while (rCount > 0 && dCount > 0) {
+        while (count['R'] > 0 && count['D'] > 0) {
             char c = queue.removeFirst();
-            
-            if (c == 'R') {
-                if (removeR > 0) {
-                    removeR--;
-                    rCount--;
-                } else {
-                    removeD++;
-                    queue.addLast(c);
-                }
+            if (remove[c] > 0) {
+                remove[c]--;
+                count[c]--;
             } else {
-                if (removeD > 0) {
-                    removeD--;
-                    dCount--;
-                } else {
-                    removeR++;
-                    queue.addLast(c);
-                }
+                remove[c == 'R' ? 'D' : 'R']++;
+                queue.addLast(c);
             }
         }
         
         
-        return (rCount > 0 ? "Radiant" : "Dire");
+        return (count['R'] > 0 ? "Radiant" : "Dire");
     }
 }
