@@ -1,38 +1,44 @@
 class Solution {
     public String predictPartyVictory(String senate) {
         int n = senate.length();
-        char [] s = senate.toCharArray();
+        Deque<Character> queue = new ArrayDeque<>();
+        int rCount = 0;
+        int dCount = 0;
         
-        boolean containsRadiant = true;
-        boolean containsDire = true;
+        for (char c : senate.toCharArray()) {
+            if (c == 'R')
+                rCount++;
+            else
+                dCount++;
+            queue.addLast(c);
+        }
         
-        int radiantCount = 0;
-        int direCount = 0;
+        int removeR = 0;
+        int removeD = 0;
         
-        while (containsRadiant && containsDire) {
-            containsRadiant = false;
-            containsDire = false;
-            for (int i = 0; i < n; i++) {
-                if (s[i] == 'R') {
-                    if (direCount > 0) {
-                        s[i] = '0';
-                        direCount--;
-                    } else {
-                        radiantCount++;
-                        containsRadiant = true;
-                    }
-                } else if (s[i] == 'D') {
-                    if (radiantCount > 0) {
-                        s[i] = '0';
-                        radiantCount--;
-                    } else {
-                        direCount++;
-                        containsDire = true;
-                    }
+        while (rCount > 0 && dCount > 0) {
+            char c = queue.removeFirst();
+            
+            if (c == 'R') {
+                if (removeR > 0) {
+                    removeR--;
+                    rCount--;
+                } else {
+                    removeD++;
+                    queue.addLast(c);
+                }
+            } else {
+                if (removeD > 0) {
+                    removeD--;
+                    dCount--;
+                } else {
+                    removeR++;
+                    queue.addLast(c);
                 }
             }
         }
         
-        return (containsRadiant ? "Radiant" : "Dire");
+        
+        return (rCount > 0 ? "Radiant" : "Dire");
     }
 }
