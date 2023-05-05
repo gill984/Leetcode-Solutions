@@ -22,6 +22,9 @@ class Solution {
                 vowelCount++;
             
             max = Math.max(max, vowelCount);
+            
+            if (max == k)
+                return max;
         }
         
         return max;
