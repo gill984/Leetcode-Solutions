@@ -1,22 +1,18 @@
 class Solution {
     public int maxVowels(String s, int k) {
         int vowelCount = 0;
-        for (int i = 0; i < k; i++) {
+        for (int i = 0; i < k; i++)
             if (isVowel(s.charAt(i)))
                 vowelCount++;
-        }
         
         int max = vowelCount;
         
-        int lo = 0;
-        int hi = k - 1;
+        int lo = 1;
+        int hi = k;
         
-        while (hi < s.length() - 1) {
-            if (isVowel(s.charAt(lo)))
+        while (hi < s.length()) {
+            if (isVowel(s.charAt(lo - 1)))
                 vowelCount--;
-            
-            lo++;
-            hi++;
             
             if (isVowel(s.charAt(hi)))
                 vowelCount++;
@@ -25,6 +21,9 @@ class Solution {
             
             if (max == k)
                 return max;
+            
+            lo++;
+            hi++;
         }
         
         return max;
