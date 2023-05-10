@@ -1,12 +1,10 @@
 class Solution {
     int [][] dirs = new int [][] {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+    int [][] boundChange = new int [][] {{1, 0, 0, 0}, {0, -1, 0, 0}, {0, 0, -1, 0}, {0, 0, 0, 1}};
+    int [] bounds;
     
     public int[][] generateMatrix(int n) {
-        int left = 0;
-        int right = n - 1;
-        int top = 0;
-        int bottom = n - 1;
-        
+        int [] bounds = new int [] {0, n - 1, n - 1, 0};
         int [][] res = new int [n][n];
         int row = 0;
         int col = 0;
@@ -17,17 +15,10 @@ class Solution {
             int nextRow = row + dirs[dir][0];
             int nextCol = col + dirs[dir][1];
             
-            if (nextRow < top) {
-                left += 1;
-                dir = (dir + 1) % 4;
-            } else if (nextRow > bottom) {
-                right -= 1;
-                dir = (dir + 1) % 4;
-            } else if (nextCol < left) {
-                bottom -= 1;
-                dir = (dir + 1) % 4;
-            } else if (nextCol > right) {
-                top += 1;
+            if (nextRow < bounds[0] || nextRow > bounds[2] || nextCol > bounds[1] || nextCol < bounds[3]) {
+                for (int i = 0; i < 4; i++) {
+                    bounds[i] += boundChange[dir][i];
+                }
                 dir = (dir + 1) % 4;
             }
             
