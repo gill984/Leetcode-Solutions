@@ -7,9 +7,11 @@ class Solution {
         int [][] res = new int [m][n];
         
         for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                for (int z = 0; z < k; z++) {
-                    res[i][j] += (mat1[i][z] * mat2[z][j]);
+            for (int z = 0; z < k; z++) {
+                if (mat1[i][z] != 0) {
+                    for (int j = 0; j < n; j++) {
+                        res[i][j] += (mat1[i][z] * mat2[z][j]);
+                    }
                 }
             }
         }
