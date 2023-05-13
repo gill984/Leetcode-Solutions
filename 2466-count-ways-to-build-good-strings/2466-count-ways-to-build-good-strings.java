@@ -6,11 +6,11 @@ class Solution {
         
         for (int end = 1; end <= high; end++) {
             if (end >= zero) {
-                dp[end] = dp[end] + dp[end - zero];
+                dp[end] = (dp[end] + dp[end - zero]) % MOD;
             }
             
             if (end >= one) {
-                dp[end] = dp[end] + dp[end - one];
+                dp[end] = (dp[end] + dp[end - one]) % MOD;
             }
             
             dp[end] %= MOD;
