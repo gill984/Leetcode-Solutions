@@ -16,8 +16,6 @@ class Solution {
             dp[end] %= MOD;
         }
         
-        System.out.println(Arrays.toString(dp));
-        
         int res = 0;
         for (int i = low; i <= high; i++) {
             res = (res + dp[i]) % MOD;
