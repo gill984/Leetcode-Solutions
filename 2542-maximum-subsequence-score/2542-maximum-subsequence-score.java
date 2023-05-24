@@ -11,7 +11,7 @@ class Solution {
         }
         
         // Descending nums2 order primary, descending nums1 order secondary
-        Arrays.sort(nums, (a, b) -> b[1] - a[1] == 0 ? b[0] - a[0] : b[1] - a[1]);
+        Arrays.sort(nums, (a, b) -> b[1] - a[1]);
         
         // Initialize algorithm with starter length of k
         long sum = 0;
