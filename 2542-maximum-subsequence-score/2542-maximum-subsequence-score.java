@@ -10,12 +10,10 @@ class Solution {
             nums[i][1] = nums2[i];
         }
         
-        // Descending nums2 order primary, descending nums1 order secondary
+        // Descending nums2 order, i.e. in order of largest min to smallest min
         Arrays.sort(nums, (a, b) -> b[1] - a[1]);
-        
-        // Initialize algorithm with starter length of k
         long sum = 0;
-        long min = Integer.MAX_VALUE;
+        long min = Long.MAX_VALUE;
         long res = 0;
         
         for (int i = 0; i < n; i++) {
