@@ -30,7 +30,7 @@ class Solution {
             return memo[idx];
         }
         
-        int max = Integer.MIN_VALUE;
+        int max = -10000;
         int sum = 0;
         for (int i = 0; i < 3 && idx + i < stoneValue.length; i++) {
             sum += stoneValue[idx + i];
