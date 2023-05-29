@@ -1,10 +1,8 @@
 class ParkingSystem {
-    int [] count = new int [4];
+    int [] count;
     
     public ParkingSystem(int big, int medium, int small) {
-        count[1] = big;
-        count[2] = medium;
-        count[3] = small;
+        count = new int [] {0, big, medium, small};
     }
     
     public boolean addCar(int carType) {
@@ -14,9 +12,3 @@ class ParkingSystem {
         return true;
     }
 }
-
-/**
- * Your ParkingSystem object will be instantiated and called as such:
- * ParkingSystem obj = new ParkingSystem(big, medium, small);
- * boolean param_1 = obj.addCar(carType);
- */
