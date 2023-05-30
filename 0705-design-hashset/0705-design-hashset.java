@@ -1,6 +1,6 @@
 class MyHashSet {
     Integer [] KeySet;
-    int CAPACITY = 7500;
+    int CAPACITY = 1000000;
     int SKIP = Integer.MAX_VALUE;
 
     public MyHashSet() {
