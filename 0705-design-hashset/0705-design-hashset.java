@@ -1,6 +1,6 @@
 class MyHashSet {
     Integer [] KeySet;
-    int CAPACITY = 100007;
+    int CAPACITY = 100000;
 
     public MyHashSet() {
         KeySet = new Integer[CAPACITY];
