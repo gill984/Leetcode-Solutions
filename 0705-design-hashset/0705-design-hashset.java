@@ -44,6 +44,6 @@ class MyHashSet {
     }
     
     private int hash(int key) {
-        return ((key) * 59) % CAPACITY;
+        return ((key) * 10007) % CAPACITY;
     }
 }
