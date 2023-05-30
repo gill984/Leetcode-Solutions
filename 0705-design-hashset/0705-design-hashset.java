@@ -15,24 +15,20 @@ class MyHashSet {
             h = (h + 1) % CAPACITY;
         }
         KeySet[h] = key;
-        // System.out.println("Putting " + key + " into index " + h);
     }
     
     public void remove(int key) {
         int h = hash(key);
         while (KeySet[h] != null) {
             if (KeySet[h] != key) {
-                h++;
+                h = (h + 1) % CAPACITY;
                 continue;
             }
             
             KeySet[h] = null;
             shift(h);
-            // System.out.println("Removing " + key + " from index " + h);
             return;
         }
-        
-        // System.out.println("Could not remove " + key + " from index " + h);
     }
     
     public boolean contains(int key) {
@@ -41,7 +37,7 @@ class MyHashSet {
         while (KeySet[h] != null) {
             if (KeySet[h] == key)
                 return true;
-            h++;
+            h = (h + 1) % CAPACITY;
         }
         
         return false;
