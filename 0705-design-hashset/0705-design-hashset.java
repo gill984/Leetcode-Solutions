@@ -1,49 +1,20 @@
 class MyHashSet {
-    Integer [] KeySet;
-    int CAPACITY = 10006;
-    int SKIP = Integer.MAX_VALUE;
+    boolean [] set;
+    int CAPACITY = 1000001;
 
     public MyHashSet() {
-        KeySet = new Integer[CAPACITY];
+        set = new boolean[CAPACITY];
     }
     
     public void add(int key) {
-        if (contains(key))
-            return;
-        
-        int h = hash(key);
-        while (KeySet[h] != null) {
-            h = (h + 1) % CAPACITY;
-        }
-        KeySet[h] = key;
+        set[key] = true;
     }
     
     public void remove(int key) {
-        int h = hash(key);
-        while (KeySet[h] != null) {
-            if (KeySet[h] != key) {
-                h = (h + 1) % CAPACITY;
-                continue;
-            }
-            
-            KeySet[h] = SKIP;
-            return;
-        }
+        set[key] = false;
     }
     
     public boolean contains(int key) {
-        int h = hash(key);
-        
-        while (KeySet[h] != null) {
-            if (KeySet[h] == key)
-                return true;
-            h = (h + 1) % CAPACITY;
-        }
-        
-        return false;
-    }
-    
-    private int hash(int key) {
-        return ((key) * 10007) % CAPACITY;
+        return set[key];
     }
 }
