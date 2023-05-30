@@ -1,6 +1,7 @@
 class MyHashSet {
     Integer [] KeySet;
     int CAPACITY = 100000;
+    int SKIP = Integer.MAX_VALUE;
 
     public MyHashSet() {
         KeySet = new Integer[CAPACITY];
@@ -25,8 +26,7 @@ class MyHashSet {
                 continue;
             }
             
-            KeySet[h] = null;
-            shift(h);
+            KeySet[h] = SKIP;
             return;
         }
     }
@@ -45,15 +45,5 @@ class MyHashSet {
     
     private int hash(int key) {
         return ((key + 7) * 13) % CAPACITY;
-    }
-    
-    private void shift(int idx) {
-        int prev = idx;
-        idx = (idx + 1) % CAPACITY;
-        while (KeySet[idx] != null && idx != hash(KeySet[idx])) {
-            KeySet[prev] = KeySet[idx];
-            prev = idx;
-            idx = (idx + 1) % CAPACITY;
-        }
     }
 }
