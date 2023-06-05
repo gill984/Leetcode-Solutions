@@ -7,13 +7,8 @@ class Solution {
         for (int i = 2; i < coordinates.length; i++) {
             int nextYSlope = coordinates[i][1] - coordinates[i - 1][1];
             int nextXSlope = coordinates[i][0] - coordinates[i - 1][0];
-            
-            
-            
-            // Cross multiply and check equality
-            if (xSlope * nextYSlope != ySlope * nextXSlope) {
+            if (xSlope * nextYSlope != ySlope * nextXSlope)
                 return false;
-            }
         }
         
         return true;
