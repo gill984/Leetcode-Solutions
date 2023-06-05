@@ -1,6 +1,6 @@
 class Solution {
     public boolean checkStraightLine(int[][] coordinates) {
-        Arrays.sort(coordinates, (a, b) -> a[0] - b[0] == 0 ? a[1] - b[1] : a[0] - b[0]);
+        // Arrays.sort(coordinates, (a, b) -> a[0] - b[0] == 0 ? a[1] - b[1] : a[0] - b[0]);
         int ySlope = coordinates[1][1] - coordinates[0][1];
         int xSlope = coordinates[1][0] - coordinates[0][0];
         
