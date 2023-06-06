@@ -1,12 +1,29 @@
 class Solution {
     public boolean canMakeArithmeticProgression(int[] arr) {
         int n = arr.length;
-        Arrays.sort(arr);
-        int diff = arr[1] - arr[0];
-        for (int i = 2; i < n; i++) {
-            if (arr[i] - arr[i - 1] != diff) {
-                return false;
+        int min = Integer.MAX_VALUE;
+        int second = Integer.MAX_VALUE;
+        Set<Integer> set = new HashSet<>();
+        
+        for (int i : arr) {
+            if (i < min) {
+                second = min;
+                min = i;
+            } else if (i < second) {
+                second = i;
             }
+            set.add(i);
+        }
+
+        int diff = second - min;
+        if (diff == 0) {
+            return set.size() == 1;
+        }
+        
+        int count = 0;
+        for (int i = min; count < arr.length; count++, i += diff) {
+            if (!set.contains(i))
+                return false;
         }
         
         return true;
