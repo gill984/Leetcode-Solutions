@@ -16,8 +16,7 @@ class Solution {
         
         while (lo <= hi) {
             int mid = (hi + lo) / 2;
-            int val = nums[mid];
-            if (val >= target)
+            if (nums[mid] >= target)
                 hi = mid - 1;
             else
                 lo = mid + 1;
