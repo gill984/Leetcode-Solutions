@@ -3,11 +3,16 @@ class Solution {
         int count = 0;
         int m = grid.length;
         int n = grid[0].length;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                count += grid[i][j] < 0 ? 1 : 0;
-            }
+        int col = 0;
+        
+        for (int row = m - 1; row >= 0 && col < n; row--) {
+            // Increment col until we get to a negative value
+            while (col < n && grid[row][col] >= 0)
+                col++;
+            count += (n - col);
         }
+        
+        
         return count;
     }
 }
