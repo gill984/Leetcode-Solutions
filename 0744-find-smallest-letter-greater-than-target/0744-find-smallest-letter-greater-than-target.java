@@ -2,11 +2,7 @@ class Solution {
     public char nextGreatestLetter(char[] letters, char target) {
         int n = letters.length;
         int idx = binarySearchRight(letters, target, n);
-        if (idx == n) {
-            return letters[0];
-        } else {
-            return letters[idx];
-        }
+        return letters[idx];
     }
     
     public int binarySearchRight(char[] letters, char target, int n) {
@@ -15,13 +11,12 @@ class Solution {
         
         while (lo <= hi) {
             int mid = (hi + lo) / 2;
-            if (letters[mid] <= target) {
+            if (letters[mid] <= target)
                 lo = mid + 1;
-            } else {
+            else
                 hi = mid - 1;
-            }
         }
         
-        return lo;
+        return lo == n ? 0 : lo;
     }
 }
