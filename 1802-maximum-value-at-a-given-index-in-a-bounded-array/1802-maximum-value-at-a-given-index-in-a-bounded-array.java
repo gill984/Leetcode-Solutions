@@ -21,15 +21,16 @@ class Solution {
         int leftLength = index + 1;
         int rightLength = n - index;
         long sum = calcTriangle(guess) + calcTriangle(guess) - guess;
+        
         if (leftLength < guess) {
             sum -= calcTriangle(guess - leftLength);
-        } else if (leftLength > guess) {
+        } else {
             sum += leftLength - guess;
         }
         
         if (rightLength < guess) {
             sum -= calcTriangle(guess - rightLength);
-        } else if (rightLength > guess) {
+        } else {
             sum += rightLength - guess;
         }
         
